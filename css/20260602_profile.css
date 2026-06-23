@@ -1,0 +1,59 @@
+/* 請幫我建立一段 :root{}，以設定網頁色彩為主。該網頁的主要用途是軟體工程師的個人首頁，包含作品集、履歷、學經歷。我喜歡的技術是 C/C++、Python，感興趣的方向是演算法與機器學習。 */
+
+:root {
+  /* ===== Brand Colors ===== */
+  --color-primary: #3b82f6;      /* 藍色 - Python / 技術感 */
+  --color-secondary: #14b8a6;    /* 青綠 - ML / AI 感 */
+  --color-accent: #f59e0b;       /* 強調色 */
+
+  /* ===== Background ===== */
+  --color-bg: #0f172a;           /* 主背景 */
+  --color-bg-secondary: #1e293b; /* 區塊背景 */
+  --color-surface: #111827;      /* 卡片背景 */
+
+  /* ===== Text ===== */
+  --color-text: #f8fafc;         /* 主文字 */
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+
+  /* ===== Borders ===== */
+  --color-border: #334155;
+  --color-border-hover: #475569;
+
+  /* ===== Status ===== */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* ===== Code Theme ===== */
+  --color-code-bg: #0b1220;
+  --color-code-keyword: #60a5fa;
+  --color-code-string: #34d399;
+  --color-code-comment: #64748b;
+
+  /* ===== Shadow ===== */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.35);
+
+  /* ===== Radius ===== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* ===== Layout ===== */
+  --max-width: 1200px;
+  --header-height: 72px;
+
+  /* ===== Typography ===== */
+  --font-sans:
+    "Inter",
+    "Noto Sans TC",
+    system-ui,
+    sans-serif;
+
+  --font-mono:
+    "JetBrains Mono",
+    "Fira Code",
+    monospace;
+}

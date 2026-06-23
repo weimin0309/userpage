@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地方美食</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/basic_tamplate.css">
+</head>
+
+<body>
+    <div class="container box01 table">
+        <div class="section">
+            <table class="table mt-3 table-bordered table-hover table-striped table-rwd erp-table">
+                <caption>OpenData - 地方美食</caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col">編號</th>
+                        <th class="col">圖片</th>
+                        <th class="col">名稱</th>
+                        <th class="col">聯絡方式</th><!--電話<br>地址-->
+                        <th class="col">簡介</th>
+                    </tr>
+                </thead>
+
+                <tbody id="foodList">
+                    <tr>
+                        <!--test data-->
+                        <th scope="row" class="product-id">0</th>
+                        <td data-th="圖片"><span><img
+                                    src="https://ezgo.ardswc.gov.tw/_api/content/images/agrispots/25819/480x360_agrispots-image--i0uqxsgseicmbf12-ztpa.jpg"></img></span>
+                        </td>
+                        <td data-th="名稱"><span>Test</span></td>
+                        <td data-th="聯絡方式"><span>0900-000-000<br>XX市OO區OO路00號</span></td>
+                        <td data-th="簡介"><span>觀看體制必要實驗在此每月字體類型需要出發，就是阿宅人民共和國，加大今日首頁本公司肌膚元素公路財政精品，回去回家對面所有不願意連。</span>
+                        </td>
+                        <!--test data-->
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        $(function () {
+            //載入資料
+            function loadData() {
+                $.ajax({
+                    type: "GET",
+                    url: "js/ODwsvTravelFood.json",
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        // console.log(data);
+                        originFood = data;
+                        return true;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        return false;
+                    }
+                });
+            };
+
+            const cleanText = (value, defaultValue) => {
+                const result = (value ?? "").trim();
+                return result === "" ? defaultValue : result;
+            };
+
+            let isSuccess = loadData();
+
+            if (isSuccess == false)
+                return;
+
+            //清洗與重構資料結構
+            const cleanFoodList = originFood.map(function (item, index) {
+                tmpAddress = cleanText(item.City).replace('台', '臺') + cleanText(item.Town) + cleanText(item.Address);
+
+                return {
+                    id: index + 1,
+                    Name: cleanText(item.Name, "未提供名稱"),
+                    Pic: cleanText(item.PicURL, ""),
+                    Description: cleanText(item.HostWords, "未提供簡介"),
+                    Tel: cleanText(item.Tel, "未提供電話"),
+                    Address: tmpAddress === "" ? "" : tmpAddress
+                };
+            });
+
+            // console.log(cleanFood);
+
+            //寫入表格、進行渲染
+            $('#foodList').empty();
+
+            // cleanFoodList.forEach(function(item){
+            for (const item of cleanFoodList) {
+                let strHTML = `<tr>
+                        <th scope="row" class="product-id">${item.id}</th>
+                        <td data-th="圖片"><span><img
+                                    src="${item.Pic}"></img></span>
+                        </td>
+                        <td data-th="名稱"><span>${item.Name}</span></td>
+                        <td data-th="聯絡方式"><span>電話：${item.Tel}<br>地址：${item.Address}</span></td>
+                        <td data-th="簡介"><span>${item.Description}</span>
+                        </td>
+                    </tr>`;
+
+                $('#foodList').append(strHTML);
+
+                if (item.id >= 10) {
+                    break;
+                }
+            };
+        })
+    </script>
+</body>
+
+</html>

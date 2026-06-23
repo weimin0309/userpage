@@ -1,0 +1,114 @@
+/*
+使用範例：
+<div class="roller_[進入方向]">
+    <!--將被覆蓋的內容-->
+    <div class="roller_box">
+        <!--滑動的元素-->
+    </div>
+    <!--將被覆蓋的內容-->
+</div>
+*/
+
+/* from bottom */
+.roller_bottom {
+    position: relative;
+    overflow: hidden;
+}
+.roller_bottom .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    left: 0;
+    bottom: -100%;
+
+    /* 將 roller_box 的內容置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: bottom 1s ease-in-out;
+}
+.roller_bottom:hover .roller_box {
+    bottom: 0;
+}
+
+/* from top */
+.roller_top {
+    position: relative;
+    overflow: hidden;
+}
+.roller_top .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    left: 0;
+    top: -100%;
+
+    /* 將 roller_box 的內容置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: top 1s ease-in-out;
+}
+.roller_top:hover .roller_box {
+    top: 0;
+}
+
+/* from left */
+.roller_left {
+    position: relative;
+    overflow: hidden;
+}
+.roller_left .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: -100%;
+
+    /* 將 roller_box 的內容置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 1s ease-in-out;
+}
+.roller_left:hover .roller_box {
+    left: 0;
+}
+
+/* from right */
+.roller_right {
+    position: relative;
+    overflow: hidden;
+}
+.roller_right .roller_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    top: 0;
+    right: -100%;
+
+    /* 將 roller_box 的內容置中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 1s ease-in-out;
+}
+.roller_right:hover .roller_box {
+    right: 0;
+}

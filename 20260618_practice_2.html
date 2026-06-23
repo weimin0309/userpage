@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>切版綜合練習</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/rollers.css">
+    <style>
+        .header {
+            height: 250px;
+            margin-top: 15px;
+            background-image: url(images/manja-vitolic-gKXKBY-C-Dk-unsplash.jpg);
+            background-position: center center;
+            background-size: cover;
+
+            /* text-align: center; */
+            /* line-height: 150px; */
+
+            /* font-size: 28px; */
+            /* font-weight: 900; */
+        }
+
+        .menu {
+            height: 90px;
+            margin-top: 10px;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 90px;
+            font-size: 48px;
+            color: aliceblue;
+        }
+
+        .card {
+            padding: 10px;
+            margin-top: 15px;
+            box-shadow: 2px 2px 6px 2px #ccc;
+            border-radius: 5px;
+        }
+
+        @media screen and (min-width: 768px) {
+            .menu {
+                height: 180px;
+                line-height: 180px;
+                font-size: 36px;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+            .menu {
+                width: 180px;
+                border-radius: 50%;
+                font-size: 48px;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .menu {
+                width: 220px;
+                height: 220px;
+                line-height: 220px;
+                /* border-radius: 50%; */
+                font-size: 48px;
+            }
+        }
+
+        #foodList button a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!--header-->
+        <div class="row">
+            <div class="col-12 d-none d-sm-block header"></div>
+        </div>
+
+        <!--menu-->
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="menu bg-dark text-center fw-900">選單01</div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="menu bg-dark text-center fw-900">選單02</div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="menu bg-dark text-center fw-900">選單03</div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="menu bg-dark text-center fw-900">選單04</div>
+            </div>
+        </div>
+
+        <!--cards-->
+        <div class="row" id="foodList">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning"><a href="#">查看更多</a></button></div>
+                    <img src="images/tormius-0eAHNGWBKrM-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning">查看更多</button></div>
+                    <img src="images/tavis-beck-gRr64-OCKy0-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning">查看更多</button></div>
+                    <img src="images/naomi-august-YgvWaaKtBR8-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning">查看更多</button></div>
+                    <img src="images/tormius-0eAHNGWBKrM-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning">查看更多</button></div>
+                    <img src="images/tavis-beck-gRr64-OCKy0-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card text-center roller_left">
+                    <div class="roller_box"><button class="btn btn-warning">查看更多</button></div>
+                    <img src="images/naomi-august-YgvWaaKtBR8-unsplash.jpg" alt="" class="img-fluid">
+                    <div class="h2 fw-900">旅遊景點</div>
+                    <p class="fw-900">故事分鐘羅東，研究所出了鄉民回頭離線確定基礎上報名氣息反應不能下載一份，一會兒大小，任何協助我會女朋友領域庫存，批發並。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script>
+        $(function () {
+            // 載入資料
+            function loadData() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:3000/travelFood/",
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        originFoodList = data;
+                        return true;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        return false;
+                    }
+                });
+            };
+
+            const cleanText = (value, defaultValue) => {
+                const result = (value ?? "").trim();
+                return result === "" ? defaultValue : result;
+            };
+
+            let isSuccess = loadData();
+
+            if (isSuccess == false)
+                return;
+
+            // 清洗與重構資料結構
+            const cleanFoodList = originFoodList.map(function (item, index) {
+                tmpAddress = cleanText(item.City).replace('台', '臺') + cleanText(item.Town) + cleanText(item.Address);
+
+                return {
+                    id: index + 1,
+                    Name: cleanText(item.Name, "未提供名稱"),
+                    Pic: cleanText(item.PicURL, ""),
+                    Description: cleanText(item.HostWords, "未提供簡介"),
+                    // Tel: cleanText(item.Tel, "未提供電話"),
+                    // Address: tmpAddress === "" ? "" : tmpAddress
+                    Web: cleanText(item.Url, "")
+                };
+            });
+
+            // 渲染表格
+            $('#foodList').empty();
+
+            // cleanFoodList.forEach(function(item){
+            for (const item of cleanFoodList) {
+                let strHTML = `<div class="col-12 col-md-6 col-lg-4">
+                            <div class="card text-center">
+                                <img src="${item.Pic}" alt="" class="img-fluid">
+                                <div class = "roller_bottom">
+                                    <div class="roller_box">
+                                        <button class="btn btn-warning"><a href="${item.Web}" target="_blank">查看更多</a></button>
+                                        <!--button class="btn btn-warning" onclick="location.href='${item.Web}'">查看更多</button-->
+                                    </div>
+                                    <div class="h2 fw-900">${item.Name}</div>
+                                    <p class="fw-900">${item.Description}</p>
+                                </div>
+                            </div>
+                        </div>`
+
+                $('#foodList').append(strHTML);
+
+                // 只輸出九筆
+                if (item.id >= 9) {
+                    break;
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

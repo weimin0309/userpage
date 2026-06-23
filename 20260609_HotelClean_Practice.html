@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅館資料清洗練習</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/20260602_profile.css">
+</head>
+
+<body>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        $(function () {
+            //ChatGPT 產生的測試資料
+            const hotel = [
+                {
+                    Name: "  星光大飯店  ",
+                    City: "台中市",
+                    Town: "西屯區",
+                    Tel: "04-2255-1234",
+                    RoomType: "雙人房",
+                    Price: 3200,
+                    Email: "service@starhotel.com.tw"
+                },
+                {
+                    Name: "城市旅居",
+                    City: "臺中市",
+                    Town: "",
+                    Tel: "04-2311-5678",
+                    RoomType: "  商務單人房 ",
+                    Price: "4500",
+                    Email: "info@citystay.com.tw"
+                },
+                {
+                    Name: "海灣精品旅館",
+                    City: "台中市",
+                    Town: null,
+                    Tel: null,
+                    RoomType: "家庭房",
+                    Price: 5200,
+                    Email: null
+                },
+                {
+                    Name: "  帝景商旅",
+                    City: "臺中市",
+                    Town: undefined,
+                    Tel: undefined,
+                    RoomType: "豪華套房",
+                    Price: "6800",
+                    Email: undefined
+                },
+                {
+                    Name: "綠園道飯店",
+                    City: "台中市",
+                    Town: "西區",
+                    Tel: "04-2302-8888",
+                    RoomType: "  雙人房",
+                    Price: "3900",
+                    Email: "booking@greenpark.com.tw"
+                },
+                {
+                    Name: "金典旅館",
+                    City: "臺中市",
+                    Town: "北區",
+                    Tel: null,
+                    RoomType: "三人房",
+                    Price: 4100,
+                    Email: "contact@goldenhotel.com.tw"
+                },
+                {
+                    Name: "悅來客棧",
+                    City: "台中市",
+                    Town: "",
+                    Tel: "04-2222-9999",
+                    RoomType: "標準客房",
+                    Price: "2800",
+                    Email: undefined
+                },
+                {
+                    Name: "皇家花園酒店",
+                    City: "臺中市",
+                    Town: "南屯區",
+                    Tel: "04-2380-7777",
+                    RoomType: "行政套房",
+                    Price: 7500,
+                    Email: "service@royalgarden.com.tw"
+                },
+                {
+                    Name: "  晨曦旅店",
+                    City: "台中市",
+                    Town: "東區",
+                    Tel: undefined,
+                    RoomType: " 單人房 ",
+                    Price: 2600,
+                    Email: null
+                },
+                {
+                    Name: "中央大旅社",
+                    City: "臺中市",
+                    Town: "中區",
+                    Tel: "04-2201-3333",
+                    RoomType: "雙床房",
+                    Price: "3600",
+                    Email: "hello@centralhotel.com.tw"
+                }
+            ];
+
+            //資料清洗
+            // const cleanText = (value, defaultValue) => {
+            //     const result = (value ?? "").trim();
+            //     return result === "" ? defaultValue : result;
+            // };
+
+            const cleanHotel = hotel.map(function(item, index){
+                // return {
+                //     id: index + 1,
+                //     Name: item.Name.trim(),
+                //     City: cleanText(item.City, "").replace('台', '臺'),
+                //     Town: cleanText(item.Town, "行政區未提供"),
+                //     Tel: cleanText(item.Tel, "未提供"),
+                //     RoomType: item.RoomType.trim(),
+                //     Price: Number(item.Price),
+                //     Email: cleanText(item.Email, "未提供")
+                // };
+                return {
+                    id: index + 1,
+                    Name: item.Name.trim(),
+                    City: item.City == "台中市" ? "臺中市" : item.City,
+                    Town: ((item.Town ?? "行政區未提供") == "" ? "行政區未提供" : (item.Town ?? "行政區未提供")).trim(),
+                    Tel: ((item.Tel ?? "未提供") == "" ? "未提供" : (item.Tel ?? "未提供")).trim(),
+                    RoomType: item.RoomType.trim(),
+                    Price: Number(item.Price),
+                    Email: ((item.Email ?? "未提供") == "" ? "未提供" : (item.Email ?? "未提供")).trim()
+                };
+            });
+
+            //輸出測試
+            console.log("清洗完成的資料：",  cleanHotel);
+        })
+    </script>
+</body>
+
+</html>

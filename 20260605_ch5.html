@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter.5</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/20260602_profile.css">
+    <link rel="stylesheet" href="css/20260605_bootstrap_practice.css">
+    <style>
+        /* body {
+            background-color: var(--color-bg);
+        }
+
+        .box01,
+        .table {
+            width: 100%;
+            color: var(--color-text);
+            background-color: var(--color-bg-secondary);
+            margin: auto;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 5px 5px var(--color-border);
+        } */
+
+        /* .section {
+            margin: 30px;
+        } */
+        @media screen and (max-width: 768px) {
+
+            .table-rwd thead,
+            .table-rwd caption {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                margin-top: 15px;
+                border: 2px solid var(--color-code-bg);
+                border-radius: 10px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+                overflow: hidden; /* 處理版面 overflow, 可分為 overflow-x 與 overflow-y */
+            }
+
+            /* 偽元素 */
+            .table-rwd tbody tr td::before {
+                content: attr(data-th) " : ";
+                font-size: 20px;
+                font-weight: bold;
+                color: var(--color-danger);
+                display: block;
+                float: left;
+                width: 30%;
+                text-align: right;
+                padding-right: 2em;
+            }
+
+            .table-rwd tbody tr td span {
+                display: block;
+                float: left;
+                width: 70%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container box01 table">
+        <div class="display-4 fw-900">1. 表格基本語法</div>
+        <div class="section">
+            <!-- table>thread>tr>th*5 -->
+            <!-- tbody>tr*4>th -->
+            <table class="table mt-3 table-bordered table-hover table-striped table-rwd">
+                <caption>test table</caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col">\</th>
+                        <th class="col">col1</th>
+                        <th class="col">col2</th>
+                        <th class="col">col3</th>
+                        <th class="col">col4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><span>row1</span></th>
+                        <td data-th="col1"><span>1-1</span></td>
+                        <td data-th="col2"><span>1-2</span></td>
+                        <td data-th="col3"><span>1-3</span></td>
+                        <td data-th="col4"><span>將來一體漢化，最好的暴力網頁課程今年對不起課堂機場些什麼他也套件應用如果你，走了不能級別記住還可以很有輸出國語圍繞，危險交通安全有的數量技巧看見，免費電影群眾身影程式對話公佈懂得印象電力下一頁證書痛苦點頭，兩人處理全身名單其中回到下列等待充分些什麼，資本。</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">row2</th>
+                        <td data-th="col1">2-1</td>
+                        <td data-th="col2">2-2</td>
+                        <td data-th="col3">2-3</td>
+                        <td data-th="col4">2-4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">row3</th>
+                        <td data-th="col1">3-1</td>
+                        <td data-th="col2">3-2</td>
+                        <td data-th="col3">3-3</td>
+                        <td data-th="col4">3-4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">row4</th>
+                        <td data-th="col1">4-1</td>
+                        <td data-th="col2">4-2</td>
+                        <td data-th="col3">4-3</td>
+                        <td data-th="col4">4-4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap practice</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/20260605_bootstrap_practice.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-chalkboard fa-xl"></i>Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i
+                                class="fa-regular fa-house"></i>首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-info"></i>關於我們</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"><i class="fa-solid fa-book"></i>
+                            課程介紹
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">前端 BootStrap</a></li>
+                            <li><a class="dropdown-item" href="#">後端 Laravel</a></li>
+                            <li><a class="dropdown-item" href="#">資料庫 PostgreSQL</a></li>
+                            <li><a class="dropdown-item" href="#">LLM Langchain</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">資料結構</a></li>
+                            <li><a class="dropdown-item" href="#">演算法</a></li>
+                            <li><a class="dropdown-item" href="#">人工智慧概論</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">線性代數</a></li>
+                            <li><a class="dropdown-item" href="#">統計學</a></li>
+                            <li><a class="dropdown-item" href="#">語言學</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled"><i class="fa-solid fa-triangle-exclamation"></i>施工中！</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container main-content">
+        <!--h1>Haha, world!</h1-->
+        <h1 class="page-title">從基礎到 AI 的程式設計學習平台</h1>
+
+        <div class="intro-section">
+            <p>歡迎來到程式設計與資訊科技學習平台。</p>
+
+            <p>
+                我們提供前端開發、後端系統、資料庫、人工智慧、
+                資料結構與演算法等完整課程內容，
+                協助學習者建立扎實的軟體工程基礎。
+            </p>
+
+            <p>
+                課程內容包含實作練習、專案開發與理論基礎，
+                適合學生、自學者以及希望轉職軟體工程師的學習者。
+            </p>
+
+            <p>
+                課程範例與技術文件可參考
+                <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/">
+                    Bootstrap 官方文件
+                </a>
+            </p>
+        </div>
+
+        <div class="note-section">
+            <div class="note">
+                <p>1. 開一個新的 html 練習</p>
+                <p>2. 前往 <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/">bootstrap 5.2.3</a>
+                </p>
+                <p>3. 把 css 和 js 另存到本地端</p>
+                <p>4. 把網頁上步驟 2 的標籤 link 和 script 依照說明貼上並依照老師的範例修改</p>
+            </div>
+        </div>
+
+        <div class="note-section">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card">
+                        <img src="/images/tavis-beck-gRr64-OCKy0-unsplash.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Bootstrap 網頁設計</h5>
+                            <p class="card-text">
+                                學習響應式網頁開發技巧，快速建立現代化網站介面，
+                                熟悉 Grid、Navbar、Card 與各種常用元件。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/images/naomi-august-YgvWaaKtBR8-unsplash.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Laravel 後端開發</h5>
+                            <p class="card-text">
+                                建立完整 Web 應用程式，
+                                學習 MVC 架構、路由設計、資料存取與 API 開發。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/images/tormius-0eAHNGWBKrM-unsplash.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">資料結構與演算法</h5>
+                            <p class="card-text">
+                                深入理解陣列、鏈結串列、樹、圖形與排序搜尋演算法，
+                                建立解題與效能分析能力。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="/images/karo-k-HoH869KdIm4-unsplash.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">人工智慧與機器學習</h5>
+                            <p class="card-text">
+                                認識機器學習基本概念，
+                                從資料處理到模型訓練，探索 AI 在實務中的應用方式。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link disabled" aria-current="page" href="#">© 2026 Programming Learning Platform</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled">Bootstrap Practice Project</a>
+            </li>
+        </ul>
+    </footer>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

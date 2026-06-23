@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timeline</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .imgbox {
+            height: 220px;
+        }
+
+        .bg-cover {
+            background-position: center center;
+            background-size: cover;
+        }
+        .timeline-section {
+            position: relative;
+        }
+        .timeline-section::before {
+            /* 位置 */
+            position: absolute;
+            content: "";
+            top: 5px;
+            bottom: 0;
+            left: 50%;
+            transform: translatex(-50%);
+            /* 樣式 */
+            width: 5px;
+            background-color: navy;
+        }
+        .timeline-section-pointer {
+            position: relative;
+        }
+        .timeline-section-pointer::before {
+            /* 位置 */
+            position: absolute;
+            content: "";
+            top: 0px;
+            bottom: 0;
+            left: 50%;
+            transform: translatex(-50%);
+            /* 樣式 */
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background-color: azure;
+            border: 3px solid navy;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline-section::before,
+            .timeline-section-pointer::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="display-2 text-center fw-900 text-primary my-4">公司沿革</div>
+        <div class="timeline-section">
+            <div class="row align-items-center flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/tavis-beck-gRr64-OCKy0-unsplash.jpg);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">1. 公司草創</div>
+                        <p>留在性格寶寶方向測試取得反覆寫作，思維報名，千萬工具，吸收。</p>
+                        <p>負責自己好多創業主任本文浙江輕易選單無比一句電話大多數，使。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center  flex-column flex-md-row flex-xl-row-reverse timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/tavis-beck-gRr64-OCKy0-unsplash.jpg);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">2. 初期發展</div>
+                        <p>留在性格寶寶方向測試取得反覆寫作，思維報名，千萬工具，吸收。</p>
+                        <p>負責自己好多創業主任本文浙江輕易選單無比一句電話大多數，使。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/tavis-beck-gRr64-OCKy0-unsplash.jpg);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">3. 業務擴張</div>
+                        <p>留在性格寶寶方向測試取得反覆寫作，思維報名，千萬工具，吸收。</p>
+                        <p>負責自己好多創業主任本文浙江輕易選單無比一句電話大多數，使。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center  flex-column flex-md-row flex-xl-row-reverse timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/tavis-beck-gRr64-OCKy0-unsplash.jpg);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">4. 海外獲獎</div>
+                        <p>留在性格寶寶方向測試取得反覆寫作，思維報名，千萬工具，吸收。</p>
+                        <p>負責自己好多創業主任本文浙江輕易選單無比一句電話大多數，使。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center  flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/tavis-beck-gRr64-OCKy0-unsplash.jpg);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">5. 未來展望</div>
+                        <p>留在性格寶寶方向測試取得反覆寫作，思維報名，千萬工具，吸收。</p>
+                        <p>負責自己好多創業主任本文浙江輕易選單無比一句電話大多數，使。</p>
+                    </div>
+                </div>
+            </div>
+        </div><!--timeline-section-->
+    </div><!--container-->
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+</body>
+
+</html>

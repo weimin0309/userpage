@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智慧演進史 - AI Evolution Timeline</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================
+           1. 全域樣式與科技感背景設定 (Global & Body Style)
+           ========================================== */
+        body {
+            /* 放射狀漸層 (Radial Gradient)：由中心點向外擴散，營造深邃太空感 */
+            /* circle at 50% 50%: 漸層中心位於正中央 */
+            /* #0f1026: 內圈科技藍紫；#04050f: 外圈極暗藍黑，形成深色視覺收縮效果 */
+            background: radial-gradient(circle at 50% 50%, #0f1026 0%, #04050f 100%);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            position: relative; /* 作為偽元素 background-grid 的定位參考基準點 */
+            overflow-x: hidden; /* 防止因動畫或位移產生水平捲軸 */
+            padding-bottom: 5rem;
+        }
+
+        /* 
+           2. 網格背景疊加 (Background Grid Pattern)
+           使用偽元素 ::before 建立獨立的網格裝飾層，避免干擾主 body 的樣式。
+        */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* 
+               利用雙重線性漸層 (linear-gradient) 交叉，重疊出網格線：
+               - 第一個漸層：每隔 1px 畫一條極淡藍色的水平線 (rgba(32, 38, 87, 0.15))，其餘透明
+               - 第二個漸層：每隔 1px 畫一條極淡藍色的垂直線 (90deg 方向)
+            */
+            background-image: 
+                linear-gradient(rgba(32, 38, 87, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(32, 38, 87, 0.15) 1px, transparent 1px);
+            /* background-size: 網格每一格的大小，此處設定為 40px * 40px */
+            background-size: 40px 40px;
+            z-index: -1;          /* 確保背景網格位於所有內容後方 */
+            pointer-events: none; /* 避免此層干擾任何滑鼠事件（如點擊、拖曳） */
+        }
+
+        /* ==========================================
+           3. 標題區塊樣式 (Header Typography)
+           ========================================== */
+        .title-container {
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        /* 科技霓虹漸層文字 (Text Gradient & Glow) */
+        .title-gradient {
+            font-family: 'Orbitron', sans-serif; /* 導入電子風/未來感等寬字型 */
+            /* 
+               利用背景色漸層填滿文字：
+               - background 宣告漸層色
+               - -webkit-background-clip: text 限制背景僅顯示在文字的字元範圍內
+               - -webkit-text-fill-color: transparent 將原文字顏色設為透明，露出下方的漸層背景
+            */
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* text-shadow: 文字外發光效果，搭配 rgba 半透明防範亮色過載 */
+            text-shadow: 0 0 30px rgba(0, 242, 254, 0.25);
+            font-weight: 900;
+            letter-spacing: 3px; /* 增加字距營造高級感 */
+        }
+
+        .subtitle-tech {
+            font-family: 'Orbitron', sans-serif;
+            color: #7075ab;
+            letter-spacing: 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase; /* 強制轉換為大寫 */
+        }
+
+        /* ==========================================
+           4. 圖片盒樣式 (Image Box & Effects)
+           ========================================== */
+        .imgbox {
+            height: 300px;
+            border-radius: 16px;
+            /* 細微的半透明邊框，能讓深色背景中的卡片輪廓立體化 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            /* 
+               transition 轉場動畫控制：
+               - cubic-bezier (貝氏曲線)：自定義速度曲線，此處為先快後慢的緩動效果，
+                 比一般 linear 或 ease 動態更具高級感與彈性。
+            */
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        /* 圖片下方漸層陰影遮罩，確保與背景能自然融合 */
+        .imgbox::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            /* 從透明漸變到 80% 暗底色，用以柔化圖片底部邊界 */
+            background: linear-gradient(to bottom, transparent 60%, rgba(4, 5, 15, 0.8));
+            pointer-events: none;
+        }
+
+        /* 圖片懸停特效 (Hover Effects) */
+        .imgbox:hover {
+            /* translateY: 向上浮動微移 8px 增加立體層次；scale: 微放大 1.02 倍 */
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 242, 254, 0.4);       /* 邊框轉為發光青藍色 */
+            box-shadow: 0 20px 45px rgba(0, 242, 254, 0.2); /* 外發光青藍色陰影 */
+        }
+
+        /* 圖片自適應填滿背景 */
+        .bg-cover {
+            background-position: center center; /* 圖片置中對齊 */
+            background-size: cover;             /* 圖片等比例縮放以填滿容器，超出的部分截斷 */
+        }
+
+        /* ==========================================
+           5. 內文資訊盒樣式 (Glassmorphism Text Box)
+           ========================================== */
+        .textbox {
+            /* 
+               毛玻璃效果 (Glassmorphism)：
+               - background 採用高透明度的深色底 (alpha: 0.65)
+               - backdrop-filter: blur(12px) 對卡片後方背景進行高斯模糊，創造磨砂玻璃質感。
+                 注意：-webkit- 屬性為 Safari 瀏覽器相容性寫法。
+            */
+            background: rgba(15, 18, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08); /* 模擬玻璃邊緣的微反光 */
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .textbox:hover {
+            transform: translateY(-8px);                        /* 向上浮動 */
+            border-color: rgba(155, 81, 224, 0.4);             /* 邊框轉為紫色微光 */
+            box-shadow: 0 20px 45px rgba(155, 81, 224, 0.25);  /* 外發光紫色陰影 */
+        }
+
+        .textbox .h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00f2fe; /* 科幻感亮青色 */
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.3); /* 文字微霓虹光暈 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .textbox p {
+            color: #94a3b8; /* 柔和灰藍色，防止純白字在暗色背景下過於刺眼 */
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            font-weight: 300; /* 偏細體，增添現代感空氣質感 */
+        }
+
+        .textbox p:last-child {
+            margin-bottom: 0; /* 移除最後一段的下外距，維持版面高度平衡 */
+        }
+
+        /* ==========================================
+           6. 時間軸結構與定位 (Timeline Layout & Connectors)
+           ========================================== */
+        .timeline-section {
+            position: relative; /* 作為中軸線 ::before 絕對定位的容器基準 */
+            padding: 2rem 0;
+        }
+
+        /* 
+           漸層中軸線 (Central Timeline Line)
+           使用偽元素 ::before 生成，並水平置中於整個 timeline-section。
+        */
+        .timeline-section::before {
+            position: absolute;
+            content: "";
+            top: 20px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%); /* 水平位移自身寬度的一半 (-50%) 達到精確水平置中 */
+            width: 4px;
+            /* 
+               線性漸層背景 (Linear Gradient)：
+               從青藍色 (#00f2fe) 漸變到紫色 (#9b51e0) 再回到青藍色，形成科技脈動的流動感
+            */
+            background: linear-gradient(to bottom, #00f2fe 0%, #9b51e0 50%, #00f2fe 100%);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); /* 中軸線發光特效 */
+        }
+
+        /* 行容器 (Row Wrap) */
+        .timeline-section-pointer {
+            position: relative; /* 作為指針節點 ::before 絕對定位的容器基準 */
+            margin-bottom: 4rem;
+        }
+
+        /* 
+           時間軸圓形節點指針 (Timeline Nodes)
+           利用 ::before 絕對定位於中軸線與 row 的垂直交點上。
+        */
+        .timeline-section-pointer::before {
+            position: absolute;
+            content: "";
+            top: 50%; /* 置中定位於 row 的垂直中央 50% */
+            left: 50%; /* 置中定位於 row 的水平中央 50% */
+            /* 
+               同時進行水平與垂直的自身尺寸位移 (-50%)，
+               保證不管圓圈大小如何調整，圓心都絕對對齊中軸線與行中心。
+            */
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%; /* 設定為 50% 可將正方形切為完美正圓形 */
+            background-color: #04050f; /* 圓圈內部填深底色，防止中軸線穿透 */
+            border: 4px solid #00f2fe; /* 青色霓虹外框 */
+            /* 雙層陰影：外發光 (0 0 15px) ＋ 內發光 (inset 0 0 5px) */
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.8), inset 0 0 5px rgba(0, 242, 254, 0.5);
+            z-index: 10; /* 確保圓圈蓋在中軸線 (z-index 隱式值或 ::before) 之上 */
+            /* 懸浮過渡動態 */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 整個 Row 懸停時，圓圈節點的連帶動畫 */
+        .timeline-section-pointer:hover::before {
+            background-color: #00f2fe;                      /* 填滿青藍色 */
+            transform: translate(-50%, -50%) scale(1.35);   /* 圓圈放大 1.35 倍 */
+            box-shadow: 0 0 25px rgba(0, 242, 254, 1);      /* 擴大發光範圍 */
+            border-color: #ffffff;                          /* 圓邊框轉為白色 */
+        }
+
+        /* ==========================================
+           7. 響應式斷點設計 (Responsive Media Queries)
+           ========================================== */
+        /* 當螢幕寬度在 768px (含) 以下時套用此段樣式（通常是平板直向與手機） */
+        @media screen and (max-width: 768px) {
+            /* 隱藏中軸線與圓圈指針，避免在單欄式行動版排版下穿插或重疊文字 */
+            .timeline-section::before,
+            .timeline-section-pointer::before {
+                display: none;
+            }
+            .timeline-section-pointer {
+                margin-bottom: 2.5rem; /* 行距縮小，使行動端閱讀更緊湊 */
+            }
+            .imgbox {
+                height: 220px; /* 行動端縮小圖片高度，避免滑動過長 */
+            }
+            .textbox {
+                padding: 1.5rem; /* 縮小內距，最大化行動端文字顯示區域 */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title-container text-center">
+            <div class="subtitle-tech mb-2">The Chronicles of AI</div>
+            <div class="display-3 title-gradient mb-4">人工智慧演進史</div>
+        </div>
+
+        <div class="timeline-section">
+            <!-- 節點 1 -->
+            <div class="row align-items-center flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/ai_turing_birth.png);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">1950s - 圖靈測試與誕生</div>
+                        <p>1950年，電腦科學之父艾倫·圖靈發表了劃時代的論文《計算機器與智能》，提出著名的「圖靈測試」，首次系統性地探討了「機器能否思考」這一終極哲學命題。</p>
+                        <p>1956年，達特茅斯會議召開，約翰·麥卡錫、馬文·明斯基等學者正式提出「Artificial Intelligence（人工智慧）」一詞，標誌著這門新興學門的誕生，開啟了人類探索機器智慧的偉大征途。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 節點 2 -->
+            <div class="row align-items-center flex-column flex-md-row flex-xl-row-reverse timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/ai_deep_blue.png);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">1997 - 深藍傳奇</div>
+                        <p>經歷了數十年的樂觀預測與兩次寒冬後，人工智慧在1997年迎來了歷史性的高光時刻。IBM研發的超級電腦「深藍（Deep Blue）」擊敗了當時的世界西洋棋大師加里·卡斯帕羅夫。</p>
+                        <p>這場世紀對決展示了強大硬體計算與啟發式搜索算法的驚人威力，向全世界宣告了機器運算實力在特定規則領域下已足以超越人類頂尖智慧。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 節點 3 -->
+            <div class="row align-items-center flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/ai_deep_learning.png);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">2012 - 深度學習的黎明</div>
+                        <p>隨著網際網路大數據的積累與GPU並行計算的成熟，人工智慧正式進入神經網路主導的時代。2012年，Alex Krizhevsky憑藉AlexNet在ImageNet圖像識別大賽中取得壓倒性勝利。</p>
+                        <p>自此，深度學習（Deep Learning）席捲全球，電腦視覺、語音識別取得跨越式進步，AI不再只是冰冷的規則引擎，而是能從實踐中自我淬煉的感知網絡。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 節點 4 -->
+            <div class="row align-items-center flex-column flex-md-row flex-xl-row-reverse timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/ai_transformer_generative.png);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">2017-2022 - 生成式革命</div>
+                        <p>2017年Google提出Transformer架構，打破了序列處理的限制，為超大規模參數模型奠定了基礎。2022年，OpenAI推出ChatGPT，引爆了席捲全球的生成式AI革命。</p>
+                        <p>人工智慧不僅能識別與分類，更能進行高質量的自然語言寫作、藝術創作、程式編寫，從此走入千家萬戶，成為人類不可或缺的智慧協作夥伴。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 節點 5 -->
+            <div class="row align-items-center flex-column flex-md-row timeline-section-pointer">
+                <div class="col-md-6 mt-3">
+                    <div class="imgbox bg-cover"
+                        style="background-image: url(images/ai_agi_future.png);"></div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="textbox">
+                        <div class="h2">未來展望 - 通用人工智慧 (AGI)</div>
+                        <p>邁向未來的道路上，人類正致力於發展「通用人工智慧（AGI）」，即在幾乎所有具有經濟價值的任務上，都能展現出等同或超越人類水平的自主學習與邏輯推理能力。</p>
+                        <p>未來的AI將更深入融合具身智能、多模態感知與量子計算，在協助人類探索星辰大海、攻克絕症的同時，也引導我們深思人機共生的新型態倫理與社會結構。</p>
+                    </div>
+                </div>
+            </div>
+        </div><!--timeline-section-->
+    </div><!--container-->
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+</body>
+
+</html>

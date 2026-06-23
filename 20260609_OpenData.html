@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenData - 農村地方美食小吃特色料理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/20260602_profile.css">
+</head>
+<body>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        //主程式
+        $(function(){
+            console.log("Hello Wryyyyold!!!");
+
+            //variables
+            const username = '阿明';
+            console.log(username + ', 你媽叫你早點回去吃飯');
+
+            // let nickname = '阿榮';
+            // console.log('阿母啊，我' + nickname + '啦！');
+
+            // let girlname = '張君雅';
+            // console.log(girlname + '小妹妹，你家的泡麵已經煮好了，你阿罵限你三分鐘以內回去')
+
+            const blackList = [
+                {"Name" : "comebuy", "City" : "臺北市", "Tel" : "02-2244-2244", "Town" : "中正區", "Email" : "aaaa@gmail.com"},
+                {"Name" : "得正", "City" : "臺中市", "Tel" : "04-2244-2244", "Town" : "  西屯區", "Email" : "bbbb@gmail.com"},
+                {"Name" : "迷客夏", "City" : "臺南市", "Tel" : "06-336-2244", "Town" : "", "Email" : "cccc@gmail.com"},
+                {"Name" : "紅茶巴士", "City" : "中國", "Tel" : null, "Town" : undefined, "Email" : ""}
+            ];
+
+            blackList.forEach(function(item, index){
+                console.log(`${index + 1}. ${item.Name}是從${item.City}發跡的飲料店`);
+
+                if (item.City == "臺北市"){console.log("這種飲料店還沒倒，可以在台北開的遍地都是，台北人的品味真的很奇怪");}
+            });
+
+            //map 重新整理資料
+            const names = blackList.map(function(item){return item.Name});
+            console.log("原始資料：", blackList);
+            console.log("map 轉換過後的資料：", names);
+
+            //map 重構資料欄位
+            const convertedDataSet = blackList.map(function(item, index){
+                return {
+                    shopID: index + 1,
+                    shopName: item.Name,
+                    shopCity: item.City,
+                    shopTel: item.Tel
+                }
+            });
+
+            console.log("map 重構後的資料：", convertedDataSet);
+
+            //資料清洗
+            //??：判斷是否為 null / undefined
+            const cleanList = blackList.map(function(item){
+                return {
+                    Name: item.Name,
+                    City: item.City,
+                    Tel: (item.Tel ?? "查無號碼"),
+                    Town: (item.Town ?? "無行政區").trim(),
+                    Mail: (item.Email ?? "未提供") == "" ? "未提供" : (item.Email ?? "未提供")
+                }
+            })
+
+            cleanList.forEach(function(item){
+                console.log(item.Name, "'" + item.Town + "'", item.Town.length);
+            });
+            
+            console.log("原始資料：", blackList);
+            console.log("清洗後的資料：", cleanList);
+        });
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: "js/HotelList.json",
+        //     dataType: "json",
+        //     async: false,
+        //     success: function(data) {
+        //         alldata = data.Hotels;
+        //         console.log(alldata);
+        //         // sortData();
+        //     },
+        //     error: function() {
+        //         alert("Getting Data doesn't success.");
+        //     }
+        // });
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅館列表</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/basic_tamplate.css">
+</head>
+
+<body>
+    <div class="container box01 table">
+        <div class="section">
+            <table class="table mt-3 table-bordered table-hover table-striped table-rwd erp-table">
+                <caption>旅館列表</caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col">編號</th>
+                        <th class="col">名稱</th>
+                        <th class="col">縣市名稱</th>
+                        <th class="col">鄉鎮區名稱</th>
+                        <th class="col">電話</th>
+                        <th class="col">房型</th>
+                        <th class="col">價格</th>
+                        <th class="col">E-mail</th>
+                    </tr>
+                </thead>
+
+                <tbody id="hotelList">
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+    <script>
+        $(function () {
+            //ChatGPT 產生的測試資料
+            const hotel = [
+                {
+                    Name: "  星光大飯店  ",
+                    City: "台中市",
+                    Town: "西屯區",
+                    Tel: "04-2255-1234",
+                    RoomType: "雙人房",
+                    Price: 3200,
+                    Email: "service@starhotel.com.tw"
+                },
+                {
+                    Name: "城市旅居",
+                    City: "臺中市",
+                    Town: "",
+                    Tel: "04-2311-5678",
+                    RoomType: "  商務單人房 ",
+                    Price: "4500",
+                    Email: "info@citystay.com.tw"
+                },
+                {
+                    Name: "海灣精品旅館",
+                    City: "台中市",
+                    Town: null,
+                    Tel: null,
+                    RoomType: "家庭房",
+                    Price: 5200,
+                    Email: null
+                },
+                {
+                    Name: "  帝景商旅",
+                    City: "臺中市",
+                    Town: undefined,
+                    Tel: undefined,
+                    RoomType: "豪華套房",
+                    Price: "6800",
+                    Email: undefined
+                },
+                {
+                    Name: "綠園道飯店",
+                    City: "台中市",
+                    Town: "西區",
+                    Tel: "04-2302-8888",
+                    RoomType: "  雙人房",
+                    Price: "3900",
+                    Email: "booking@greenpark.com.tw"
+                },
+                {
+                    Name: "金典旅館",
+                    City: "臺中市",
+                    Town: "北區",
+                    Tel: null,
+                    RoomType: "三人房",
+                    Price: 4100,
+                    Email: "contact@goldenhotel.com.tw"
+                },
+                {
+                    Name: "悅來客棧",
+                    City: "台中市",
+                    Town: "",
+                    Tel: "04-2222-9999",
+                    RoomType: "標準客房",
+                    Price: "2800",
+                    Email: undefined
+                },
+                {
+                    Name: "皇家花園酒店",
+                    City: "臺中市",
+                    Town: "南屯區",
+                    Tel: "04-2380-7777",
+                    RoomType: "行政套房",
+                    Price: 7500,
+                    Email: "service@royalgarden.com.tw"
+                },
+                {
+                    Name: "  晨曦旅店",
+                    City: "台中市",
+                    Town: "東區",
+                    Tel: undefined,
+                    RoomType: " 單人房 ",
+                    Price: 2600,
+                    Email: null
+                },
+                {
+                    Name: "中央大旅社",
+                    City: "臺中市",
+                    Town: "中區",
+                    Tel: "04-2201-3333",
+                    RoomType: "雙床房",
+                    Price: "3600",
+                    Email: "hello@centralhotel.com.tw"
+                },
+                {
+                    Name: "  豪泰商旅  ",
+                    City: "台北市",
+                    Town: "中正區",
+                    Tel: "02-2311-2233",
+                    RoomType: "雙人房",
+                    Price: 2800,
+                    Email: "service@haotai.com.tw"
+                },
+                {
+                    Name: "悠遊旅店",
+                    City: "臺北市",
+                    Town: "",
+                    Tel: "02-2555-6677",
+                    RoomType: "  商務單人房 ",
+                    Price: "3200",
+                    Email: "info@youyou.com.tw"
+                },
+                {
+                    Name: "海景大飯店",
+                    City: "高雄市",
+                    Town: null,
+                    Tel: null,
+                    RoomType: "家庭房",
+                    Price: 4800,
+                    Email: null
+                },
+                {
+                    Name: "  港灣旅館",
+                    City: "高雄市",
+                    Town: undefined,
+                    Tel: undefined,
+                    RoomType: "豪華套房",
+                    Price: "6500",
+                    Email: undefined
+                },
+                {
+                    Name: "晨光商務旅店",
+                    City: "台南市",
+                    Town: "東區",
+                    Tel: "06-234-5678",
+                    RoomType: "  雙人房",
+                    Price: "3000",
+                    Email: "booking@morning.com.tw"
+                },
+                {
+                    Name: "金鑽飯店",
+                    City: "臺南市",
+                    Town: "中西區",
+                    Tel: null,
+                    RoomType: "三人房",
+                    Price: 4200,
+                    Email: "contact@golden.com.tw"
+                },
+                {
+                    Name: "樂活旅居",
+                    City: "新北市",
+                    Town: "",
+                    Tel: "02-8951-2345",
+                    RoomType: "標準客房",
+                    Price: "2600",
+                    Email: undefined
+                },
+                {
+                    Name: "皇家精品酒店",
+                    City: "臺北市",
+                    Town: "信義區",
+                    Tel: "02-8787-9999",
+                    RoomType: "行政套房",
+                    Price: 7200,
+                    Email: "service@royalhotel.com.tw"
+                },
+                {
+                    Name: "  微風旅店",
+                    City: "桃園市",
+                    Town: "中壢區",
+                    Tel: undefined,
+                    RoomType: " 單人房 ",
+                    Price: 2200,
+                    Email: null
+                },
+                {
+                    Name: "中央旅社",
+                    City: "新竹市",
+                    Town: "東區",
+                    Tel: "03-525-1234",
+                    RoomType: "雙床房",
+                    Price: "3400",
+                    Email: "hello@central.com.tw"
+                },
+                {
+                    Name: "  星辰飯店",
+                    City: "基隆市",
+                    Town: "仁愛區",
+                    Tel: "02-2422-8888",
+                    RoomType: "雙人房",
+                    Price: 3100,
+                    Email: "service@starry.com.tw"
+                },
+                {
+                    Name: "山水旅館",
+                    City: "宜蘭縣",
+                    Town: "",
+                    Tel: null,
+                    RoomType: "  家庭房 ",
+                    Price: "3900",
+                    Email: "info@mountainwater.com.tw"
+                },
+                {
+                    Name: "海洋之星大飯店",
+                    City: "花蓮縣",
+                    Town: null,
+                    Tel: "03-835-6789",
+                    RoomType: "海景房",
+                    Price: 5600,
+                    Email: undefined
+                },
+                {
+                    Name: "  東海商旅",
+                    City: "臺東縣",
+                    Town: undefined,
+                    Tel: undefined,
+                    RoomType: "豪華雙人房",
+                    Price: "4300",
+                    Email: null
+                },
+                {
+                    Name: "城市假期旅店",
+                    City: "嘉義市",
+                    Town: "西區",
+                    Tel: "05-225-8899",
+                    RoomType: " 商務客房 ",
+                    Price: "3500",
+                    Email: "booking@cityholiday.com.tw"
+                },
+                {
+                    Name: "鳳凰酒店",
+                    City: "屏東縣",
+                    Town: "屏東市",
+                    Tel: null,
+                    RoomType: "套房",
+                    Price: 5000,
+                    Email: "service@phoenix.com.tw"
+                },
+                {
+                    Name: "  綠野仙蹤旅館 ",
+                    City: "苗栗縣",
+                    Town: "",
+                    Tel: "037-321-888",
+                    RoomType: "標準雙人房",
+                    Price: "2700",
+                    Email: undefined
+                },
+                {
+                    Name: "幸福時光飯店",
+                    City: "彰化縣",
+                    Town: "彰化市",
+                    Tel: "04-722-5678",
+                    RoomType: "四人房",
+                    Price: 4600,
+                    Email: "contact@happytime.com.tw"
+                },
+                {
+                    Name: "  月光旅居",
+                    City: "雲林縣",
+                    Town: null,
+                    Tel: undefined,
+                    RoomType: " 單人房 ",
+                    Price: "2100",
+                    Email: null
+                },
+                {
+                    Name: "蔚藍海岸大飯店",
+                    City: "澎湖縣",
+                    Town: "馬公市",
+                    Tel: "06-927-1234",
+                    RoomType: "海景套房",
+                    Price: 6800,
+                    Email: "service@bluecoast.com.tw"
+                }
+            ];
+
+            const cleanText = (value, defaultValue) => {
+                const result = (value ?? "").trim();
+                return result === "" ? defaultValue : result;
+            };
+
+            const cleanHotel = hotel.map(function (item, index) {
+                return {
+                    id: index + 1,
+                    Name: item.Name.trim(),
+                    City: cleanText(item.City, "").replace('台', '臺'),
+                    Town: cleanText(item.Town, "行政區未提供"),
+                    Tel: cleanText(item.Tel, "未提供"),
+                    RoomType: item.RoomType.trim(),
+                    Price: Number(item.Price),
+                    Email: cleanText(item.Email, "未提供")
+                };
+            });
+
+            cleanHotel.forEach(function (item) {
+                let strHTML = `<tr>
+                        <th scope="row" class="product-id">${item.id}</th>
+                        <td data-th="名稱"><span>${item.Name}</span></td>
+                        <td data-th="縣市名稱"><span>${item.City}</span></td>
+                        <td data-th="鄉鎮區名稱"><span>${item.Town}</span></td>
+                        <td data-th="電話"><span>${item.Tel}</span></td>
+                        <td data-th="房型"><span>${item.RoomType}</span></td>
+                        <td data-th="價格"><span class="price">${item.Price}</span></td>
+                        <td data-th="E-mail"><span>${item.Email}</span></td>
+                    </tr>`;
+                $("#hotelList").append(strHTML);
+            });
+        })
+    </script>
+</body>
+
+</html>

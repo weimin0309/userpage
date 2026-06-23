@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人首頁</title>
+    <link rel="stylesheet" href="css/20260602_profile.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+        }
+
+        /* s01: 自我介紹 */
+        .s01 {
+            background-color: var(--color-bg-secondary);
+            height: 100vh;
+            position: relative;
+        }
+
+        .s01 .box01 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--color-surface);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .s01 .box02 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--color-surface);
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .s01 .box03 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--color-surface);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            ;
+        }
+
+        .s01 .box04 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--color-surface);
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .s01 .userImg {
+            background-color: var(--color-primary);
+            background-image: url(images/alex-knight-2EJCSULRwC8-unsplash.jpg);
+            background-position: center;
+            background-size: cover;
+
+            position: absolute;
+            top: 100px;
+            bottom: 100px;
+            left: 100px;
+            right: 100px;
+
+            border-radius: var(--radius-lg);
+            box-shadow: 2px 2px 2px 2px var(--shadow-lg);
+        }
+
+        .userText {
+            position: absolute;
+            top: 55%;
+            left: 30%;
+            right: 30%;
+        }
+
+        /* s02: 作品集 */
+        .s02 {
+            padding: 80px 10%;
+            background-color: var(--color-bg-secondary);
+            text-align: center;
+        }
+
+        .s02 h2 {
+            font-size: 36px;
+        }
+
+        .s02 .card {
+            display: inline-block;
+            margin: 15px;
+
+            width: 240px;
+            background-color: var(--color-surface);
+            padding: 20px;
+            text-align: left;
+            border-radius: 12px;
+        }
+
+        .s02 .card h3 {
+            margin-top: 0;
+            color: var(--color-text);
+        }
+
+        .s02 .card p {
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+
+        .s02 .card a {
+            background-color: var(--color-secondary);
+            line-height: 1.6;
+            color: var(--color-text);
+
+            display: inline-block;
+            text-align: center;
+
+            width: 160px;
+            height: 56px;
+
+            margin-top: 20px;
+
+            text-decoration: none;
+
+            /* color: var(--color_bg); */
+
+            font-size: 20px;
+            font-weight: bold;
+
+            line-height: 56px;
+
+            border-radius: 999px;
+
+            box-shadow: 0 8px 20px rgba(47, 93, 140, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+    <section class="s01">
+        <div class="box01"></div>
+        <div class="box02"></div>
+        <div class="box03"></div>
+        <div class="box04"></div>
+        <div class="userImg"></div>
+        <div class="userText">
+            <h1>42號混凝土</h1>
+            <hr>
+            <h2>專長：C/C++</h2>
+            <h2>興趣：吃飯睡覺打東東</h2>
+            <p>不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。 －－Rick Astley</p>
+        </div>
+    </section>
+
+    <section class="s02">
+        <h2>我ㄉ作品</h2>
+
+        <!-- 作品01 -->
+        <div class="card">
+            <h3>切版練習</h3>
+            <p>使用 HTML、CSS 練習切版（版面控制）。</p>
+            <a href="/20260528_practice.html" target="_blank">查看作品</a>
+        </div>
+
+        <!-- 作品02 -->
+        <div class="card">
+            <h3>一個網站</h3>
+            <p>使用 HTML、CSS、JavaScript 製作展示頁面。</p>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">查看作品</a>
+        </div>
+
+        <!-- 作品03 -->
+        <div class="card">
+            <h3>第二個網站</h3>
+            <p>使用 HTML、CSS、JavaScript 製作展示頁面。</p>
+            <a href="#">查看作品</a>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>切版練習</title>
+    <link rel="stylesheet" href="css/20260528_practice.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        /* css */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color_sub);
+            color: var(--color4);
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                sans-serif;
+            line-height: 1.8;
+
+            font-family: var(--font_context);
+            
+        }
+
+        /* 外層容器 */
+        .wrapper {
+            width: 1024px;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Banner 圖片 */
+        .imgbox {
+            width: auto;
+            height: 260px;
+            border-radius: 16px 16px 0 0;
+            overflow: hidden;
+
+            background-color: var(--color_main);
+
+            /* 背景圖片設定 */
+            background-image:
+                linear-gradient(var(--color_banner_mask),
+                    var(--color_banner_mask)),
+                url(images/istockphoto-2254401010-1024x1024.jpg);
+
+            background-position: center center;
+            background-size: cover;
+
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 導覽列 */
+        nav {
+            background-color: var(--color_bg);
+            text-align: center;
+            padding: 16px;
+            margin-top: 0;
+            margin-bottom: 8px;
+
+            border-radius: 0 0 16px 16px;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        nav ul {
+            display: inline-block;
+        }
+
+        nav ul li {
+            float: left;
+            list-style-type: none;
+        }
+
+        /* 導覽按鈕 */
+        nav ul li a {
+            text-decoration: none;
+            display: block;
+
+            background-color: transparent;
+            color: var(--color_main);
+
+            margin-right: 12px;
+
+            padding-top: 12px;
+            padding-bottom: 12px;
+            padding-left: 22px;
+            padding-right: 22px;
+
+            border-radius: 999px;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        /* hover */
+        nav ul li a:hover {
+            background-color: var(--color_main);
+            color: var(--color_bg);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 16px rgba(47, 93, 140, 0.25);
+        }
+
+        /* 內容區 */
+        .content {
+            background-color: var(--color_bg);
+
+            text-align: center;
+
+            padding-top: 50px;
+            padding-bottom: 50px;
+            padding-left: 60px;
+            padding-right: 60px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        /* 標題 */
+        .content h1 {
+            color: var(--color_main);
+
+            font-size: 52px;
+            font-weight: 800;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 30px;
+        }
+
+        /* 內文 */
+        .content p {
+            text-align: left;
+
+            font-size: 20px;
+            color: var(--color4);
+
+            margin-bottom: 24px;
+
+            line-height: 2;
+        }
+
+        /* 按鈕 */
+        .content a#about_more {
+            display: inline-block;
+
+            background: linear-gradient(135deg,
+                    var(--color_main),
+                    #6FB3B8);
+
+            width: 160px;
+            height: 56px;
+
+            margin-top: 20px;
+
+            text-decoration: none;
+
+            color: var(--color_bg);
+
+            font-size: 20px;
+            font-weight: bold;
+
+            line-height: 56px;
+
+            border-radius: 999px;
+
+            box-shadow: 0 8px 20px rgba(47, 93, 140, 0.25);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
+        }
+
+        /* 按鈕 hover */
+        .content a#about_more:hover {
+            transform: translateY(-3px);
+
+            box-shadow: 0 12px 24px rgba(47, 93, 140, 0.35);
+
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color_main);
+
+            text-align: center;
+
+            padding-top: 18px;
+            padding-bottom: 18px;
+
+            margin-top: 12px;
+
+            border-radius: 14px;
+
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .footer p {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color_sub);
+            letter-spacing: 1px;
+        }
+
+        /* RWD */
+        @media screen and (max-width: 1280px) and (min-width: 1025px) {/* screen width between 1280px to 1024px */
+            .imgbox {
+                background-image: 
+                    linear-gradient(var(--color_banner_mask),
+                    var(--color_banner_mask)),
+                    url(images/marco-bicca-TYyUACwwWRA-unsplash.jpg); /* airforce fighter */
+            }
+        }
+        @media screen and (max-width: 1024px) { /* screen width <= 1024px */
+            .wrapper {
+                width: 96%;
+            }
+            .imgbox {
+                width: 100%;
+                /* background-image: original */
+            }
+
+            nav ul {
+                display: block;
+                padding-left: 10px;
+                margin: 0;
+            }
+
+            nav ul li {
+                float: none;
+                margin-bottom: 10px;
+            }
+
+            nav ul li a {
+                background-color: var(--color_main);
+                color: var(--color_sub);
+            }
+            nav ul li a i.fa-solid {
+                color: var(--color_sub);
+            }
+            .content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .content p {
+                font-size: 24px;
+                line-height: 1.4;
+                text-align: left;
+            }
+        }
+        @media screen and (max-width: 680px) { /* screen width <= 680px */
+            .imgbox {
+                background-image: 
+                    linear-gradient(var(--color_banner_mask),
+                    var(--color_banner_mask)),
+                    url(images/manja-vitolic-gKXKBY-C-Dk-unsplash.jpg); /* cat */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="banner">
+            <div class="imgbox">
+                <!-- <img src="https://fakeimg.pl/1024x220/576/?text=Logo" alt=""> -->
+            </div>
+
+            <!-- nav>ul>li*5>a -->
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-house btn-icon-color"></i>&nbsp;手<i class="fa-regular fa-hand-peace"></i></a></li>
+                    <li><a href="#"><i class="fa-solid fa-newspaper btn-icon-color"></i>&nbsp;最新消息</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shop btn-icon-color"></i>&nbsp;合作店家</a></li>
+                    <li><a href="#"><i class="fa-solid fa-circle-info btn-icon-color"></i>&nbsp;關於我們</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope btn-icon-color"></i>&nbsp;聯絡我們</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content">
+            <h1><i class="fa-solid fa-handshake fa-xl"></i>&nbsp;緩關臨&nbsp;<i class="fa-solid fa-handshake fa-xl"></i></h1>
+            <p class="fw-200">應該低價聽到搜尋引擎兒童，快車麻煩滿意面議毫無註明設施因為宅宅衝突不需要，位置用戶經營，比如飛機點此每個連結民族禮品之中回去事業所以高雄開展平均果然，玻璃這一。</p>
+            <p class="fw-200">好多技術外觀區域地區不夠聲音結果陷入先後存款喜愛廣播，安裝大學生就會相關圖片半年引用監控不承擔嘉義，呼吸私服花園提出了願意輕易說道我家是他億元效率轉貼，各類公里但我來了工商主任，國家不得放在進來硬盤又有比較友情連結作品，機械群眾不滿你看今。
+            </p>
+            <p class="fw-200">密碼斗內技術確定，呵呵些什麼圍繞風情想要女性所在地積分，簡體日報判斷傳奇認證希望加速，驅動睡覺傷害，較高十年剛剛打開連續，批評基本上教材我在堅決浙江針對不到，爆炸什麼事原創共享版。</p>
+
+            <a href="#" id="about_more">了解更多</a>
+            <!-- <a href="#" id="about_more2">了解更多2</a> -->
+        </div>
+
+        <div class="footer">
+            <p>PowerBy 2026.05 本網頁為上課練習作品，採CC授權，誰愛用誰用</p>
+        </div>
+    </div>
+</body>
+
+</html>

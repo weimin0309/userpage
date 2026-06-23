@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ch.6 Bootstrap 欄與列（切版）</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/basic_tamplate.css">
+    <style>
+        .box01 {
+            height: 150px;
+            margin-top: 15px;
+        }
+
+        .box02 {
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="display-3 fw-900 text-primary">1. 基本排版</div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="box01 bg-info"></div>
+            </div>
+            <div class="col-6">
+                <div class="box01 bg-info"></div>
+            </div>
+            <div class="col-6">
+                <div class="box01 bg-info"></div>
+            </div>
+            <div class="col-6">
+                <div class="box01 bg-info"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+            <div class="col-4">
+                <div class="box01 bg-success"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <a href="https://bootstrap5.hexschool.com/docs/5.0/layout/breakpoints/">斷點參考 - 六角學院</a>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+                <div class="box01 bg-secondary"></div>
+            </div>
+        </div>
+
+        <div class="display-3 fw-900 text-primary">2. offset（推格子）</div>
+        <!--基本操作-->
+        <div class="row">
+            <div class="col-6 offset-0">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-3">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-6">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-9">
+                <div class="box01 bg-warning"></div>
+            </div>
+        </div>
+
+        <!--加上斷點-->
+        <div class="row">
+            <div class="col-6 offset-md-0">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-md-3">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-md-6">
+                <div class="box01 bg-warning"></div>
+            </div>
+            <div class="col-6 offset-md-9">
+                <div class="box01 bg-warning"></div>
+            </div>
+        </div>
+
+        <div class="display-3 fw-900 text-primary">3. Gutter</div>
+        <div class="row gy-2 gx-5"> <!--寫在 row，可以用 g-[0-5], gx-[0-5], gy-[0-5]-->
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+            <div class="col-3">
+                <div class="box02 bg-danger"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.js"></script>
+</body>
+
+</html>

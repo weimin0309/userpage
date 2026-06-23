@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bootstrap flex practice</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .box01 {
+            height: 150px;
+            text-align: center;
+            line-height: 150px;
+            font-size: 36px;
+            font-weight: 900;
+        }
+        .box02 {
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 24px;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="display-2 fw-900">1. flex-row</div>
+        <div class="row">
+            <div class="col-3">
+                <div class="box01 bg-success">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">2. flex-row-reverse</div>
+        <div class="row flex-row-reverse">
+            <div class="col-3">
+                <div class="box01 bg-success">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">3. flex-column</div>
+        <div class="row flex-column"> <!--也可以加斷點-->
+            <div class="col-3">
+                <div class="box01 bg-success">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+        <div>memo: lg 以上使用一般樣式，lg 以下使用 column 樣式</div>
+        <div class="row flex-lg-row flex-column">
+            <div class="col-3">
+                <div class="box01 bg-success">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">4. flex-column-reverse</div>
+        <div class="row flex-column-reverse"> <!--也可以加斷點-->
+            <div class="col-3">
+                <div class="box01 bg-success">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">5. justify-content-start</div>
+        <div class="row justify-content-start"> <!--memo 也可以加斷點：justify-content-[斷點]-[justify樣式]-->
+            <div class="col-3">
+                <div class="box01 bg-warning">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">03</div>
+            </div>
+        </div>
+
+        <div class="display-2 fw-900">6. justify-content-center</div>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="box01 bg-warning">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">03</div>
+            </div>
+        </div>
+
+        <div class="display-2 fw-900">7. justify-content-end</div>
+        <div class="row justify-content-end">
+            <div class="col-3">
+                <div class="box01 bg-warning">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">03</div>
+            </div>
+        </div>
+
+        <div class="display-2 fw-900">8. justify-content-around</div>
+        <div class="row justify-content-around">
+            <div class="col-3">
+                <div class="box01 bg-warning">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">03</div>
+            </div>
+        </div>
+
+        <div class="display-2 fw-900">9. justify-content-between</div>
+        <div class="row justify-content-between">
+            <div class="col-3">
+                <div class="box01 bg-warning">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-warning">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">10. align-items/self</div>
+        <div class="row flex-column align-items-center"> <!--memo: align-items-[斷點]-[start/center/end]-->
+            <div class="col-3 align-self-start"> <!--memo: align-self-[斷點]-[start/center/end]-->
+                <div class="box01 bg-primary">01</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-primary">02</div>
+            </div>
+            <div class="col-3">
+                <div class="box01 bg-primary">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">11. order</div>
+        <div class="row flex-row">
+            <div class="col-2 order-0 order-lg-5">
+                <div class="box02 bg-primary">01-5</div>
+            </div>
+            <div class="col-2 order-1 order-lg-2">
+                <div class="box02 bg-primary">02-2</div>
+            </div>
+            <div class="col-2 order-2 order-lg-3">
+                <div class="box02 bg-primary">03-3</div>
+            </div>
+            <div class="col-2 order-3 order-lg-4">
+                <div class="box02 bg-primary">04-4</div>
+            </div>
+            <div class="col-2 order-4 order-lg-0">
+                <div class="box02 bg-primary">05-0</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">12. 左右推移：ms-auto/me-auto</div>
+        <div><a href="https://bootstrap5.hexschool.com/docs/5.0/utilities/spacing/">ref</a>： m:margin, s:start(left), e:end(right)</div>
+        <div class="row flex-row">
+            <div class="col-2">
+                <div class="box02 bg-success">01</div>
+            </div>
+            <div class="col-2 ms-auto">
+                <div class="box02 bg-success">02</div>
+            </div>
+            <div class="col-2 me-auto">
+                <div class="box02 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">13. 上下推移：mt-auto/mb-auto</div>
+        <div class="row flex-row" style="height: 50vh;">
+            <div class="col-2 mt-auto">
+                <div class="box02 bg-success">01</div>
+            </div>
+            <div class="col-2 mb-auto">
+                <div class="box02 bg-success">02</div>
+            </div>
+            <div class="col-2">
+                <div class="box02 bg-success">03</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="display-2 fw-900">14. spacing</div>
+        <div class="bg-info mt-3 pt-1">
+            <p class="bg-primary ms-3 me-3 mt-3">客人做法業績出台面前傳來，步驟創造，原創體力也有要求出生相同作為希望魔法配套難得一切都開展體力，甚至選手當前位置孩子有什麼文件大小，補充農民你就專欄看了還會報價生物，政治能量諾基亞人物不可以策略不是很，曾經學者地點業績，主人重視審核臺中，一項不在，視頻決。</p>
+            <p class="bg-primary mt-5">哈哈他們透明要有期限手機鈴聲版主採購報導，國家回頭所需公司觀念重複不能，歡迎您監控桃園，工作特性你們的負責人種種兩次非常男人感動一道我的，開始界面一些斗內必然或許排行榜確保期待寵物後悔也會，另一個完美正是辦理百姓如有他們的條件，一下國產，不多我去部隊，小。</p>
+        </div>
+        <hr>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飲料 ERP 商品管理</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+
+        .box01 {
+            margin-top: 40px;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .erp-table {
+            margin-bottom: 0;
+        }
+
+        .erp-table caption {
+            caption-side: top;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+
+        .erp-table thead {
+            background-color: #212529;
+            color: white;
+        }
+
+        .erp-table th,
+        .erp-table td {
+            vertical-align: middle;
+        }
+
+        .product-id {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .status-active {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .status-stop {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #fd7e14;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            .table-rwd thead,
+            .table-rwd caption {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                margin-top: 15px;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                background-color: #fff;
+                padding: 10px;
+            }
+
+            .table-rwd tbody tr td,
+            .table-rwd tbody tr th {
+                display: block;
+                overflow: hidden;
+                border: none;
+            }
+
+            .table-rwd tbody tr td::before {
+                content: attr(data-th) "：";
+                font-size: 15px;
+                font-weight: bold;
+                color: #495057;
+                display: block;
+                float: left;
+                width: 35%;
+                text-align: right;
+                padding-right: 1rem;
+            }
+
+            .table-rwd tbody tr td span {
+                display: block;
+                float: left;
+                width: 65%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container box01 table">
+
+        <div class="section">
+
+            <table class="table mt-3 table-bordered table-hover table-striped table-rwd erp-table">
+
+                <caption>飲料 ERP 商品管理系統</caption>
+
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col">商品編號</th>
+                        <th class="col">商品名稱</th>
+                        <th class="col">分類</th>
+                        <th class="col">售價</th>
+                        <th class="col">商品狀態</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR001</th>
+                        <td data-th="商品名稱"><span>珍珠奶茶</span></td>
+                        <td data-th="分類"><span>奶茶系列</span></td>
+                        <td data-th="售價"><span class="price">65 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR002</th>
+                        <td data-th="商品名稱"><span>波霸奶茶</span></td>
+                        <td data-th="分類"><span>奶茶系列</span></td>
+                        <td data-th="售價"><span class="price">70 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR003</th>
+                        <td data-th="商品名稱"><span>四季春青茶</span></td>
+                        <td data-th="分類"><span>純茶系列</span></td>
+                        <td data-th="售價"><span class="price">35 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR004</th>
+                        <td data-th="商品名稱"><span>阿薩姆紅茶</span></td>
+                        <td data-th="分類"><span>純茶系列</span></td>
+                        <td data-th="售價"><span class="price">30 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR005</th>
+                        <td data-th="商品名稱"><span>冬瓜檸檬</span></td>
+                        <td data-th="分類"><span>特調系列</span></td>
+                        <td data-th="售價"><span class="price">55 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR006</th>
+                        <td data-th="商品名稱"><span>百香綠茶</span></td>
+                        <td data-th="分類"><span>果茶系列</span></td>
+                        <td data-th="售價"><span class="price">60 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR007</th>
+                        <td data-th="商品名稱"><span>葡萄柚綠茶</span></td>
+                        <td data-th="分類"><span>果茶系列</span></td>
+                        <td data-th="售價"><span class="price">65 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR008</th>
+                        <td data-th="商品名稱"><span>芋頭鮮奶</span></td>
+                        <td data-th="分類"><span>鮮奶系列</span></td>
+                        <td data-th="售價"><span class="price">80 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR009</th>
+                        <td data-th="商品名稱"><span>黑糖鮮奶</span></td>
+                        <td data-th="分類"><span>鮮奶系列</span></td>
+                        <td data-th="售價"><span class="price">85 元</span></td>
+                        <td data-th="商品狀態"><span class="status-stop">停售</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="product-id">DR010</th>
+                        <td data-th="商品名稱"><span>蜂蜜檸檬</span></td>
+                        <td data-th="分類"><span>特調系列</span></td>
+                        <td data-th="售價"><span class="price">70 元</span></td>
+                        <td data-th="商品狀態"><span class="status-active">販售中</span></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

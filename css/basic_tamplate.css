@@ -1,0 +1,99 @@
+body {
+    background-color: #f4f6f9;
+    font-family: "Microsoft JhengHei", sans-serif;
+}
+
+.box01 {
+    margin-top: 40px;
+}
+
+.section {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.erp-table {
+    margin-bottom: 0;
+}
+
+.erp-table caption {
+    caption-side: top;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.erp-table thead {
+    background-color: #212529;
+    color: white;
+}
+
+.erp-table th,
+.erp-table td {
+    vertical-align: middle;
+}
+
+.product-id {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.status-active {
+    color: #198754;
+    font-weight: bold;
+}
+
+.status-stop {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.price {
+    font-weight: bold;
+    color: #fd7e14;
+}
+
+@media screen and (max-width: 768px) {
+
+    .table-rwd thead,
+    .table-rwd caption {
+        display: none;
+    }
+
+    .table-rwd tbody tr {
+        display: block;
+        margin-top: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .table-rwd tbody tr td,
+    .table-rwd tbody tr th {
+        display: block;
+        overflow: hidden;
+        border: none;
+    }
+
+    .table-rwd tbody tr td::before {
+        content: attr(data-th) "：";
+        font-size: 15px;
+        font-weight: bold;
+        color: #495057;
+        display: block;
+        float: left;
+        width: 35%;
+        text-align: right;
+        padding-right: 1rem;
+    }
+
+    .table-rwd tbody tr td span {
+        display: block;
+        float: left;
+        width: 65%;
+    }
+}
