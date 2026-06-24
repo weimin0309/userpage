@@ -157,7 +157,9 @@
             function loadData() {
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:3000/travelFood/",
+                    // 為便於 github 展示頁面效果，改由檔案讀取，而非 API 或 json-server
+                    // url: "http://localhost:3000/travelFood/",
+                    url: "js/ODwsvTravelFood.json",
                     dataType: "json",
                     async: false,
                     success: function (data) {
