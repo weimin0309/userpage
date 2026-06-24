@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 樣式與配色手冊 - Style Guide Showcase</title>
+    <!-- 引入 Bootstrap 5 (本地) -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 引入整理好的配色與版型 CSS -->
+    <link rel="stylesheet" href="css/reusable_colors.css">
+    <link rel="stylesheet" href="css/reusable_layouts.css">
+    
+    <!-- 載入 Google Fonts 增進視覺美感 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 樣式手冊本身的展示用專屬樣式，不影響複用版型 */
+        body {
+            background-color: #090b11;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .showcase-header {
+            padding: 4rem 0 3rem;
+            background: linear-gradient(180deg, #111422 0%, #090b11 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        /* 互動展示容器 */
+        .showcase-wrapper {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        /* 主題切換按鈕 */
+        .theme-btn {
+            background-color: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .theme-btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 調色盤圓圈 */
+        .color-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .color-swatch-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .color-swatch-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .color-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .color-code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* 程式碼區塊展示 */
+        .code-block-container {
+            position: relative;
+            margin-top: 1rem;
+        }
+        .code-block {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #1e293b;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        /* 側欄導覽 */
+        .sidebar-nav {
+            position: sticky;
+            top: 2rem;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 10px 15px;
+            color: #94a3b8;
+            text-decoration: none;
+            border-left: 2px solid #1e293b;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 標頭 -->
+    <header class="showcase-header text-center">
+        <div class="container">
+            <h1 class="display-4 gradient-text">CSS Style & Color Guide</h1>
+            <p class="lead text-muted">網頁配色與常用版型複用手冊 — 快速挑選風格與切版</p>
+        </div>
+    </header>
+
+    <!-- 主體內容 -->
+    <main class="container my-5">
+        <div class="row">
+            
+            <!-- 側邊選單 -->
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar-nav card bg-dark border-secondary p-3">
+                    <h5 class="text-white mb-3">導覽分類</h5>
+                    <a href="#section-themes" class="sidebar-link active">1. 配色與主題選擇</a>
+                    <a href="#section-rwd-table" class="sidebar-link">2. RWD 響應式表格</a>
+                    <a href="#section-timeline" class="sidebar-link">3. 科技感時間軸</a>
+                    <a href="#section-glass-card" class="sidebar-link">4. 玻璃擬態卡片</a>
+                    <a href="#section-rollers" class="sidebar-link">5. 四向滑動遮罩</a>
+                </div>
+            </div>
+
+            <!-- 展示主面板 -->
+            <div class="col-lg-9">
+                
+                <!-- 1. 主題配色設定 -->
+                <section id="section-themes" class="mb-5">
+                    <h2 class="h3 border-bottom border-secondary pb-2 mb-3">1. 配色與主題選擇</h2>
+                    <p class="text-muted">點擊下方按鈕切換展示區的主題風格。所有配色皆以 CSS 變數定義，可直接嵌入在 HTML 外層的 class 中。</p>
+                    
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <button class="theme-btn active" onclick="switchTheme('theme-dark-tech', this)">科技暗黑 (theme-dark-tech)</button>
+                        <button class="theme-btn" onclick="switchTheme('theme-light-corporate', this)">商務明亮 (theme-light-corporate)</button>
+                        <button class="theme-btn" onclick="switchTheme('theme-cyberpunk-neon', this)">霓虹賽博 (theme-cyberpunk-neon)</button>
+                        <button class="theme-btn" onclick="switchTheme('theme-aurora-glass', this)">極光毛玻璃 (theme-aurora-glass)</button>
+                    </div>
+
+                    <!-- 即時主題展示容器 -->
+                    <div id="active-theme-showcase" class="showcase-wrapper theme-dark-tech">
+                        <h4 class="mb-3">當前主題色彩變數預覽</h4>
+                        
+                        <!-- 調色盤 -->
+                        <div class="color-palette-grid">
+                            <div class="color-swatch-card" onclick="copyText('var(--color-primary)')">
+                                <div class="color-circle" style="background-color: var(--color-primary)"></div>
+                                <div>主要品牌色 (Primary)</div>
+                                <div class="color-code">var(--color-primary)</div>
+                            </div>
+                            <div class="color-swatch-card" onclick="copyText('var(--color-secondary)')">
+                                <div class="color-circle" style="background-color: var(--color-secondary)"></div>
+                                <div>次要品牌色 (Secondary)</div>
+                                <div class="color-code">var(--color-secondary)</div>
+                            </div>
+                            <div class="color-swatch-card" onclick="copyText('var(--color-accent)')">
+                                <div class="color-circle" style="background-color: var(--color-accent)"></div>
+                                <div>強調凸顯色 (Accent)</div>
+                                <div class="color-code">var(--color-accent)</div>
+                            </div>
+                            <div class="color-swatch-card" onclick="copyText('var(--color-bg)')">
+                                <div class="color-circle" style="background-color: var(--color-bg)"></div>
+                                <div>背景色 (BG)</div>
+                                <div class="color-code">var(--color-bg)</div>
+                            </div>
+                            <div class="color-swatch-card" onclick="copyText('var(--color-surface)')">
+                                <div class="color-circle" style="background-color: var(--color-surface)"></div>
+                                <div>卡片表面色 (Surface)</div>
+                                <div class="color-code">var(--color-surface)</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="form-label text-muted">使用此主題的 CSS Class 代碼：</label>
+                            <div class="code-block-container">
+                                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                                <pre class="code-block" id="code-theme-wrapper">&lt;div class="theme-dark-tech"&gt;
+    &lt;!-- 您的網頁元件會自動繼承此配色變數 --&gt;
+&lt;/div&gt;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="my-5 border-secondary">
+
+                <!-- 2. RWD 表格 -->
+                <section id="section-rwd-table" class="mb-5">
+                    <h2 class="h3 border-bottom border-secondary pb-2 mb-3">2. RWD 響應式表格 (Table Layout)</h2>
+                    <p class="text-muted">在大螢幕為標準表格，在行動端（&lt;= 768px）自動縮合，將各行轉換為獨立卡片，並運用 <code>data-th</code> 屬性將表頭名稱浮現於左側，非常適合 ERP 或列表展示。</p>
+                    
+                    <div class="showcase-wrapper theme-dark-tech" id="rwd-table-container">
+                        <table class="table-rwd-custom">
+                            <thead>
+                                <tr>
+                                    <th>產品編號</th>
+                                    <th>產品名稱</th>
+                                    <th>房型</th>
+                                    <th>售價</th>
+                                    <th>狀態</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-th="產品編號">#10024</td>
+                                    <td data-th="產品名稱">藍天沙灘渡假村</td>
+                                    <td data-th="房型">豪華雙人海景房</td>
+                                    <td data-th="售價" style="color: var(--color-accent); font-weight: bold;">$4,800</td>
+                                    <td data-th="狀態" style="color: var(--color-secondary); font-weight: bold;">使用中</td>
+                                </tr>
+                                <tr>
+                                    <td data-th="產品編號">#10025</td>
+                                    <td data-th="產品名稱">綠野仙蹤溫泉旅館</td>
+                                    <td data-th="房型">標準雙人套房</td>
+                                    <td data-th="售價" style="color: var(--color-accent); font-weight: bold;">$2,700</td>
+                                    <td data-th="狀態" style="color: var(--color-primary); font-weight: bold;">已滿房</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4">
+                            <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#codeCollapseTable" aria-expanded="false">
+                                顯示 / 隱藏 HTML 結構代碼
+                            </button>
+                            <div class="collapse" id="codeCollapseTable">
+                                <div class="code-block-container mt-2">
+                                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                                    <pre class="code-block">&lt;table class="table-rwd-custom"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;產品編號&lt;/th&gt;
+      &lt;th&gt;產品名稱&lt;/th&gt;
+      &lt;th&gt;售價&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td data-th="產品編號"&gt;#10024&lt;/td&gt;
+      &lt;td data-th="產品名稱"&gt;藍天沙灘渡假村&lt;/td&gt;
+      &lt;td data-th="售價"&gt;$4,800&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="my-5 border-secondary">
+
+                <!-- 3. 科技感時間軸 -->
+                <section id="section-timeline" class="mb-5">
+                    <h2 class="h3 border-bottom border-secondary pb-2 mb-3">3. 雙向響應式時間軸 (Timeline Layout)</h2>
+                    <p class="text-muted">自動在大螢幕左右交錯排列，並內建中軸色彩漸層。滑鼠移到卡片上時，時間軸對應的圓點會產生放大與霓虹外發光特效。</p>
+                    
+                    <div class="showcase-wrapper theme-dark-tech" id="timeline-container">
+                        <div class="timeline-custom">
+                            
+                            <!-- 節點 1 -->
+                            <div class="timeline-item">
+                                <div class="timeline-img" style="background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 2.5rem; font-weight: bold;">
+                                    IMAGE
+                                </div>
+                                <div class="timeline-content">
+                                    <h4 style="color: var(--color-primary);">第一階段：技術誕生</h4>
+                                    <p class="text-muted small">1950 - 1956</p>
+                                    <p>提出經典理念，標誌著這門新興學門的正式誕生，開啟了人類探索機器智慧的偉大征途。</p>
+                                </div>
+                            </div>
+
+                            <!-- 節點 2 -->
+                            <div class="timeline-item">
+                                <div class="timeline-img" style="background: linear-gradient(135deg, #062f4f 0%, #1e1b4b 100%); display: flex; align-items: center; justify-content: center; color: var(--color-secondary); font-size: 2.5rem; font-weight: bold;">
+                                    IMAGE
+                                </div>
+                                <div class="timeline-content">
+                                    <h4 style="color: var(--color-secondary);">第二階段：深藍傳奇</h4>
+                                    <p class="text-muted small">1997</p>
+                                    <p>超級電腦擊敗人類西洋棋大師，展示了硬體計算與啟發式搜索算法的驚人威力。</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#codeCollapseTimeline" aria-expanded="false">
+                                顯示 / 隱藏 HTML 結構代碼
+                            </button>
+                            <div class="collapse" id="codeCollapseTimeline">
+                                <div class="code-block-container mt-2">
+                                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                                    <pre class="code-block">&lt;div class="timeline-custom"&gt;
+  &lt;!-- 節點 1 --&gt;
+  &lt;div class="timeline-item"&gt;
+    &lt;div class="timeline-img" style="background-image: url(...);"&gt;&lt;/div&gt;
+    &lt;div class="timeline-content"&gt;
+      &lt;h4&gt;標題&lt;/h4&gt;
+      &lt;p&gt;內容說明...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="my-5 border-secondary">
+
+                <!-- 4. 玻璃擬態卡片 -->
+                <section id="section-glass-card" class="mb-5">
+                    <h2 class="h3 border-bottom border-secondary pb-2 mb-3">4. 玻璃擬態卡片 (Glassmorphism Card)</h2>
+                    <p class="text-muted">運用高斯模糊（Backdrop Blur）與極細微透明邊框，讓卡片呈現玻璃質感。懸停時會略微上浮並發出對應主題的主色霓虹光圈。</p>
+                    
+                    <div class="showcase-wrapper theme-dark-tech" id="glass-card-container">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="glass-card">
+                                    <h4 style="color: var(--color-primary);">質感玻璃卡片</h4>
+                                    <p class="text-muted">這是使用 <code>.glass-card</code> 類別的範例元件。適用於暗色背景、極光背景以展示高端質感。</p>
+                                    <button class="btn btn-sm mt-3" style="background-color: var(--color-primary); color: white;">互動按鈕</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="glass-card">
+                                    <h4 style="color: var(--color-secondary);">精緻資訊板塊</h4>
+                                    <p class="text-muted">隨著主題切換，卡片邊框懸停微光、按鈕以及文字顏色會同步適配。完美契合您的視覺感官。</p>
+                                    <button class="btn btn-sm mt-3" style="background-color: var(--color-secondary); color: white;">了解更多</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#codeCollapseGlass" aria-expanded="false">
+                                顯示 / 隱藏 HTML 結構代碼
+                            </button>
+                            <div class="collapse" id="codeCollapseGlass">
+                                <div class="code-block-container mt-2">
+                                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                                    <pre class="code-block">&lt;div class="glass-card"&gt;
+  &lt;h4 style="color: var(--color-primary);"&gt;標題&lt;/h4&gt;
+  &lt;p&gt;內容描述...&lt;/p&gt;
+&lt;/div&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="my-5 border-secondary">
+
+                <!-- 5. 四向滑動遮罩 -->
+                <section id="section-rollers" class="mb-5">
+                    <h2 class="h3 border-bottom border-secondary pb-2 mb-3">5. 四向懸停滑動遮罩 (Roller Effects)</h2>
+                    <p class="text-muted">當滑鼠懸停於區塊上時，遮罩層會從指定的方向（上、下、左、右）平滑滑入，非常適合用於作品集縮圖、人物介紹或相簿展示。</p>
+                    
+                    <div class="showcase-wrapper theme-dark-tech" id="rollers-container">
+                        <div class="row g-4">
+                            
+                            <!-- Up -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="roller-container">
+                                    <!-- 底圖/內容 -->
+                                    <div style="width:100%; height:100%; background: linear-gradient(45deg, #1e1b4b, #4f46e5); display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                                        向下滑入
+                                    </div>
+                                    <!-- 遮罩 (roller-box) + 方向類別 -->
+                                    <div class="roller-box roller-down">
+                                        <h5>資訊細節</h5>
+                                        <p class="small text-muted">從上方滑入</p>
+                                        <a href="#" class="btn btn-xs btn-outline-light py-1 px-2 mt-2">點擊</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Down -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="roller-container">
+                                    <div style="width:100%; height:100%; background: linear-gradient(45deg, #1e1b4b, #0d9488); display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                                        向上滑入
+                                    </div>
+                                    <div class="roller-box roller-up">
+                                        <h5>作品連結</h5>
+                                        <p class="small text-muted">從下方滑入</p>
+                                        <a href="#" class="btn btn-xs btn-outline-light py-1 px-2 mt-2">點擊</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Left -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="roller-container">
+                                    <div style="width:100%; height:100%; background: linear-gradient(45deg, #1e1b4b, #be185d); display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                                        向右滑入
+                                    </div>
+                                    <div class="roller-box roller-left">
+                                        <h5>詳細內容</h5>
+                                        <p class="small text-muted">從左側滑入</p>
+                                        <a href="#" class="btn btn-xs btn-outline-light py-1 px-2 mt-2">點擊</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right -->
+                            <div class="col-md-3 col-sm-6">
+                                <div class="roller-container">
+                                    <div style="width:100%; height:100%; background: linear-gradient(45deg, #1e1b4b, #b45309); display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                                        向左滑入
+                                    </div>
+                                    <div class="roller-box roller-right">
+                                        <h5>更多資訊</h5>
+                                        <p class="small text-muted">從右側滑入</p>
+                                        <a href="#" class="btn btn-xs btn-outline-light py-1 px-2 mt-2">點擊</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#codeCollapseRoller" aria-expanded="false">
+                                顯示 / 隱藏 HTML 結構代碼
+                            </button>
+                            <div class="collapse" id="codeCollapseRoller">
+                                <div class="code-block-container mt-2">
+                                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                                    <pre class="code-block">&lt;div class="roller-container"&gt;
+  &lt;!-- 底圖或文字背景 --&gt;
+  &lt;div&gt;預覽內容&lt;/div&gt;
+
+  &lt;!-- 滑動遮罩。類別可替換為 roller-up, roller-down, roller-left, roller-right --&gt;
+  &lt;div class="roller-box roller-up"&gt;
+    &lt;h5&gt;標題&lt;/h5&gt;
+    &lt;p&gt;懸停時顯示的文字&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="text-center py-4 mt-5 border-top border-secondary text-muted small">
+        <div class="container">
+            <p>CSS Reusable & Responsive Showcase © 2026. Made for web reuse.</p>
+        </div>
+    </footer>
+
+    <!-- JS 控制與互動邏輯 -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 切換展示區塊的主題類別
+        function switchTheme(themeName, btnElement) {
+            // 移除舊的 Active 按鈕樣式
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // 取得所有需要變更主題的展示卡片容器
+            const targets = [
+                'active-theme-showcase',
+                'rwd-table-container',
+                'timeline-container',
+                'glass-card-container',
+                'rollers-container'
+            ];
+
+            targets.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    // 清除原有的 theme-* 類別
+                    element.className = element.className.replace(/\btheme-\S+/g, '');
+                    // 加入新主題類別
+                    element.classList.add(themeName);
+                }
+            });
+
+            // 更新 Class 代碼預覽區
+            const themeWrapperPre = document.getElementById('code-theme-wrapper');
+            themeWrapperPre.textContent = `<div class="${themeName}">\n    <!-- 您的網頁元件會自動繼承此配色變數 -->\n</div>`;
+        }
+
+        // 點擊複製色彩變數名稱
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`已複製變數：${text}`);
+            });
+        }
+
+        // 複製代碼區塊
+        function copyCode(btn) {
+            const pre = btn.nextElementSibling;
+            navigator.clipboard.writeText(pre.textContent).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = '已複製！';
+                btn.style.backgroundColor = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.backgroundColor = '';
+                }, 2000);
+            });
+        }
+
+        // 滾動時自動標示左側導覽列 active 狀態
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+            
+            sections.forEach(sec => {
+                if (scrollPos >= sec.offsetTop - 150 && scrollPos < sec.offsetTop + sec.offsetHeight - 150) {
+                    const activeLink = document.querySelector(`.sidebar-link[href="#${sec.id}"]`);
+                    if (activeLink) {
+                        document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

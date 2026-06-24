@@ -1,0 +1,274 @@
+/*
+================================================================
+  常用佈局與動畫版型 (Reusable Layouts & Animations)
+  依賴說明：建議與 reusable_colors.css 搭配使用，以取得 CSS 變數支援。
+================================================================
+*/
+
+/* ==========================================
+   1. 響應式表格 (RWD Table Layout)
+   當寬度小於 768px 時自動轉為卡片堆疊排版
+   ========================================== */
+.table-rwd-custom {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+.table-rwd-custom thead {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.table-rwd-custom th, 
+.table-rwd-custom td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.2s ease;
+}
+
+/* RWD 表格手機端轉換樣式 */
+@media screen and (max-width: 768px) {
+    .table-rwd-custom thead {
+        display: none; /* 隱藏表頭 */
+    }
+
+    .table-rwd-custom tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .table-rwd-custom tbody tr td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed var(--color-border);
+        padding: 8px 4px;
+        text-align: right;
+    }
+
+    .table-rwd-custom tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    /* 利用 data-th 顯示欄位名稱 */
+    .table-rwd-custom tbody tr td::before {
+        content: attr(data-th);
+        font-weight: bold;
+        color: var(--color-text-secondary);
+        text-align: left;
+        margin-right: 15px;
+    }
+}
+
+/* ==========================================
+   2. 科技感響應式時間軸 (Timeline Layout)
+   ========================================== */
+.timeline-custom {
+    position: relative;
+    padding: 2rem 0;
+    margin: 0 auto;
+}
+
+/* 時間軸中央貫穿線 */
+.timeline-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background: var(--gradient-primary, linear-gradient(to bottom, #3b82f6, #10b981));
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* 讓偶數節點反向排列 */
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-img,
+.timeline-content {
+    width: 45%;
+}
+
+.timeline-img {
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s;
+}
+
+.timeline-img:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--color-border-hover);
+}
+
+.timeline-content {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s, box-shadow 0.4s;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-border-hover);
+    box-shadow: 0 15px 30px var(--color-glow);
+}
+
+/* 時間軸圓點節點 */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    border: 4px solid var(--color-primary);
+    box-shadow: 0 0 10px var(--color-primary);
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.timeline-item:hover::after {
+    transform: translate(-50%, -50%) scale(1.3);
+    background-color: var(--color-primary);
+    box-shadow: 0 0 20px var(--color-primary), 0 0 40px var(--color-primary);
+    border-color: #ffffff;
+}
+
+/* 時間軸手機端響應式調整 */
+@media screen and (max-width: 768px) {
+    .timeline-custom::before {
+        left: 20px; /* 將線移到左邊 */
+    }
+
+    .timeline-item {
+        flex-direction: column !important; /* 強制改為單欄 */
+        padding-left: 45px;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-img,
+    .timeline-content {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .timeline-item::after {
+        left: 20px; /* 圓圈對齊左側線 */
+        top: 25px;  /* 置於頂部附近 */
+        transform: translate(-50%, 0);
+    }
+
+    .timeline-item:hover::after {
+        transform: translate(-50%, 0) scale(1.3);
+    }
+}
+
+/* ==========================================
+   3. 玻璃擬態卡片 (Glassmorphism Card)
+   ========================================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-border-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px var(--color-glow);
+}
+
+/* ==========================================
+   4. 懸停滑動遮罩 (Roller Effects)
+   ========================================== */
+.roller-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 250px;
+}
+
+.roller-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 2;
+}
+
+/* 四向進入定位與轉場初始值 */
+.roller-up {
+    bottom: -100%;
+    left: 0;
+}
+.roller-container:hover .roller-up {
+    bottom: 0;
+}
+
+.roller-down {
+    top: -100%;
+    left: 0;
+}
+.roller-container:hover .roller-down {
+    top: 0;
+}
+
+.roller-left {
+    top: 0;
+    left: -100%;
+}
+.roller-container:hover .roller-left {
+    left: 0;
+}
+
+.roller-right {
+    top: 0;
+    right: -100%;
+}
+.roller-container:hover .roller-right {
+    right: 0;
+}
