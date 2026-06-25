@@ -272,3 +272,90 @@
 .roller-container:hover .roller-right {
     right: 0;
 }
+
+/* ==========================================
+   5. 極簡表單卡片與輸入元件 (Minimal Form & Card Layout - Uber Eats Style)
+   ========================================== */
+.uber-form-card {
+    background: var(--color-bg-secondary, #ffffff);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--color-border, #e2e2e2);
+    width: 100%;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.uber-form-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.uber-form-label {
+    font-weight: 600;
+    color: var(--color-text, #000000);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: inline-block;
+}
+
+.uber-form-control {
+    border: 1px solid var(--color-border, #e2e2e2);
+    background-color: var(--color-bg, #f6f6f6);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--color-text, #000000);
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+}
+
+.uber-form-control:focus {
+    background-color: var(--color-bg-secondary, #ffffff);
+    border-color: var(--color-text, #000000);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+/* Pill Buttons */
+.uber-btn-pill {
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    border: none;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.uber-btn-pill-primary {
+    background-color: var(--color-secondary, #000000) !important;
+    color: #ffffff !important;
+}
+
+.uber-btn-pill-primary:hover {
+    background-color: var(--color-secondary-hover, #1f2124) !important;
+    transform: translateY(-1px);
+}
+
+.uber-btn-pill-secondary {
+    background-color: #eeeeee !important;
+    color: var(--color-text, #000000) !important;
+}
+
+.uber-btn-pill-secondary:hover {
+    background-color: #e2e2e2 !important;
+}
+
+/* Validation Style */
+.uber-form-control.is-valid {
+    border-color: var(--color-primary, #06c167) !important;
+}
+.uber-form-control.is-invalid {
+    border-color: var(--color-accent, #e03c31) !important;
+}
+

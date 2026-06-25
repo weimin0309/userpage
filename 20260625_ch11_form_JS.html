@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ch11. 表單練習 JavaScript</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        /* Import premium font */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #F6F6F6;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #000000;
+        }
+
+        /* Container & Card Styling */
+        .container {
+            max-width: 800px;
+            padding-bottom: 5rem;
+        }
+
+        /* Main Header "產品建檔" */
+        .display-4.text-bg-secondary {
+            background-color: #06C167 !important; /* Uber Eats green */
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            border-radius: 16px;
+            font-size: 2.25rem;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 24px rgba(6, 193, 103, 0.15);
+            margin-bottom: 2rem;
+            border: none;
+            padding: 1.25rem !important;
+        }
+
+        /* Form Card Container */
+        .row.justify-content-center.m-4 > .col-md-6 {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E2E2E2;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        /* Form Labels */
+        .form-label {
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Form Controls (Inputs, Selects) */
+        .form-control, .form-select {
+            border: 1px solid #E2E2E2;
+            background-color: #F6F6F6;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: #000000;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Floating label support */
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: #06C167;
+            transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+        }
+        
+        .form-floating > label {
+            padding: 0.75rem 1rem;
+            color: #767676;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+            outline: none;
+        }
+
+        /* Customize valid/invalid styling to be Uber-like */
+        .is-valid {
+            border-color: #06C167 !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2306C167' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") !important;
+        }
+        .is-valid:focus {
+            box-shadow: 0 0 0 3px rgba(6, 193, 103, 0.15) !important;
+        }
+        .valid-feedback {
+            color: #06C167;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid {
+            border-color: #E03C31 !important;
+        }
+        .is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(224, 60, 49, 0.15) !important;
+        }
+        .invalid-feedback {
+            color: #E03C31;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Special styles for product_name label color matching valid/invalid state */
+        #product_name.is-invalid ~ label {
+            color: #E03C31 !important;
+        }
+        #product_name.is-valid ~ label {
+            color: #06C167 !important;
+        }
+
+
+        /* Buttons Styling */
+        .btn {
+            font-weight: 600;
+            padding: 0.75rem 1.75rem;
+            border-radius: 9999px; /* Pill shape */
+            font-size: 1rem;
+            transition: all 0.15s ease-in-out;
+            border: none;
+        }
+
+        #useless_btn.btn-secondary {
+            background-color: #EEEEEE !important;
+            color: #000000 !important;
+        }
+        #useless_btn.btn-secondary:hover {
+            background-color: #E2E2E2 !important;
+        }
+
+        #confirm_btn.btn-primary {
+            background-color: #000000 !important; /* Uber black button style */
+            color: #ffffff !important;
+            margin-left: 0.75rem;
+        }
+        #confirm_btn.btn-primary:hover {
+            background-color: #1F2124 !important;
+            transform: translateY(-1px);
+        }
+        #confirm_btn.btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Detail section styling */
+        #product_detail {
+            margin-top: 3rem !important;
+        }
+        
+        #product_detail .display-5.text-bg-success {
+            background-color: #06C167 !important;
+            font-weight: 800 !important;
+            font-size: 1.75rem;
+            border-radius: 12px !important;
+            padding: 1rem !important;
+            box-shadow: 0 4px 15px rgba(6, 193, 103, 0.1);
+        }
+
+        #product_detail .col-md-6 {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E2E2E2;
+            width: 100%;
+            max-width: 550px;
+            margin-top: 1.5rem;
+        }
+
+        #showmessage h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            border-bottom: 1px solid #EEEEEE;
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
+            color: #1F2124;
+            display: flex;
+            align-items: center;
+        }
+        #showmessage h3::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #06C167;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container pt-5">
+        <div class="display-4 fw-900 text-center text-bg-secondary py-2">產品建檔</div>
+        <div class="row justify-content-center m-4">
+            <div class="col-md-6">
+
+                <!-- 產品名稱 -->
+                <label for="" class="form-label">產品名稱</label>
+                <div class="mb-3 form-floating">
+                    <input type="text" class="form-control" name="" id="product_name">
+                    <label for="product_name" class="form-label">請輸入產品名稱（1～6 個字）</label>
+                    <div class="valid-feedback">長度符合規定</div>
+                    <div class="invalid-feedback">長度超出限制</div>
+                </div>
+
+                <!-- 產品數量 -->
+                <div class="mb-3">
+                    <label for="product_number" class="form-label">數量（1-10）</label>
+                    <input type="number" class="form-control" id="product_number" value="0" min="1" max="10">
+                    <div class="valid-feedback">數量符合規定</div>
+                    <div class="invalid-feedback">數量超出限制</div>
+                </div>
+
+                <!--產品規格-->
+                <div class="mb-3">
+                    <label for="product_spec" class="form-label">產品規格</label>
+                    <input type="text" class="form-control" id="product_spec" placeholder="請輸入產品規格（上限 20 個字）"
+                        list="datalist_option">
+                    <datalist id="datalist_option">
+                        <option value="半糖少冰"></option>
+                        <option value="半糖微冰"></option>
+                        <option value="微糖少冰"></option>
+                        <option value="微糖微冰"></option>
+                    </datalist>
+                    <div class="valid-feedback">符合字數限制</div>
+                    <div class="invalid-feedback">你在點二郎系拉麵嗎？</div>
+                </div>
+
+                <!-- 產品尺寸 -->
+                <div class="mb-3">
+                    <label for="product_size" class="form-label">選擇尺寸</label>
+                    <select class="form-control is-invalid" id="product_size">
+                        <option value="" disabled selected>請選擇尺寸</option>
+                        <option value="300ml">小杯（300 ml）</option>
+                        <option value="500ml">中杯（500 ml）</option>
+                        <option value="700ml">大杯（700 ml）</option>
+                        <option value="1000ml">特大杯（1000 ml）</option>
+                    </select>
+                    <div class="valid-feedback">已選擇容量</div>
+                    <div class="invalid-feedback">請選擇容量</div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button class="btn btn-secondary" id="useless_btn">取消</button>
+                    <button class="btn btn-primary" id="confirm_btn">確認</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 m-3 justify-content-center" id="product_detail" style="display:none">
+            <div class="display-5 fw-900 text-center text-bg-success py-2 rounded-5">飲料產品建檔 - 明細確認</div>
+            <div class="col-md-6">
+                <div id="showmessage"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script>
+        $(function () {
+            // 雖然老師說用全域變數，但應該用 hasClass 處理就好
+            // let flag_product_name = false;
+            // let flag_product_number = false;
+            // let flag_product_spec = false;
+            // let flag_product_size = false;
+
+            // 監聽 #product_name
+            $("#product_name").on("input", function () {
+                // let product_name = $(this).val().trim();
+
+                // if (product_name.length == 0) {
+                //     $(this).removeClass("is-invalid");
+                //     $(this).removeClass("is-valid");
+                // }
+                // else if (product_name.length >= 1 && product_name.length <= 6) {
+                //     // 符合長度限制
+                //     $(this).removeClass("is-invalid");
+                //     $(this).addClass("is-valid");
+                // } else {
+                //     // 超出長度限制
+                //     $(this).removeClass("is-valid");
+                //     $(this).addClass("is-invalid");
+                // }$(this)
+
+                let product_name_len = $(this).val().trim().length;
+
+                $(this)
+                    .toggleClass("is-valid", product_name_len >= 1 && product_name_len <= 6)
+                    .toggleClass("is-invalid", product_name_len > 6);
+            });
+
+            $("#product_number").on("input", function () {
+                // console.log($(this).val());
+                let product_number = Number($(this).val());
+
+                $(this)
+                    .toggleClass("is-valid", product_number >= 1 && product_number <= 10)
+                    .toggleClass("is-invalid", product_number > 10);
+            });
+
+            $("#product_spec").on("input", function () {
+                let product_spec_len = $(this).val().trim().length;
+
+                $(this)
+                    .toggleClass("is-valid", product_spec_len >= 1 && product_spec_len <= 20)
+                    .toggleClass("is-invalid", product_spec_len > 20);
+            });
+
+            $("#product_size").on("change", function () {
+                //因為選項變化時，必定就是有選了正確的選項，所以不做判斷
+                $(this).removeClass("is-invalid");
+                $(this).addClass("is-valid"); //非必要
+            });
+
+            $("#confirm_btn").on("click", function () {
+                $("#showmessage").empty();
+
+                if ($("#product_name").hasClass('is-valid') == false
+                    || $("#product_number").hasClass('is-valid') == false
+                    || $("#product_spec").hasClass('is-valid') == false
+                    || $("#product_size").hasClass('is-valid') == false) {
+                    $("#product_detail").hide();
+                    alert("輸入資料有誤，請重新確認");
+                    return;
+                };
+
+                let product_name = $("#product_name").val().trim();
+                let product_number = Number($("#product_number").val());
+                let product_spec = $("#product_spec").val().trim();
+                let product_size = $("#product_size").val().trim();
+
+                let message_html = `<h3>產品名稱：${product_name}</h3>
+                    <h3>產品數量：${product_number}</h3>
+                    <h3>產品規格：${product_spec}</h3>
+                    <h3>產品尺寸：${product_size}</h3>`;
+
+                $("#showmessage").html(message_html);
+                $("#product_detail").toggle();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -104,3 +104,31 @@
     --gradient-primary: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
     --color-gradient-text: #e879f9;
 }
+
+/* 5. Uber Eats 質感主題 (Uber Eats Premium Theme) - 適用於美食外送、簡約白表單、購物車 */
+.theme-uber-eats {
+    --color-bg: #f6f6f6;
+    --color-bg-secondary: #ffffff;
+    --color-bg-gradient: linear-gradient(180deg, #f6f6f6 0%, #eeeeee 100%);
+    --color-surface: #ffffff;
+    --color-surface-hover: #f3f3f3;
+    
+    --color-text: #000000;
+    --color-text-secondary: #1f2124;
+    --color-text-muted: #767676;
+    
+    --color-primary: #06c167;       /* Uber Eats 綠 */
+    --color-primary-hover: #05a859; /* Uber Eats 深綠 */
+    --color-secondary: #000000;     /* 黑色 */
+    --color-secondary-hover: #1f2124;
+    --color-accent: #e03c31;        /* 亮紅 */
+    --color-glow: rgba(6, 193, 103, 0.15);
+    
+    --color-border: #e2e2e2;
+    --color-border-hover: #000000;
+    
+    /* 漸層色組 */
+    --gradient-primary: linear-gradient(135deg, #06c167 0%, #05a859 100%);
+    --color-gradient-text: #06c167;
+}
+

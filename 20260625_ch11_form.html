@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ch11. 表單練習</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="display-2 fw-900 my-3">1. 基本表單</div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="" class="form-label">產品名稱</label>
+                    <input type="text" class="form-control is-valid" placeholder="請輸入產品名稱（2～6 個字）">
+                    <div class="valid-feedback">已送出訂單，稍候為您送餐</div>
+                    <div class="invalid-feedback">產品名稱輸入有誤，請重新輸入</div>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">產品數量</label>
+                    <div class="mb-3">
+                        <input type="number" class="form-control is-valid" min="1" max="9999" value="0">
+                        <div class="valid-feedback">已送出訂單，稍候為您送餐</div>
+                        <div class="invalid-feedback">產品名稱輸入有誤，請重新輸入</div>
+                    </div>
+                    <div>
+                        <input type="number" class="form-control form-control-lg is-invalid" min="1" max="9999"
+                            value="0"> <!--比較大-->
+                        <div class="valid-feedback">已送出訂單，稍候為您送餐</div>
+                        <div class="invalid-feedback">產品名稱輸入有誤，請重新輸入</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">檔案</label>
+                    <input type="file" class="form-control form-control-lg mb-3">
+                    <input type="file" class="form-control form-control-lg" disabled> <!--顯示，但不能互動、操作-->
+                </div>
+            </div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">2. Datalist</div>
+        <div class="row">
+            <div class="col-9">
+                <div class="mb-3">
+                    <label for="" class="form-label">產品名稱</label>
+                    <input type="text" class="form-control is-invalid" placeholder="請輸入產品名稱（2～6 個字）"
+                        list="datalist_option">
+                    <datalist id="datalist_option">
+                        <option value="經典美式"></option>
+                        <option value="特選單品"></option>
+                        <option value="經典拿鐵"></option>
+                        <option value="單品拿鐵"></option>
+                    </datalist>
+                    <div class="valid-feedback">已送出訂單，稍候為您送餐</div>
+                    <div class="invalid-feedback">我們只賣茶</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">3. select</div>
+        <div class="row">
+            <div class="col-9">
+                <div class="mb-3">
+                    <label for="" class="form-label">產品名稱</label>
+                    <select class="form-control is-invalid" name="" id="">
+                        <option value="" disabled selected>請選擇主餐</option>
+                        <option value="德式香腸">德式香腸</option>
+                        <option value="美式炒蛋">美式炒蛋</option>
+                        <option value="義式燻雞">義式燻雞</option>
+                        <option value="台式炒麵">台式炒麵</option>
+                        <option value="儀式召喚">儀式召喚</option>
+                        <option value="多喝水">沒式多喝水</option>
+                    </select>
+                    <div class="valid-feedback">已送出訂單，稍候為您送餐</div>
+                    <div class="invalid-feedback">請選擇餐點</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">4. switch</div>
+        <div class="row">
+            <div class="col-9">
+                <div class="mb-3 form-check form-switch">
+                    <input type="checkbox" class="form-check-input is-valid" name="" id="" checked>
+                    <label for="">同意／不同意加入會員</label>
+                    <div class="valid-feedback">加入會員方能使用此服務</div>
+                    <div class="invalid-feedback">非會員不得使用此服務</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">5. checkbox</div>
+        <div class="row">
+            <div class="col-9 is-invalid">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input">
+                    <label for="" class="form-check-label">選項 1</label>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input">
+                    <label for="" class="form-check-label">選項 2</label>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input">
+                    <label for="" class="form-check-label">選項 3</label>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input">
+                    <label for="" class="form-check-label">選項 4</label>
+                </div>
+            </div>
+            <div class="valid-feedback"></div>
+            <div class="invalid-feedback">至少選擇一個選項</div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">6. radio</div>
+        <div class="row">
+            <div class="col-12 is-invalid">
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="radio01">
+                    <label for="" class="form-check-label">選項 1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="radio01">
+                    <label for="" class="form-check-label">選項 2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="radio01">
+                    <label for="" class="form-check-label">選項 3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" name="radio01">
+                    <label for="" class="form-check-label">選項 4</label>
+                </div>
+            </div>
+            <div class="valid-feedback"></div>
+            <div class="invalid-feedback">至少選擇一個選項</div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">7. input group</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">帳號</span>
+                    <input type="text" class="form-control" placeholder="Enter user name">
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">信箱</span>
+                    <input type="text" class="form-control" placeholder="Enter Gmail account">
+                    <span class="input-group-text">@gmail.com</span>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">信箱2</span>
+                    <input type="text" class="form-control" placeholder="Enter 2nd E-mail account">
+                    <span class="input-group-text">@</span>
+                    <select class="input-group-text form-control" name="" id="">
+                        <option value="" disabled selected>選擇域名</option>
+                        <option value="@yahoo.com.tw">yahoo.com.tw</option>
+                        <option value="@hotmail.com">hotmail.com</option>
+                        <option value="@hotmail.com.tw">hotmail.com.tw</option>
+                        <option value="@outlook.com">outlook.com</option>
+                    </select>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">信箱3</span>
+                    <input type="text" class="form-control" placeholder="Enter 3rd E-mail account">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" placeholder="select or type in domain name" list="domain_option">
+                    <datalist id="domain_option">
+                        <option value="yahoo.com.tw">yahoo.com.tw</option>
+                        <option value="hotmail.com">hotmail.com</option>
+                        <option value="hotmail.com.tw">hotmail.com.tw</option>
+                        <option value="outlook.com">outlook.com</option>
+                    </datalist>
+                </div>
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">金額: </span>
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" placeholder="Enter Bill Amount">
+                    <span class="input-group-text">.99 dollars</span>
+                </div>
+                <div class="mb-3 input-group">
+                    <input type="text" class="form-control" placeholder="Input keywords">
+                    <button class="btn btn-primary">搜尋</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="display-2 hw-900 my-3">8. floating label</div>
+        <div class="row">
+            <div class="col-9">
+                <div class="mb-3 form-floating"> <!--bootstrap 的特效-->
+                    <input type="text" class="form-control" name="" id="" placeholder="不會顯示">
+                    <label for="" class="form-label">隨便寫點什麼</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="js/jquery-4.0.0.min.js"></script> -->
+</body>
+
+</html>
