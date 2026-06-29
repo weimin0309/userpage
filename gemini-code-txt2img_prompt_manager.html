@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Txt2Img Prompt 輕量管理工具 v5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
+    <div id="app" class="container mx-auto p-6 max-w-6xl" v-cloak>
+        <header class="mb-6 flex justify-between items-center border-b pb-4">
+            <h1 class="text-2xl font-bold text-indigo-600">📝 Txt2Img Prompt 積木組合器 (終極完整版)</h1>
+            <div class="flex gap-2">
+                <button @click="exportData" class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">匯出 JSON</button>
+                <button @click="triggerImport" class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">匯入 JSON</button>
+                <input type="file" ref="fileInput" @change="importData" class="hidden" accept=".json">
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h2 class="text-lg font-semibold mb-3 flex justify-between items-center">
+                    <span>主模板列表</span>
+                    <button @click="openAddModal" class="text-xs bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-600">+ 新增模板</button>
+                </h2>
+                
+                <div class="mb-4 space-y-2">
+                    <input type="text" v-model="searchQuery" placeholder="搜尋模板名稱或內容..." class="w-full px-3 py-1.5 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                    <div class="flex flex-wrap gap-1">
+                        <span @click="toggleTagFilter('')" :class="['text-xs px-2 py-1 rounded cursor-pointer border', !selectedTagFilter ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">全部</span>
+                        <span v-for="tag in allTags" :key="tag" @click="toggleTagFilter(tag)" :class="['text-xs px-2 py-1 rounded cursor-pointer border', selectedTagFilter === tag ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">
+                            #{{ tag }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="space-y-2 max-h-[550px] overflow-y-auto">
+                    <div v-for="tpl in filteredTemplates" :key="tpl.id" 
+                         @click="selectTemplate(tpl)"
+                         :class="['p-3 border rounded-lg cursor-pointer transition-all', currentTemplate?.id === tpl.id ? 'border-indigo-500 bg-indigo-50/50 shadow-sm' : 'border-gray-200 hover:bg-gray-50']">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-sm text-gray-900">{{ tpl.name }}</h3>
+                            <div class="flex gap-2" @click.stop>
+                                <button @click="openEditModal(tpl)" class="text-xs text-indigo-500 hover:text-indigo-700">⚙️ 編輯</button>
+                                <button @click="deleteTemplate(tpl.id)" class="text-xs text-red-400 hover:text-red-600">🗑️ 刪除</button>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 truncate mt-1">{{ tpl.base_prompt }}</p>
+                        <div class="flex flex-wrap gap-1 mt-2">
+                            <span v-for="t in tpl.tags" :key="t" class="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">#{{ t }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow md:col-span-2 flex flex-col justify-between min-h-[500px]">
+                <div>
+                    <div class="flex justify-between items-center border-b pb-2 mb-4">
+                        <h2 class="text-lg font-semibold">工作面板</h2>
+                        <button v-if="currentTemplate" @click="addNewGroup" class="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">+ 新增可選元素群組</button>
+                    </div>
+                    
+                    <div v-if="currentTemplate" class="space-y-4">
+                        <div class="p-3 bg-gray-50 rounded-lg flex justify-between items-start">
+                            <div class="space-y-1 flex-1">
+                                <div class="text-xs text-indigo-600 font-bold uppercase tracking-wider">目前選擇模板</div>
+                                <div class="font-semibold text-gray-800 text-sm mt-0.5">{{ currentTemplate.name }}</div>
+                                <div class="text-xs text-gray-600 font-mono mt-1">基礎提示詞：{{ currentTemplate.base_prompt }}</div>
+                            </div>
+                            <button @click="openEditModal(currentTemplate)" class="text-xs bg-white border px-2 py-1 rounded shadow-sm text-indigo-600 hover:bg-gray-50 ml-2">⚙️ 編輯模板</button>
+                        </div>
+
+                        <div v-for="group in currentTemplateGroups" :key="group.id" class="border rounded-lg p-3 bg-white shadow-sm relative group/panel">
+                            
+                            <div class="flex justify-between items-center mb-2 h-6">
+                                <div class="text-xs font-bold text-gray-700">
+                                    【{{ group.group_name }}】
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover/panel:opacity-100 transition-opacity">
+                                    <button @click="renameGroup(group.id)" class="text-xs text-indigo-500 hover:text-indigo-700">🛠️ 修改名稱</button>
+                                    <button @click="deleteGroup(group.id)" class="text-xs text-red-400 hover:text-red-600">🗑️ 刪除此群組</button>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 items-center mb-3">
+                                <div v-for="item in group.items" :key="item" class="inline-flex items-center text-sm bg-gray-50 border rounded px-2.5 py-1 transition-colors">
+                                    <input type="checkbox" :value="item" v-model="selectedElements" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-2">
+                                    <span class="mr-1.5">{{ item }}</span>
+                                    <span @click.stop="removeItemFromGroup(group.id, item)" class="text-gray-400 hover:text-red-500 font-bold cursor-pointer text-xs" title="刪除此元素">×</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <input type="text" v-model="groupInputs[group.id]" @keyup.enter="addItemToGroup(group.id)" placeholder="輸入新元素（多個請用逗號隔開），按 Enter 加入..." class="w-full px-2.5 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                <button @click="addItemToGroup(group.id)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded border">加入</button>
+                            </div>
+                        </div>
+
+                        <div v-if="currentTemplateGroups.length === 0" class="text-center py-6 text-sm text-gray-400 bg-gray-50 rounded-lg border border-dashed">
+                            目前沒有任何可選元素。請點擊右上角「+ 新增可選元素群組」開始建立！
+                        </div>
+                    </div>
+                    <div v-else class="text-gray-400 text-center py-20">
+                        請從左側選擇一個主模板開始組合
+                    </div>
+                </div>
+
+                <div class="mt-6 border-t pt-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2">最終組合結果 (即時生成)：</div>
+                    <div class="flex gap-2">
+                        <textarea readonly class="w-full p-3 bg-gray-900 text-green-400 font-mono text-sm rounded-lg border focus:outline-none min-h-[80px] resize-none" :value="combinedPrompt"></textarea>
+                        <button @click="copyToClipboard" :disabled="!combinedPrompt" :class="['px-6 rounded-lg font-semibold text-sm transition-colors shadow flex items-center justify-center', combinedPrompt ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed']">
+                            {{ copyStatus }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="isModalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-lg max-w-lg w-full p-5 shadow-xl space-y-4">
+                <h3 class="text-lg font-semibold text-gray-900 border-b pb-2">
+                    {{ modalMode === 'add' ? '新增提示詞模板' : '編輯提示詞模板' }}
+                </h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">模板名稱 *</label>
+                        <input type="text" v-model="modalTpl.name" placeholder="例如：日式插畫女僕" class="w-full px-3 py-1.5 border text-sm rounded">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">基礎提示詞 (用逗號隔開) *</label>
+                        <textarea v-model="modalTpl.base_prompt" placeholder="例如：masterpiece, 1girl, maid" class="w-full px-3 py-1.5 border text-sm rounded h-24 font-mono"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">模板標籤 (用空格或逗號隔開)</label>
+                        <input type="text" v-model="modalTpl.tagsInput" placeholder="例如：女僕 插畫" class="w-full px-3 py-1.5 border text-sm rounded">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 border-t pt-3">
+                    <button @click="closeModal" class="px-3 py-1.5 border text-sm rounded text-gray-600 hover:bg-gray-50">取消</button>
+                    <button @click="saveTemplate" class="px-4 py-1.5 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted, watch } = Vue;
+
+        createApp({
+            setup() {
+                const defaultDb = {
+                    elements: {
+                        "g_default_1": { id: "g_default_1", template_id: "tpl_001", group_name: "裙子款式", items: ["長裙", "短裙"] },
+                        "g_default_2": { id: "g_default_2", template_id: "tpl_001", group_name: "女僕裝風格", items: ["英式女僕裝", "法式女僕裝", "大正女僕裝"] }
+                    },
+                    templates: [
+                        {
+                            id: "tpl_001",
+                            name: "日式插畫女僕",
+                            base_prompt: "日式插畫風格, 女僕, 三人",
+                            tags: ["女僕", "插畫"]
+                        }
+                    ]
+                };
+
+                const db = ref(defaultDb);
+                const currentTemplate = ref(null);
+                const selectedElements = ref([]);
+                
+                const groupInputs = ref({});
+                const searchQuery = ref('');
+                const selectedTagFilter = ref('');
+                
+                // 彈窗控制升級：單一彈窗處理 Add / Edit
+                const isModalOpen = ref(false);
+                const modalMode = ref('add'); // 'add' 或 'edit'
+                const editingTplId = ref(null); // 紀錄目前正在編輯哪一個 ID
+                const modalTpl = ref({ name: '', base_prompt: '', tagsInput: '' });
+
+                const copyStatus = ref('一鍵複製');
+                const fileInput = ref(null);
+
+                // 同步至 LocalStorage
+                onMounted(() => {
+                    const localData = localStorage.getItem('txt2img_prompt_db_v5');
+                    if (localData) {
+                        try { db.value = JSON.parse(localData); } catch(e) { console.error(e); }
+                    }
+                });
+
+                watch(db, (newVal) => {
+                    localStorage.setItem('txt2img_prompt_db_v5', JSON.stringify(newVal));
+                }, { deep: true });
+
+                // 計算所有標籤
+                const allTags = computed(() => {
+                    const tagsSet = new Set();
+                    db.value.templates.forEach(t => t.tags && t.tags.forEach(tag => tagsSet.add(tag)));
+                    return Array.from(tagsSet);
+                });
+
+                // 搜尋篩選模板
+                const filteredTemplates = computed(() => {
+                    return db.value.templates.filter(t => {
+                        const matchQuery = t.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+                                           t.base_prompt.toLowerCase().includes(searchQuery.value.toLowerCase());
+                        const matchTag = selectedTagFilter.value ? t.tags.includes(selectedTagFilter.value) : true;
+                        return matchQuery && matchTag;
+                    });
+                });
+
+                // 「即時動態獲取」當前模板所擁有的元素群組
+                const currentTemplateGroups = computed(() => {
+                    if (!currentTemplate.value) return [];
+                    return Object.values(db.value.elements).filter(g => g.template_id === currentTemplate.value.id);
+                });
+
+                // 組合輸出 Prompt
+                const combinedPrompt = computed(() => {
+                    if (!currentTemplate.value) return '';
+                    let prompt = currentTemplate.value.base_prompt;
+                    if (selectedElements.value.length > 0) {
+                        prompt += ', ' + selectedElements.value.join(', ');
+                    }
+                    return prompt;
+                });
+
+                const selectTemplate = (tpl) => {
+                    currentTemplate.value = tpl;
+                    selectedElements.value = []; // 清空前一次的勾選
+                    // 初始化動態輸入框
+                    groupInputs.value = {};
+                };
+
+                const toggleTagFilter = (tag) => { selectedTagFilter.value = tag; };
+
+                // 刪除主模板及連帶的群組資料
+                const deleteTemplate = (id) => {
+                    if(confirm("確定要刪除此模板嗎？這會連同其底下的元素細節一併刪除。")) {
+                        db.value.templates = db.value.templates.filter(t => t.id !== id);
+                        Object.keys(db.value.elements).forEach(gid => {
+                            if (db.value.elements[gid].template_id === id) {
+                                delete db.value.elements[gid];
+                            }
+                        });
+                        if (currentTemplate.value?.id === id) currentTemplate.value = null;
+                    }
+                };
+
+                // 【動態功能】為目前模板新增一個元素群組
+                const addNewGroup = () => {
+                    const groupName = prompt("請輸入新元素群組的名稱（例如：天氣、光影、相機視角）：");
+                    if (!groupName || !groupName.trim()) return;
+
+                    const gId = "g_" + Date.now();
+                    db.value.elements[gId] = {
+                        id: gId,
+                        template_id: currentTemplate.value.id,
+                        group_name: groupName.trim(),
+                        items: []
+                    };
+                };
+
+                // 【優化】顯性修改群組名稱按鈕
+                const renameGroup = (groupId) => {
+                    const oldName = db.value.elements[groupId].group_name;
+                    const newName = prompt(`請輸入新的群組名稱：`, oldName);
+                    if (newName && newName.trim() && newName.trim() !== oldName) {
+                        db.value.elements[groupId].group_name = newName.trim();
+                    }
+                };
+
+                const deleteGroup = (groupId) => {
+                    if(confirm("確定要刪除這整個元素群組嗎？")) {
+                        // 先把已被勾選的該群組元素過濾掉，避免殘留在最終 prompt 裡
+                        const itemsToRemove = db.value.elements[groupId].items;
+                        selectedElements.value = selectedElements.value.filter(e => !itemsToRemove.includes(e));
+                        delete db.value.elements[groupId];
+                    }
+                };
+
+                // 【動態功能】往群組內加新元素項
+                const addItemToGroup = (groupId) => {
+                    const inputVal = groupInputs.value[groupId];
+                    if (!inputVal || !inputVal.trim()) return;
+
+                    // 支援用逗號一次性輸入多個元素
+                    const newItems = inputVal.split(',').map(i => i.trim()).filter(Boolean);
+                    newItems.forEach(item => {
+                        if (!db.value.elements[groupId].items.includes(item)) {
+                            db.value.elements[groupId].items.push(item);
+                        }
+                    });
+                    groupInputs.value[groupId] = ''; // 清空輸入框
+                };
+
+                // 【動態功能】刪除群組內的單一元素
+                const removeItemFromGroup = (groupId, item) => {
+                    db.value.elements[groupId].items = db.value.elements[groupId].items.filter(i => i !== item);
+                    selectedElements.value = selectedElements.value.filter(e => e !== item); // 如果有勾選，一併移除
+                };
+
+                // 一鍵複製
+                const copyToClipboard = () => {
+                    navigator.clipboard.writeText(combinedPrompt.value).then(() => {
+                        copyStatus.value = '已複製！';
+                        setTimeout(() => { copyStatus.value = '一鍵複製'; }, 2000);
+                    });
+                };
+
+                // 【全新彈窗控制邏輯】
+                const openAddModal = () => {
+                    modalMode.value = 'add';
+                    modalTpl.value = { name: '', base_prompt: '', tagsInput: '' };
+                    isModalOpen.value = true;
+                };
+
+                const openEditModal = (tpl) => {
+                    modalMode.value = 'edit';
+                    editingTplId.value = tpl.id;
+                    // 自動帶入當前選中模板的舊設定
+                    modalTpl.value = {
+                        name: tpl.name,
+                        base_prompt: tpl.base_prompt,
+                        tagsInput: tpl.tags ? tpl.tags.join(' ') : ''
+                    };
+                    isModalOpen.value = true;
+                };
+
+                const closeModal = () => {
+                    isModalOpen.value = false;
+                    editingTplId.value = null;
+                };
+
+                // 儲存（新增與編輯共用此邏輯）
+                const saveTemplate = () => {
+                    if (!modalTpl.value.name || !modalTpl.value.base_prompt) {
+                        alert("請填寫模板名稱與基礎提示詞！");
+                        return;
+                    }
+
+                    const tags = modalTpl.value.tagsInput 
+                        ? modalTpl.value.tagsInput.replace(/,/g, ' ').split(' ').map(t => t.trim()).filter(Boolean)
+                        : [];
+
+                    if (modalMode.value === 'add') {
+                        // 新增邏輯
+                        db.value.templates.push({
+                            id: "tpl_" + Date.now(),
+                            name: modalTpl.value.name,
+                            base_prompt: modalTpl.value.base_prompt,
+                            tags: tags
+                        });
+                    } else if (modalMode.value === 'edit') {
+                        // 編輯邏輯：找到對應的舊模板並用新值覆蓋
+                        const targetTpl = db.value.templates.find(t => t.id === editingTplId.value);
+                        if (targetTpl) {
+                            targetTpl.name = modalTpl.value.name;
+                            targetTpl.base_prompt = modalTpl.value.base_prompt;
+                            targetTpl.tags = tags;
+                        }
+                    }
+
+                    closeModal();
+                };
+
+                // JSON 匯入匯出
+                const exportData = () => {
+                    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db.value, null, 2));
+                    const downloadAnchor = document.createElement('a');
+                    downloadAnchor.setAttribute("href", dataStr);
+                    downloadAnchor.setAttribute("download", `prompt_manager_v5_${new Date().toISOString().slice(0,10)}.json`);
+                    document.body.appendChild(downloadAnchor);
+                    downloadAnchor.click();
+                    downloadAnchor.remove();
+                };
+
+                const triggerImport = () => { fileInput.value.click(); };
+                const importData = (event) => {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const importedJson = JSON.parse(e.target.result);
+                            if (importedJson.templates && importedJson.elements) {
+                                db.value = importedJson;
+                                currentTemplate.value = null;
+                                alert("匯入成功！");
+                            } else { alert("無效的資料格式！"); }
+                        } catch (err) { alert("讀取檔案失敗。"); }
+                    };
+                    reader.readAsText(file);
+                };
+
+                return {
+                    db, currentTemplate, selectedElements, groupInputs, searchQuery, selectedTagFilter, allTags, filteredTemplates, currentTemplateGroups, combinedPrompt, isModalOpen, modalMode, modalTpl, copyStatus, fileInput,
+                    selectTemplate, toggleTagFilter, deleteTemplate, copyToClipboard, openAddModal, openEditModal, closeModal, saveTemplate, exportData, triggerImport, importData,
+                    addNewGroup, renameGroup, deleteGroup, addItemToGroup, removeItemFromGroup
+                };
+            }
+        }).mount('#app');
+    </script>
+
+    <style>
+        [v-cloak] { display: none; }
+    </style>
+</body>
+</html>
