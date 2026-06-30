@@ -85,8 +85,33 @@
             outline: none;
         }
 
+        /* Form Switch (product_status) */
+        .form-switch .form-check-input {
+            width: 2.75em;
+            height: 1.5em;
+            background-color: #E2E2E2;
+            border: none;
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .form-switch .form-check-input:checked {
+            background-color: #06C167;
+            border-color: #06C167;
+        }
+        .form-switch .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(6, 193, 103, 0.15);
+            border-color: transparent;
+        }
+        .form-check-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1F2124;
+            padding-left: 0.5rem;
+            cursor: pointer;
+        }
+
         /* Customize valid/invalid styling to be Uber-like */
-        .is-valid {
+        .is-valid:not(#topping_group, #supply_group) {
             border-color: #06C167 !important;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2306C167' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") !important;
         }
@@ -111,6 +136,22 @@
             font-weight: 500;
             font-size: 0.85rem;
             margin-top: 0.25rem;
+        }
+
+        /* topping_group & supply_group valid/invalid border */
+        #topping_group, #supply_group {
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        #topping_group.is-valid, #supply_group.is-valid {
+            border-color: #06C167;
+            background-color: rgba(6, 193, 103, 0.04);
+        }
+        #topping_group.is-invalid, #supply_group.is-invalid {
+            border-color: #E03C31;
+            background-color: rgba(224, 60, 49, 0.04);
         }
 
         /* Special styles for product_name label color matching valid/invalid state */
@@ -252,6 +293,71 @@
                     <div class="invalid-feedback">請選擇容量</div>
                 </div>
 
+                <div class="mb-3 form-check form-switch">
+                    <input type="checkbox" id="product_status" class="form-check-input" checked>
+                    <labe for="" id="product_status_label" class="form-check-label">目前狀態：上架</labe>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-label fw-900">選擇配料（必選）</div>
+                    <div id="topping_group" class="is-invalid">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="珍珠">
+                            <lable for="" class="form-check-lable">珍珠</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="波霸">
+                            <lable for="" class="form-check-lable">波霸</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="椰果">
+                            <lable for="" class="form-check-lable">椰果</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="蒟蒻">
+                            <lable for="" class="form-check-lable">蒟蒻</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="仙草">
+                            <lable for="" class="form-check-lable">仙草</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="茶凍">
+                            <lable for="" class="form-check-lable">茶凍</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="奶蓋">
+                            <lable for="" class="form-check-lable">奶蓋</lable>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input topping_item" value="不加料" id="none_topping">
+                            <lable for="" class="form-check-lable">不加料</lable>
+                        </div>
+                    </div>
+                    <div class="valid-feedback">已確認選項</div>
+                    <div class="invalid-feedback">至少選個不加料吧</div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-label fw-900">選擇供應方式</div>
+                    <div id="supply_group" class="is-invalid">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input supply_option" name="supply_option" value="冷飲">
+                            <lable for="" class="form-check-label">冷飲</lable>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input supply_option" name="supply_option" value="熱飲">
+                            <lable for="" class="form-check-label">熱飲</lable>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input supply_option" name="supply_option" value="冷熱皆可">
+                            <lable for="" class="form-check-label">冷熱皆可</lable>
+                        </div>
+                    </div>
+                    <div class="valid-feedback">已選擇供應方式</div>
+                    <div class="invalid-feedback">未選擇供應方式</div>
+                </div>
+
                 <div class="text-end mt-4">
                     <button class="btn btn-secondary" id="useless_btn">取消</button>
                     <button class="btn btn-primary" id="confirm_btn">確認</button>
@@ -259,15 +365,20 @@
             </div>
         </div>
 
-        <div class="row mt-5 m-3 justify-content-center" id="product_detail" style="display:none">
+        <div class="row mt-5 m-3 justify-content-center d-none" id="product_detail">
             <div class="display-5 fw-900 text-center text-bg-success py-2 rounded-5">飲料產品建檔 - 明細確認</div>
             <div class="col-md-6">
                 <div id="showmessage"></div>
+                <div class="text-end mt-4">
+                    <button class="btn btn-secondary" id="useless_btn2">取消</button>
+                    <button class="btn btn-primary" id="upload_btn">送出</button>
+                </div>
             </div>
         </div>
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-4.0.0.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
     <script>
         $(function () {
             // 雖然老師說用全域變數，但應該用 hasClass 處理就好
@@ -276,6 +387,9 @@
             // let flag_product_spec = false;
             // let flag_product_size = false;
 
+            /***************
+             *** 檢查欄位 ***
+             ***************/
             // 監聽 #product_name
             $("#product_name").on("input", function () {
                 // let product_name = $(this).val().trim();
@@ -324,30 +438,106 @@
                 $(this).addClass("is-valid"); //非必要
             });
 
+            $("#product_status").on("change", function () {
+                let product_status = $(this).prop("checked");
+
+                if (product_status) {
+                    $("#product_status_label").text("目前狀態：上架");
+                }
+                else {
+                    $("#product_status_label").text("目前狀態：下架");
+                }
+            });
+
+            // 監聽 class="topping_item"
+            $(".topping_item").on("change", function () {
+                // 判斷是否有選擇配料
+                let topping_item_number = $(".topping_item:checked").length;
+
+                $("#topping_group")
+                    .toggleClass("is-valid", topping_item_number >0)
+                    .toggleClass("is-invalid", topping_item_number <= 0); //< 0 ??
+
+                //TODO:
+                // 特殊處理：不加料時取消其他選項，選擇其他選項時取消不加料
+                if ($(this).prop("checked"))
+                {
+                    if ($(this).val() == "不加料") {
+                        // 取消其他加料
+                        $(".topping_item:checked").each(function () {
+                            if ($(this).val() != "不加料") {
+                                $(this).prop("checked", false);
+                            };
+                        });
+                    } else {
+                        // 取消不加料
+                        $(".topping_item:checked").each(function () {
+                            if ($(this).val() == "不加料") {
+                                $(this).prop("checked", false);
+                            };
+                        });
+                    }
+                }
+            });
+
+            $(".supply_option").on("change", function () {
+                if ($(".supply_option:checked").val() != undefined) {
+                    $("#supply_group").addClass("is-valid").removeClass("is-invalid");
+                }
+                //radio 不可能再被一般操作取消，不做 invalid 處理
+            });
+
+            /***************
+             *** 確認訂單 ***
+             ***************/
             $("#confirm_btn").on("click", function () {
                 $("#showmessage").empty();
 
+                // 不管有沒有 is-invalid，只要沒有 is-valid 就算錯誤
                 if ($("#product_name").hasClass('is-valid') == false
                     || $("#product_number").hasClass('is-valid') == false
                     || $("#product_spec").hasClass('is-valid') == false
-                    || $("#product_size").hasClass('is-valid') == false) {
-                    $("#product_detail").hide();
-                    alert("輸入資料有誤，請重新確認");
+                    || $("#product_size").hasClass('is-valid') == false
+                    || $("#topping_group").hasClass('is-valid') == false
+                    || $("#supply_group").hasClass('is-valid') == false) {
+
+                    // $("#product_detail").hide(); //用 style="display:none" 的基本 JS 寫法
+                    $("#product_detail").addClass("d-none");
+
+                    // alert("輸入資料有誤，請重新確認");
+                    Swal.fire({
+                        title: "錯誤",
+                        text: "輸入資料有誤，請重新確認",
+                        icon: "error"
+                    });
+
                     return;
                 };
 
                 let product_name = $("#product_name").val().trim();
                 let product_number = Number($("#product_number").val());
                 let product_spec = $("#product_spec").val().trim();
-                let product_size = $("#product_size").val().trim();
+                let product_size = $("#product_size").val();
+                let product_status = $("#product_status").prop("checked") ? "上架" : "下架";
+
+                let topping_array = [];
+                $(".topping_item:checked").each(function () {
+                    topping_array.push($(this).val());
+                });
+
+                let supply_option = $(".supply_option:checked").val();
 
                 let message_html = `<h3>產品名稱：${product_name}</h3>
                     <h3>產品數量：${product_number}</h3>
                     <h3>產品規格：${product_spec}</h3>
-                    <h3>產品尺寸：${product_size}</h3>`;
+                    <h3>產品尺寸：${product_size}</h3>
+                    <h3>目前狀態：${product_status}</h3>
+                    <h3>選擇配料：${topping_array.join(", ")}</h3>
+                    <h3>供應方式：${supply_option}</h3>`;
 
                 $("#showmessage").html(message_html);
-                $("#product_detail").toggle();
+                // $("#product_detail").toggle(); //用 style="display:none" 的基本 JS 寫法
+                $("#product_detail").removeClass("d-none");
             });
         });
     </script>
