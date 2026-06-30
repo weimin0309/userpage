@@ -16,68 +16,450 @@
         /* s01: 自我介紹 */
         .s01 {
             background-color: var(--color-bg-secondary);
-            height: 100vh;
+            min-height: 100vh;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 80px 10%;
         }
 
-        .s01 .box01 {
-            width: 200px;
-            height: 200px;
-            background-color: var(--color-surface);
+        /* 裝飾性漸層光暈 */
+        .s01::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -200px;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: s01-glow-pulse 6s ease-in-out infinite alternate;
         }
 
-        .s01 .box02 {
-            width: 200px;
-            height: 200px;
-            background-color: var(--color-surface);
+        .s01::after {
+            content: '';
             position: absolute;
-            top: 0;
-            right: 0;
+            bottom: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+            animation: s01-glow-pulse 8s ease-in-out infinite alternate-reverse;
         }
 
-        .s01 .box03 {
-            width: 200px;
-            height: 200px;
-            background-color: var(--color-surface);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            ;
+        @keyframes s01-glow-pulse {
+            from { opacity: 0.6; transform: scale(1); }
+            to   { opacity: 1;   transform: scale(1.15); }
         }
 
-        .s01 .box04 {
-            width: 200px;
-            height: 200px;
-            background-color: var(--color-surface);
+        /* 主體兩欄佈局 */
+        .s01-inner {
+            max-width: var(--max-width);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 64px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 左欄：頭像 */
+        .s01-avatar-col {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .s01-avatar-wrap {
+            position: relative;
+            width: 240px;
+            height: 240px;
+        }
+
+        /* 旋轉邊框光環 */
+        .s01-avatar-ring {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--color-primary) 0deg,
+                var(--color-secondary) 120deg,
+                var(--color-accent) 240deg,
+                var(--color-primary) 360deg
+            );
+            animation: s01-ring-spin 8s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes s01-ring-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .s01-avatar-bg {
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background-color: var(--color-bg-secondary);
+            z-index: 1;
         }
 
         .s01 .userImg {
-            background-color: var(--color-primary);
-            background-image: url(images/alex-knight-2EJCSULRwC8-unsplash.jpg);
-            background-position: center;
-            background-size: cover;
-
             position: absolute;
-            top: 100px;
-            bottom: 100px;
-            left: 100px;
-            right: 100px;
-
-            border-radius: var(--radius-lg);
-            box-shadow: 2px 2px 2px 2px var(--shadow-lg);
+            inset: 6px;
+            border-radius: 50%;
+            background-image: url(images/alex-knight-2EJCSULRwC8-unsplash.jpg);
+            background-position: center top;
+            background-size: cover;
+            z-index: 2;
+            box-shadow: var(--shadow-md);
         }
 
-        .userText {
+        /* 技能標籤 */
+        .s01-skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .s01-skill-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            background-color: var(--color-surface);
+            transition: all 0.2s ease;
+        }
+
+        .s01-skill-tag:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* 右欄：文字 */
+        .s01-text-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .s01-text-col h1 {
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800;
+            color: var(--color-text);
+            margin: 0;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .s01-title-accent {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .s01-subtitle {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .s01-quote {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            font-style: italic;
+            line-height: 1.7;
+            border-left: 3px solid var(--color-primary);
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        /* 工作經歷卡片 */
+        .s01-experience {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .s01-exp-label {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2px;
+        }
+
+        .s01-exp-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            transition: all 0.25s ease;
+        }
+
+        .s01-exp-item:hover {
+            border-color: var(--color-primary);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .s01-exp-period {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-secondary);
+            white-space: nowrap;
+            flex: 0 0 auto;
+            margin-top: 2px;
+        }
+
+        .s01-exp-detail {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .s01-exp-detail strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        /* 滾動提示 */
+        .s01-scroll-hint {
             position: absolute;
-            top: 55%;
-            left: 30%;
-            right: 30%;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--color-text-muted);
+            font-size: 12px;
+            animation: s01-scroll-bounce 2s ease-in-out infinite;
+        }
+
+        .s01-scroll-hint i {
+            font-size: 16px;
+        }
+
+        @keyframes s01-scroll-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ===== 照片橫向捲動列 ===== */
+        .s01-photos {
+            /* 讓容器不超出右欄寬度 */
+            overflow-x: auto;
+            overflow-y: hidden;
+            /* 隱藏捲軸，但保留可捲動能力 */
+            scrollbar-width: none;        /* Firefox */
+            -ms-overflow-style: none;     /* IE/Edge */
+            /* 保持單列排列 */
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 10px;
+            /* 觸控順滑捲動 */
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            /* 左右 padding 讓邊緣照片有呼吸感 */
+            padding: 4px 2px 8px;
+            /* 讓容器能延伸到邊緣 */
+            margin: 0 -2px;
+        }
+
+        /* 隱藏 WebKit 捲軸 */
+        .s01-photos::-webkit-scrollbar {
+            display: none;
+        }
+
+        .s01-photos img {
+            /* 固定寬高，不壓縮 */
+            flex: 0 0 auto;
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            transition: filter 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            filter: brightness(0.82) saturate(0.85);
+            cursor: pointer;
+            /* 每張對齊捲動停靠點 */
+            scroll-snap-align: start;
+        }
+
+        .s01-photos img:hover {
+            filter: brightness(1) saturate(1.15);
+            border-color: var(--color-secondary);
+            transform: scale(1.05);
+        }
+
+        /* 滑動提示標籤（桌機可見，手機也保留） */
+        .s01-photos-hint {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--color-text-muted);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.7;
+        }
+
+        .s01-photos-hint i {
+            font-size: 12px;
+        }
+
+        /* ===== Lightbox ===== */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            cursor: zoom-out;
+            /* hidden by default */
+            pointer-events: none;
+            transition: background 0.35s ease;
+        }
+
+        .lightbox-overlay.is-open {
+            background: rgba(0, 0, 0, 0.88);
+            pointer-events: all;
+        }
+
+        .lightbox-overlay img {
+            max-width: min(90vw, 960px);
+            max-height: 85vh;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            object-fit: contain;
+            transform: scale(0.75);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        opacity  0.3s ease;
+        }
+
+        .lightbox-overlay.is-open img {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* 關閉按鈕 */
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 28px;
+            color: var(--color-text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .lightbox-overlay.is-open .lightbox-close {
+            opacity: 1;
+        }
+
+        .lightbox-close:hover {
+            color: var(--color-text);
+            transform: scale(1.15);
+        }
+
+        /* ===== RWD：手機版 (≤ 768px) ===== */
+        @media (max-width: 768px) {
+
+            /* s01 改為單欄垂直 */
+            .s01 {
+                padding: 100px 6% 80px;
+                align-items: flex-start;
+            }
+
+            .s01-inner {
+                flex-direction: column;
+                align-items: center;
+                gap: 36px;
+                text-align: center;
+            }
+
+            /* 縮小頭像 */
+            .s01-avatar-wrap {
+                width: 180px;
+                height: 180px;
+            }
+
+            /* 標題字縮小 */
+            .s01-text-col h1 {
+                font-size: clamp(28px, 7vw, 36px);
+            }
+
+            .s01-subtitle {
+                font-size: 15px;
+            }
+
+            /* 引言靠左對齊 */
+            .s01-quote {
+                text-align: left;
+            }
+
+            /* 經歷 hover 效果在手機取消位移（避免橫向溢出）*/
+            .s01-exp-item:hover {
+                transform: none;
+            }
+
+            /* s02 s03 padding 縮小 */
+            .s02, .s03 {
+                padding: 60px 6%;
+            }
+
+            .s02 h2, .s03 h2 {
+                font-size: 28px;
+            }
+
+            /* 滾動提示在手機版隱藏（底部空間小）*/
+            .s01-scroll-hint {
+                display: none;
+            }
+        }
+
+        /* 超小螢幕 (≤ 480px) */
+        @media (max-width: 480px) {
+            .s01 {
+                padding: 90px 5% 70px;
+            }
+
+            .s01-avatar-wrap {
+                width: 150px;
+                height: 150px;
+            }
+
+            .s01-exp-period {
+                font-size: 11px;
+            }
         }
 
         /* s02: 作品集 */
@@ -238,19 +620,76 @@
 
 <body>
     <section class="s01">
-        <div class="box01"></div>
-        <div class="box02"></div>
-        <div class="box03"></div>
-        <div class="box04"></div>
+        <div class="s01-inner">
+            <!-- 左欄：頭像 -->
+            <div class="s01-avatar-col">
+                <div class="s01-avatar-wrap">
+                    <div class="s01-avatar-ring"></div>
+                    <div class="s01-avatar-bg"></div>
         <div class="userImg"></div>
-        <div class="userText">
-            <h1>42號混凝土</h1>
-            <hr>
-            <h2>專長：C/C++</h2>
-            <h2>興趣：吃飯睡覺打東東</h2>
-            <p>不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。 －－Rick Astley</p>
+                </div>
+                <div class="s01-skills">
+                    <span class="s01-skill-tag">C/C++</span>
+                    <span class="s01-skill-tag">Python</span>
+                    <span class="s01-skill-tag">Qt6</span>
+                    <span class="s01-skill-tag">Algorithm</span>
+                    <span class="s01-skill-tag">ML</span>
+                </div>
+            </div>
+
+            <!-- 右欄：文字 -->
+            <div class="s01-text-col">
+                <div>
+                    <h1>42號混凝土<br><span class="s01-title-accent">Software Engineer</span></h1>
+                    <p class="s01-subtitle">興趣：吃飯睡覺打東東 · C/C++ / Python / Qt6</p>
+                </div>
+
+                <blockquote class="s01-quote">
+                    不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。<br>
+                    <span style="font-size:13px;">—— Rick Astley</span>
+                </blockquote>
+
+                <div class="s01-experience">
+                    <div class="s01-exp-label">工作經歷</div>
+                    <div class="s01-exp-item">
+                        <span class="s01-exp-period">2016–2024</span>
+                        <p class="s01-exp-detail"><strong>鼎新電腦 / 鼎華系統</strong> · APS 先進排程規劃 · C++(98)</p>
+                    </div>
+                    <div class="s01-exp-item">
+                        <span class="s01-exp-period">2024–2025</span>
+                        <p class="s01-exp-detail"><strong>康翔電腦 / DXC / NCCC</strong> · 清算系統 · C、Pro*C</p>
+                    </div>
+                    <div class="s01-exp-item">
+                        <span class="s01-exp-period">2025–2026</span>
+                        <p class="s01-exp-detail"><strong>柏輝科技</strong> · VBS4 遊戲式軍事模擬引擎 · C++、Qt6</p>
+                    </div>
+                </div>
+
+                <div class="s01-photos" id="photoStrip">
+                    <img src="images/asurada_GSX_01.jpg" alt="asurada 01" onclick="openLightbox(this)">
+                    <img src="images/asurada_GSX_02.jpg" alt="asurada 02" onclick="openLightbox(this)">
+                    <img src="images/asurada_GSX_03.jpg" alt="asurada 03" onclick="openLightbox(this)">
+                    <!-- 新增照片：複製上一行並換 src 即可，版型不會跑掉 -->
+                </div>
+                <div class="s01-photos-hint">
+                    <i class="fas fa-arrows-left-right"></i>
+                    <span>滑動瀏覽更多</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滾動提示 -->
+        <div class="s01-scroll-hint">
+            <i class="fas fa-chevron-down"></i>
+            <span>Scroll</span>
         </div>
     </section>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();" aria-label="關閉">&#x2715;</button>
+        <img id="lightboxImg" src="" alt="放大檢視">
+    </div>
 
     <section class="s02">
         <h2>我ㄉ作品</h2>
@@ -397,4 +836,27 @@
     </section>
 </body>
 
+<script>
+    const overlay  = document.getElementById('lightboxOverlay');
+    const lbImg    = document.getElementById('lightboxImg');
+
+    function openLightbox(imgEl) {
+        lbImg.src = imgEl.src;
+        lbImg.alt = imgEl.alt;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden'; /* 防止背景捲動 */
+    }
+
+    function closeLightbox() {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        /* 等動畫結束後清空 src，避免閃爍 */
+        setTimeout(() => { lbImg.src = ''; }, 350);
+    }
+
+    /* ESC 鍵關閉 */
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+</script>
 </html>
