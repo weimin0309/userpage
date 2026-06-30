@@ -509,7 +509,7 @@
                     || $("#topping_group").hasClass('is-valid') == false
                     || $("#supply_group").hasClass('is-valid') == false) {
 
-                    // $("#product_detail").hide(); //用 style="display:none" 的基本 JS 寫法
+                    // $("#product_detail").hide(); //用 style="display:none" 的 vanilla JS 寫法
                     $("#product_detail").addClass("d-none");
 
                     // alert("輸入資料有誤，請重新確認");
@@ -562,7 +562,7 @@
                     <h3>供應方式：${supply_option}</h3>`;
 
                 $("#showmessage").html(message_html);
-                // $("#product_detail").toggle(); //用 style="display:none" 的基本 JS 寫法
+                // $("#product_detail").toggle(); //用 style="display:none" 的 vanilla JS 寫法
                 $("#product_detail").removeClass("d-none");
             });
 
@@ -573,13 +573,11 @@
                 axios.post('http://localhost:3000/product', product_data)
                 .then(function (response) {
                     if (response.status == 201) {
-                        // console.log(response);
                         Swal.fire({
                             title: "新增成功",
                             showDenyButton: false,
                             showCancelButton: false,
                             confirmButtonText: "確認",
-                            // dennyButtonText: "Don't save",
                             icon: "success"
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -589,13 +587,11 @@
                     }
                 })
                 .catch(function (error) {
-                        // console.log(response);
                         Swal.fire({
                             title: "新增失敗",
                             showDenyButton: false,
                             showCancelButton: false,
                             confirmButtonText: "確認",
-                            // dennyButtonText: "Don't save",
                             icon: "error"
                         }).then((result) => {
                             // do nothing
