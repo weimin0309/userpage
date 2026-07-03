@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>產品列表</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <!-- <link rel="stylesheet" href="css/ch11_product_system.css"> -->
+    <style>
+        /* 產品列表設定 */
+        /* 覆寫 ch11_product_system.css 設定 */
+        /* body {
+            background-color: #f4f6f9;
+            font-family: "Microsoft JhengHei", sans-serif;
+        } */
+
+        /* 覆寫 ch11_product_system.css 設定 */
+        .container {
+            max-width: 75%;
+            padding-bottom: 5rem;
+        }
+
+        .box01 {
+            margin-top: 40px;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .erp-table {
+            margin-bottom: 0;
+        }
+
+        .erp-table caption {
+            caption-side: top;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+
+        .erp-table thead {
+            background-color: #212529;
+            color: white;
+        }
+
+        .erp-table th,
+        .erp-table td {
+            vertical-align: middle;
+        }
+
+        .product-id {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .status-active {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .status-stop {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #fd7e14;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            .table-rwd thead,
+            .table-rwd caption {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                margin-top: 15px;
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                background-color: #fff;
+                padding: 10px;
+            }
+
+            .table-rwd tbody tr td,
+            .table-rwd tbody tr th {
+                display: block;
+                overflow: hidden;
+                border: none;
+            }
+
+            .table-rwd tbody tr td::before {
+                content: attr(data-th) "：";
+                font-size: 15px;
+                font-weight: bold;
+                color: #495057;
+                display: block;
+                float: left;
+                width: 35%;
+                text-align: right;
+                padding-right: 1rem;
+            }
+
+            .table-rwd tbody tr td span {
+                display: block;
+                float: left;
+                width: 65%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-chalkboard fa-xl"></i>Navbar</a>
+            <!--button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button-->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!--li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i
+                                class="fa-regular fa-house"></i>首頁</a>
+                    </li-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/20260625_ch11_form_JS.html"><i class="fa-solid fa-info"></i>產品建檔</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-info"></i>產品列表</a>
+                    </li>
+                </ul>
+                <!--form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form-->
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container box01 table">
+        <div class="section">
+            <table class="table mt-3 table-bordered table-hover table-striped table-rwd erp-table">
+                <caption>飲料 ERP 商品管理系統</caption>
+
+                <div class="d-flex justify-content-start align-items-center mt-4">
+                    <label for="" class="fw-bold me-2" id="testLabel">每頁顯示</label>
+                    <select name="" id="pageSizeSetting" class="form-select form-select-sm me-2" style="width: 80px;">
+                        <option value="3">3</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                    </select>
+                    <span>筆</span>
+                </div>
+
+                <thead class="table-dark">
+                    <tr>
+                        <th class="col">產品編號</th>
+                        <th class="col">產品名稱</th>
+                        <th class="col">產品數量</th>
+                        <th class="col">產品規格</th>
+                        <th class="col">產品尺寸</th>
+                        <th class="col">在售狀態</th>
+                        <th class="col">內容配料</th>
+                        <th class="col">供應方式</th>
+                        <th class="col">建立時間</th>
+                    </tr>
+                </thead>
+
+                <tbody id="productList">
+
+                    <tr>
+                        <th scope="row" class="product-id">DR001</th>
+                        <td data-th="產品名稱"><span>產品名稱</span></td>
+                        <td data-th="產品數量"><span>產品數量</span></td>
+                        <td data-th="產品規格"><span>產品規格</span></td>
+                        <td data-th="產品尺寸"><span>產品尺寸</span></td>
+                        <td data-th="在售狀態"><span>在售狀態</span></td>
+                        <td data-th="內容配料"><span>內容配料</span></td>
+                        <td data-th="供應方式"><span>供應方式</span></td>
+                        <td data-th="建立時間"><span>建立時間</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- <li class="page-item"><a class="page-link" href="#">上一頁</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一頁</a></li> -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <script>
+        //global variables
+        const pageState = {
+            productList: [],
+            pageSize: 5,
+            pageAmount: 0,
+            currentPage: 1
+        };
+
+        $(function () {
+            // tool script: 清理資料
+            const cleanText = (value, defaultValue) => {
+                const result = String(value ?? "").trim();
+                return result === "" ? defaultValue : result;
+            };
+
+            // 取得資料
+            const loadData = async(data_source_url) => {
+                try {
+                    const { data } = await axios.get(data_source_url);
+
+                    return data.map(element => ({
+                                id: element.id,
+                                name: cleanText(element.product_name, "傷心的感覺"),
+                                number: element.product_number ?? 1,
+                                spec: cleanText(element.product_spec, "全糖正常冰"),
+                                size: cleanText(element.size, "1000ml"),
+                                status: element.product_status ?? false,
+                                topping: element.topping ?? ["不加料"],
+                                supply_option: cleanText(element.supply_option, "冷熱皆可"),
+                                created_time: cleanText(element.created_time, "1999/01/01 00:00:01")
+                        }));
+                } catch (error) {
+                    Swal.fire("load data error");
+                    console.log(error);
+                    return [];
+                } //finally {
+                    //do nothing
+                // };
+            };
+
+            // 取出需要的資料
+            function getCurrentPageData() {
+                let indexStart = 0, indexEnd = 0;
+
+                indexStart = (pageState.currentPage - 1) * pageState.pageSize;
+                indexEnd = indexStart + pageState.pageSize;
+
+                return pageState.productList.slice(indexStart, indexEnd);
+            };
+
+            // 計算分頁數量，渲染分頁導覽
+            function renderPaginationNavbar () {
+                let strHTML = `<li class="page-item${ pageState.currentPage===1 ? " disabled" : ""}" data-page="${pageState.currentPage - 1}"><a class="page-link" href="#">上一頁</a></li>`;
+
+                for (let i = 1; i <= pageState.pageAmount; ++i)
+                {
+                    strHTML += `<li class="page-item${i===pageState.currentPage?" active":""}" data-page="${i}" id="page-${i}"><a class="page-link" href="#">${i}</a></li>`;
+                };
+
+                strHTML += `<li class="page-item${ pageState.currentPage===pageState.pageAmount ? " disabled" : ""}" data-page="${pageState.currentPage + 1}"><a class="page-link" href="#">下一頁</a></li>`;
+
+                $("#pagination").html(strHTML);
+            };
+
+            // 渲染畫面
+            const renderTable = pageData => {
+                let strHTML = '';
+                pageData.forEach(item => {
+                    strHTML += `<tr>
+                        <th scope="row" class="product-id">${item.id}</th>
+                        <td data-th="產品名稱"><span>${item.name}</span></td>
+                        <td data-th="產品數量"><span class="price">${item.number}</span></td>
+                        <td data-th="產品規格"><span>${item.spec}</span></td>
+                        <td data-th="產品尺寸"><span>${item.size}</span></td>
+                        <td data-th="在售狀態"><span class="${ item.status ? 'status-active' : 'status-stop'}">${ item.status ? "販售中" : "停止出售" }</span></td>
+                        <td data-th="內容配料"><span>${item.topping.join("、")}</span></td>
+                        <td data-th="供應方式"><span>${item.supply_option}</span></td>
+                        <td data-th="建立時間"><span>${item.created_time}</span></td>
+                    </tr>`;
+                });
+
+                $("#productList").html(strHTML);
+            };
+
+            // 渲染資料呈現區
+            const renderMainPage = () => {
+                renderPaginationNavbar();
+                let pageData = getCurrentPageData();
+                renderTable(pageData);
+            };
+
+            // 重整 pageState
+            const resetPageState = () => {
+                pageState.pageAmount = Math.ceil(pageState.productList.length / pageState.pageSize);
+                pageState.currentPage = 1;
+            };
+
+            // main()
+            $(async function () {
+                pageState.productList = await loadData("http://localhost:3000/product");
+
+                if (pageState.productList.length === 0)
+                {
+                    //loadData: Swal.fire("load data error");
+                    return;
+                }
+
+                pageState.pageAmount = Math.ceil(pageState.productList.length / pageState.pageSize);
+                renderMainPage();
+            });
+
+            // 監聽換頁行為
+            $(".pagination").on("click", ".page-item", function() {
+                let page = Number($(this).data("page"));
+
+                if (page === 0 || page === pageState.pageAmount+1)
+                {
+                    return;
+                }
+
+                pageState.currentPage = Math.min(Math.max(page, 1), pageState.pageAmount);
+
+                renderMainPage();
+            });
+
+            // 監聽選擇每頁顯示資料數量
+            $("#pageSizeSetting").on("change", function() {
+                pageState.pageSize = Number($(this).val());
+                resetPageState();
+                renderMainPage();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+/* Import premium font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+body {
+    background-color: #F6F6F6;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #000000;
+}
+
+/* Container & Card Styling */
+.container {
+    max-width: 800px;
+    padding-bottom: 5rem;
+}
+
+/* Main Header "產品建檔" */
+.display-4.text-bg-secondary {
+    background-color: #06C167 !important;
+    /* Uber Eats green */
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    border-radius: 16px;
+    font-size: 2.25rem;
+    letter-spacing: -0.5px;
+    box-shadow: 0 8px 24px rgba(6, 193, 103, 0.15);
+    margin-bottom: 2rem;
+    border: none;
+    padding: 1.25rem !important;
+}
+
+/* Form Card Container */
+.row.justify-content-center.m-4>.col-md-6 {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #E2E2E2;
+    width: 100%;
+    max-width: 550px;
+}
+
+/* Form Labels */
+.form-label {
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Form Controls (Inputs, Selects) */
+.form-control,
+.form-select {
+    border: 1px solid #E2E2E2;
+    background-color: #F6F6F6;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Floating label support */
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label {
+    color: #06C167;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.form-floating>label {
+    padding: 0.75rem 1rem;
+    color: #767676;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+/* Form Switch (product_status) */
+.form-switch .form-check-input {
+    width: 2.75em;
+    height: 1.5em;
+    background-color: #E2E2E2;
+    border: none;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #06C167;
+    border-color: #06C167;
+}
+
+.form-switch .form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(6, 193, 103, 0.15);
+    border-color: transparent;
+}
+
+.form-check-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1F2124;
+    padding-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* Customize valid/invalid styling to be Uber-like */
+.is-valid {
+    border-color: #06C167 !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2306C167' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") !important;
+}
+
+.is-valid:focus {
+    box-shadow: 0 0 0 3px rgba(6, 193, 103, 0.15) !important;
+}
+
+.valid-feedback {
+    color: #06C167;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.is-invalid {
+    border-color: #E03C31 !important;
+}
+
+.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(224, 60, 49, 0.15) !important;
+}
+
+.invalid-feedback {
+    color: #E03C31;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* topping_group & supply_group valid/invalid border */
+#topping_group,
+#supply_group {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+#topping_group.is-valid,
+#supply_group.is-valid {
+    border-color: #06C167;
+    background-color: rgba(6, 193, 103, 0.04);
+    /* 明確限制 SVG 勾勾的大小與位置，避免填滿整個 div */
+    background-repeat: no-repeat;
+    background-position: top 0.75rem right 0.75rem;
+    background-size: 1rem 1rem;
+}
+
+#topping_group.is-invalid,
+#supply_group.is-invalid {
+    border-color: #E03C31;
+    background-color: rgba(224, 60, 49, 0.04);
+    background-image: none;
+}
+
+/* Special styles for product_name label color matching valid/invalid state */
+#product_name.is-invalid~label {
+    color: #E03C31 !important;
+}
+
+#product_name.is-valid~label {
+    color: #06C167 !important;
+}
+
+
+/* Buttons Styling */
+.btn {
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    /* Pill shape */
+    font-size: 1rem;
+    transition: all 0.15s ease-in-out;
+    border: none;
+}
+
+#useless_btn.btn-secondary {
+    background-color: #EEEEEE !important;
+    color: #000000 !important;
+}
+
+#useless_btn.btn-secondary:hover {
+    background-color: #E2E2E2 !important;
+}
+
+#confirm_btn.btn-primary {
+    background-color: #000000 !important;
+    /* Uber black button style */
+    color: #ffffff !important;
+    margin-left: 0.75rem;
+}
+
+#confirm_btn.btn-primary:hover {
+    background-color: #1F2124 !important;
+    transform: translateY(-1px);
+}
+
+#confirm_btn.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Detail section styling */
+#product_detail {
+    margin-top: 3rem !important;
+}
+
+#product_detail .display-5.text-bg-success {
+    background-color: #06C167 !important;
+    font-weight: 800 !important;
+    font-size: 1.75rem;
+    border-radius: 12px !important;
+    padding: 1rem !important;
+    box-shadow: 0 4px 15px rgba(6, 193, 103, 0.1);
+}
+
+#product_detail .col-md-6 {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #E2E2E2;
+    width: 100%;
+    max-width: 550px;
+    margin-top: 1.5rem;
+}
+
+#showmessage h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.85rem;
+    color: #1F2124;
+    display: flex;
+    align-items: center;
+}
+
+#showmessage h3::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #06C167;
+    margin-right: 12px;
+}
