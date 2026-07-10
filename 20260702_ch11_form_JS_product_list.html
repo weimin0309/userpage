@@ -1,159 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>產品列表</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/all.min.css">
-    <!-- <link rel="stylesheet" href="css/ch11_product_system.css"> -->
-    <style>
-        /* 產品列表設定 */
-        /* 覆寫 ch11_product_system.css 設定 */
-        /* body {
-            background-color: #f4f6f9;
-            font-family: "Microsoft JhengHei", sans-serif;
-        } */
-
-        /* 覆寫 ch11_product_system.css 設定 */
-        .container {
-            max-width: 75%;
-            padding-bottom: 5rem;
-        }
-
-        .box01 {
-            margin-top: 40px;
-        }
-
-        .section {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .erp-table {
-            margin-bottom: 0;
-        }
-
-        .erp-table caption {
-            caption-side: top;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #343a40;
-            margin-bottom: 15px;
-        }
-
-        .erp-table thead {
-            background-color: #212529;
-            color: white;
-        }
-
-        .erp-table th,
-        .erp-table td {
-            vertical-align: middle;
-        }
-
-        .product-id {
-            font-weight: bold;
-            color: #0d6efd;
-        }
-
-        .status-active {
-            color: #198754;
-            font-weight: bold;
-        }
-
-        .status-stop {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        .price {
-            font-weight: bold;
-            color: #fd7e14;
-        }
-
-        @media screen and (max-width: 768px) {
-
-            .table-rwd thead,
-            .table-rwd caption {
-                display: none;
-            }
-
-            .table-rwd tbody tr {
-                display: block;
-                margin-top: 15px;
-                border: 1px solid #dee2e6;
-                border-radius: 10px;
-                background-color: #fff;
-                padding: 10px;
-            }
-
-            .table-rwd tbody tr td,
-            .table-rwd tbody tr th {
-                display: block;
-                overflow: hidden;
-                border: none;
-            }
-
-            .table-rwd tbody tr td::before {
-                content: attr(data-th) "：";
-                font-size: 15px;
-                font-weight: bold;
-                color: #495057;
-                display: block;
-                float: left;
-                width: 35%;
-                text-align: right;
-                padding-right: 1rem;
-            }
-
-            .table-rwd tbody tr td span {
-                display: block;
-                float: left;
-                width: 65%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/ch11_product_system.css">
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-chalkboard fa-xl"></i>Navbar</a>
-            <!--button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-mug-hot fa-xl"></i>飲料 ERP 商品管理系統</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button-->
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!--li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i
-                                class="fa-regular fa-house"></i>首頁</a>
-                    </li-->
                     <li class="nav-item">
-                        <a class="nav-link" href="/20260625_ch11_form_JS.html"><i class="fa-solid fa-info"></i>產品建檔</a>
+                        <a class="nav-link" href="20260625_ch11_form_JS.html"><i
+                                class="fa-solid fa-pen-to-square"></i>產品建檔</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-info"></i>產品列表</a>
+                        <a class="nav-link active" aria-current="page" href="20260702_ch11_form_JS_product_list.html"><i
+                                class="fa-solid fa-list"></i>產品列表</a>
                     </li>
                 </ul>
-                <!--form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form-->
             </div>
         </div>
     </nav>
     
-    <div class="container box01 table">
+    <div class="container box01">
+        <div class="display-4 fw-900 text-center text-bg-secondary py-2">產品列表</div>
         <div class="section">
-            <table class="table mt-3 table-bordered table-hover table-striped table-rwd erp-table">
-                <caption>飲料 ERP 商品管理系統</caption>
-
-                <div class="d-flex justify-content-start align-items-center mt-4">
-                    <label for="" class="fw-bold me-2" id="testLabel">每頁顯示</label>
+            <div class="d-flex justify-content-start align-items-center mb-3">
+                <label for="pageSizeSetting" class="fw-bold me-2" id="testLabel">每頁顯示</label>
                     <select name="" id="pageSizeSetting" class="form-select form-select-sm me-2" style="width: 80px;">
                         <option value="3">3</option>
                         <option value="5" selected>5</option>
@@ -163,6 +48,7 @@
                     <span>筆</span>
                 </div>
 
+            <table class="table table-bordered table-hover table-striped table-rwd erp-table">
                 <thead class="table-dark">
                     <tr>
                         <th class="col">產品編號</th>
@@ -174,6 +60,7 @@
                         <th class="col">內容配料</th>
                         <th class="col">供應方式</th>
                         <th class="col">建立時間</th>
+                        <th class="col">資料操作</th>
                     </tr>
                 </thead>
 
@@ -189,6 +76,11 @@
                         <td data-th="內容配料"><span>內容配料</span></td>
                         <td data-th="供應方式"><span>供應方式</span></td>
                         <td data-th="建立時間"><span>建立時間</span></td>
+                        <td data-th="資料操作">
+                            <button class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal"
+                                data-bs-target="#updateModal">更新</button>
+                            <button class="btn btn-danger btn-sm mt-1">刪除</button>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -206,6 +98,140 @@
         </div>
     </div>
 
+    <!-- update Modal-->
+    <div class="modal fade" data-bs-backdrop="static" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header-custom">
+                    <h1 class="modal-title-custom fs-5" id="exampleModalLabel">產品更新</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 產品名稱 -->
+                    <label for="product_name" class="form-label">產品名稱</label>
+                    <div class="mb-3 form-floating">
+                        <input type="text" class="form-control" name="" id="product_name" disabled>
+                        <label for="product_name" class="form-label">請輸入產品名稱（1～6 個字）</label>
+                        <div class="valid-feedback">長度符合規定</div>
+                        <div class="invalid-feedback">長度超出限制</div>
+                    </div>
+
+                    <!-- 產品數量 -->
+                    <div class="mb-3">
+                        <label for="product_number" class="form-label">數量（1-10）</label>
+                        <input type="number" class="form-control" id="product_number" value="0" min="1" max="10">
+                        <div class="valid-feedback">數量符合規定</div>
+                        <div class="invalid-feedback">數量超出限制</div>
+                    </div>
+
+                    <!--產品規格-->
+                    <div class="mb-3">
+                        <label for="product_spec" class="form-label">產品規格</label>
+                        <input type="text" class="form-control" id="product_spec" placeholder="請輸入產品規格（上限 20 個字）"
+                            list="datalist_option">
+                        <datalist id="datalist_option">
+                            <option value="半糖少冰"></option>
+                            <option value="半糖微冰"></option>
+                            <option value="微糖少冰"></option>
+                            <option value="微糖微冰"></option>
+                        </datalist>
+                        <div class="valid-feedback">符合字數限制</div>
+                        <div class="invalid-feedback">你在點二郎系拉麵嗎？</div>
+                    </div>
+
+                    <!-- 產品尺寸 -->
+                    <div class="mb-3">
+                        <label for="product_size" class="form-label">選擇尺寸</label>
+                        <select class="form-control is-invalid" id="product_size">
+                            <option value="" disabled selected>請選擇尺寸</option>
+                            <option value="300ml">小杯（300 ml）</option>
+                            <option value="500ml">中杯（500 ml）</option>
+                            <option value="700ml">大杯（700 ml）</option>
+                            <option value="1000ml">特大杯（1000 ml）</option>
+                        </select>
+                        <div class="valid-feedback">已選擇容量</div>
+                        <div class="invalid-feedback">請選擇容量</div>
+                    </div>
+
+                    <div class="mb-3 form-check form-switch">
+                        <input type="checkbox" id="product_status" class="form-check-input" checked>
+                        <labe for="" id="product_status_label" class="form-check-label">目前狀態：上架</labe>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-label fw-900">選擇配料（必選）</div>
+                        <div id="topping_group" class="is-invalid">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="珍珠">
+                                <lable for="" class="form-check-lable">珍珠</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="波霸">
+                                <lable for="" class="form-check-lable">波霸</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="椰果">
+                                <lable for="" class="form-check-lable">椰果</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="蒟蒻">
+                                <lable for="" class="form-check-lable">蒟蒻</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="仙草">
+                                <lable for="" class="form-check-lable">仙草</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="茶凍">
+                                <lable for="" class="form-check-lable">茶凍</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="奶蓋">
+                                <lable for="" class="form-check-lable">奶蓋</lable>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input topping_item" value="不加料"
+                                    id="none_topping">
+                                <lable for="" class="form-check-lable">不加料</lable>
+                            </div>
+                        </div>
+                        <div class="valid-feedback">已確認選項</div>
+                        <div class="invalid-feedback">至少選個不加料吧</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-label fw-900">選擇供應方式</div>
+                        <div id="supply_group" class="is-invalid">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input supply_option" name="supply_option"
+                                    value="冷飲">
+                                <lable for="" class="form-check-label">冷飲</lable>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input supply_option" name="supply_option"
+                                    value="熱飲">
+                                <lable for="" class="form-check-label">熱飲</lable>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input supply_option" name="supply_option"
+                                    value="冷熱皆可">
+                                <lable for="" class="form-check-label">冷熱皆可</lable>
+                            </div>
+                        </div>
+                        <div class="valid-feedback">已選擇供應方式</div>
+                        <div class="invalid-feedback">未選擇供應方式</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="update_cancel"
+                        data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="update_confirm">確認更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-4.0.0.min.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
@@ -216,7 +242,9 @@
             productList: [],
             pageSize: 5,
             pageAmount: 0,
-            currentPage: 1
+            currentPage: 1,
+            pid_for_update: "",
+            pid_for_delete: ""
         };
 
         $(function () {
@@ -231,17 +259,22 @@
                 try {
                     const { data } = await axios.get(data_source_url);
 
-                    return data.map(element => ({
-                                id: element.id,
+                    cleanData = data.map(function (element, index) {
+                        return {
+                            pid: element.id,    //for update
+                            id: index + 1,        //for render table
                                 name: cleanText(element.product_name, "傷心的感覺"),
                                 number: element.product_number ?? 1,
                                 spec: cleanText(element.product_spec, "全糖正常冰"),
-                                size: cleanText(element.size, "1000ml"),
+                            size: cleanText(element.product_size, "1000ml"),
                                 status: element.product_status ?? false,
                                 topping: element.topping ?? ["不加料"],
                                 supply_option: cleanText(element.supply_option, "冷熱皆可"),
                                 created_time: cleanText(element.created_time, "1999/01/01 00:00:01")
-                        }));
+                        }
+                    });
+
+                    return cleanData;
                 } catch (error) {
                     Swal.fire("load data error");
                     console.log(error);
@@ -265,8 +298,7 @@
             function renderPaginationNavbar () {
                 let strHTML = `<li class="page-item${ pageState.currentPage===1 ? " disabled" : ""}" data-page="${pageState.currentPage - 1}"><a class="page-link" href="#">上一頁</a></li>`;
 
-                for (let i = 1; i <= pageState.pageAmount; ++i)
-                {
+                for (let i = 1; i <= pageState.pageAmount; ++i) {
                     strHTML += `<li class="page-item${i===pageState.currentPage?" active":""}" data-page="${i}" id="page-${i}"><a class="page-link" href="#">${i}</a></li>`;
                 };
 
@@ -289,6 +321,13 @@
                         <td data-th="內容配料"><span>${item.topping.join("、")}</span></td>
                         <td data-th="供應方式"><span>${item.supply_option}</span></td>
                         <td data-th="建立時間"><span>${item.created_time}</span></td>
+                        <td data-th="資料操作">
+                            <button class="btn btn-warning btn-sm mt-1 update_btn" data-bs-toggle="modal" data-bs-target="#updateModal"
+                                data-pid="${item.pid}" data-pname="${item.name}" data-pnum="${item.number}" data-pspec="${item.spec}"
+                                data-psize="${item.size}" data-pstatus="${item.status}" data-ptopping="${item.topping}" data-psupply="${item.supply_option}"
+                                data-ptime="${item.created_time}">更新</button>
+                            <button class="btn btn-danger btn-sm mt-1 delete_btn" data-pid="${item.pid}">刪除</button>
+                        </td>
                     </tr>`;
                 });
 
@@ -297,6 +336,11 @@
 
             // 渲染資料呈現區
             const renderMainPage = () => {
+                // 防呆，沒有取得資料或者刪除最後一筆資料時可能會發生。總之將第一頁渲染成空白的表格。
+                pageState.pageAmount = Math.max(pageState.pageAmount, 1);
+                // 防呆，換頁或刪除資料時可能會發生。不想重複寫，統一在渲染之前判斷處理。
+                pageState.currentPage = Math.min(Math.max(pageState.currentPage, 1), pageState.pageAmount);
+
                 renderPaginationNavbar();
                 let pageData = getCurrentPageData();
                 renderTable(pageData);
@@ -308,12 +352,18 @@
                 pageState.currentPage = 1;
             };
 
+            // 關閉 modal
+            const closeUpdateModel = () => {
+                let modalElement = document.getElementById("updateModal");
+                let modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+            };
+
             // main()
             $(async function () {
                 pageState.productList = await loadData("http://localhost:3000/product");
 
-                if (pageState.productList.length === 0)
-                {
+                if (pageState.productList.length === 0) {
                     //loadData: Swal.fire("load data error");
                     return;
                 }
@@ -326,12 +376,11 @@
             $(".pagination").on("click", ".page-item", function() {
                 let page = Number($(this).data("page"));
 
-                if (page === 0 || page === pageState.pageAmount+1)
-                {
+                if (page === 0 || page === pageState.pageAmount + 1) {
                     return;
                 }
 
-                pageState.currentPage = Math.min(Math.max(page, 1), pageState.pageAmount);
+                pageState.currentPage = page;
 
                 renderMainPage();
             });
@@ -342,7 +391,259 @@
                 resetPageState();
                 renderMainPage();
             });
+
+            // 監聽更新按鈕
+            $("#productList").on("click", ".update_btn", function () {
+                //將 data-* 資料傳遞給 Modal 的欄位內
+                pageState.pid_for_update = $(this).data("pid");
+                let pname = $(this).data("pname");
+                let pnum = Number($(this).data("pnum"));
+                let pspec = $(this).data("pspec");
+                let psize = $(this).data("psize");
+                let pstatus = $(this).data("pstatus");
+                let ptopping = $(this).data("ptopping"); // data-* 存的是陣列 .toString() 的字串，例如 "珍珠,波霸"
+                let psupply = $(this).data("psupply");   // 字串，例如 "冷飲"
+
+                // 帶入一般欄位
+                $("#product_name").val(pname);
+                $("#product_number").val(pnum);
+                $("#product_spec").val(pspec);
+                $("#product_size").val(psize);
+
+                // 處理狀態（checkbox 要用 .prop("checked")，不能用 .val()）
+                $("#product_status").prop("checked", pstatus === true || pstatus === "true");
+                if (pstatus === true || pstatus === "true") {
+                    $("#product_status_label").text("目前狀態：上架");
+                } else {
+                    $("#product_status_label").text("目前狀態：下架");
+                }
+
+                // 處理配料：先全部取消，再根據 ptopping 字串 split 後逐一打勾
+                $(".topping_item").prop("checked", false);
+                let ptoppingArray = String(ptopping).split(",");
+                ptoppingArray.forEach(function (val) {
+                    $(".topping_item[value='" + val.trim() + "']").prop("checked", true);
+                });
+
+                // 處理供應方式：先全部取消，再用屬性選擇器找到對應 value 的 radio 選取
+                $(".supply_option").prop("checked", false);
+                $(".supply_option[value='" + psupply + "']").prop("checked", true);
+
+                // 檢查目前資料是否正確，雖然自動帶入的資料應該都是正確的，不過還是要渲染一下 class="is-valid"
+                let product_number = Number($("#product_number").val());
+                $("#product_number")
+                    .toggleClass("is-valid", product_number >= 1 && product_number <= 10)
+                    .toggleClass("is-invalid", product_number > 10);
+
+                let product_spec_len = $("#product_spec").val().trim().length;
+                $("#product_spec")
+                    .toggleClass("is-valid", product_spec_len >= 1 && product_spec_len <= 20)
+                    .toggleClass("is-invalid", product_spec_len > 20);
+
+                if (psize ?? false) {
+                    $("#product_size").removeClass("is-invalid").addClass("is-valid");
+                }
+
+                let topping_item_number = $(".topping_item:checked").length;
+                $("#topping_group")
+                    .toggleClass("is-valid", topping_item_number > 0)
+                    .toggleClass("is-invalid", topping_item_number <= 0); //< 0 ??
+
+                if ($(".supply_option:checked").val() != undefined) {
+                    $("#supply_group").addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+
+            // 監聽確認更新按鈕，送出更新結果
+            $("#update_confirm").on("click", function () {
+                // 檢查表單內容，如果有錯誤，使用 sweet alert 顯示錯誤訊息
+                if (// product_name 不用檢查，因為現在的版本直接帶入原始名稱，且不允許更改。
+                    // pstatus 為布林值，不用檢查。
+                    $("#product_number").hasClass('is-valid') == false
+                    || $("#product_spec").hasClass('is-valid') == false
+                    || $("#product_size").hasClass('is-valid') == false
+                    || $("#topping_group").hasClass('is-valid') == false
+                    || $("#supply_group").hasClass('is-valid') == false) {
+                    Swal.fire({
+                        title: "錯誤",
+                        text: "輸入資料有誤，請重新確認",
+                        icon: "error"
+                    });
+                    return;
+                };
+
+                // 取得表單內容，用 axios update 給 json-server
+                let topping_array = [];
+                $(".topping_item:checked").each(function () {
+                    topping_array.push($(this).val());
+                });
+
+                let updateData = {
+                    product_number: Number($("#product_number").val()),
+                    product_spec: $("#product_spec").val(),
+                    product_size: $("#product_size").val(),
+                    product_status: $("#product_status").prop("checked"),
+                    topping: topping_array,
+                    supply_option: $(".supply_option:checked").val()
+                };
+
+                axios.patch(`http://localhost:3000/product/${pageState.pid_for_update}`, updateData)
+                    .then(function (response) {
+                        console.log(response);
+
+                        if (response.status == 200) {
+                            // 無腦更新，但會回到第一頁
+                            // Swal.fire({title: "已更新完成", icon: "success"})
+                            // .then((result)  => {
+                            //     if (result.isConfirmed)
+                            //         location.reload();
+                            // });
+
+                            // 精準更新，回到原本的畫面
+                            let updatedItem = pageState.productList.find(function (item) { return item.pid == pageState.pid_for_update });
+
+                            if (updatedItem) {
+                                // 更新資料
+                                updatedItem.number = updateData.product_number;
+                                updatedItem.spec = updateData.product_spec;
+                                updatedItem.size = updateData.product_size;
+                                updatedItem.status = updateData.product_status;
+                                updatedItem.topping = topping_array;
+                                updatedItem.supply_option = updateData.supply_option;
+
+                                // 重新渲染表格
+                                renderMainPage();
+
+                                // 關閉 modal
+                                closeUpdateModel();
+                            }
+                            else {
+                                console.log("doesn't find updatedItem");
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+
+            // 監聽 Modal 內的欄位是否合理：產品數量
+            $("#product_number").on("input", function () {
+                let product_number = Number($(this).val());
+
+                $(this)
+                    .toggleClass("is-valid", product_number >= 1 && product_number <= 10)
+                    .toggleClass("is-invalid", product_number > 10);
+            });
+
+            // 監聽 Modal 內的欄位是否合理：產品規格
+            $("#product_spec").on("input", function () {
+                let product_spec_len = $(this).val().trim().length;
+
+                $(this)
+                    .toggleClass("is-valid", product_spec_len >= 1 && product_spec_len <= 20)
+                    .toggleClass("is-invalid", product_spec_len > 20);
+            });
+
+            // 監聽 Modal 內的欄位是否合理：產品尺寸
+            // 原本就有帶入資料，必定有已選項，所以不做判斷
+            // $("#product_size").on("change", function () {
+            //     $(this).removeClass("is-invalid");
+            //     $(this).addClass("is-valid"); //非必要
+            // });
+
+            // 監聽 Modal 內的欄位的資料表示：產品狀態
+            $("#product_status").on("change", function () {
+                let product_status = $(this).prop("checked");
+
+                if (product_status) {
+                    $("#product_status_label").text("目前狀態：上架");
+                }
+                else {
+                    $("#product_status_label").text("目前狀態：下架");
+                }
+            });
+
+            // 監聽 Modal 內的欄位是否合理：產品配料
+            $(".topping_item").on("change", function () {
+                // 判斷是否有選擇配料
+                let topping_item_number = $(".topping_item:checked").length;
+
+                $("#topping_group")
+                    .toggleClass("is-valid", topping_item_number > 0)
+                    .toggleClass("is-invalid", topping_item_number <= 0); //< 0 ??
+
+                // 特殊處理：不加料時取消其他選項，選擇其他選項時取消不加料
+                if ($(this).prop("checked")) {
+                    if ($(this).val() == "不加料") {
+                        // 取消其他加料
+                        $(".topping_item:checked").each(function () {
+                            if ($(this).val() != "不加料") {
+                                $(this).prop("checked", false);
+                            };
+                        });
+                    } else {
+                        // 取消不加料
+                        $(".topping_item:checked").each(function () {
+                            if ($(this).val() == "不加料") {
+                                $(this).prop("checked", false);
+                            };
+                        });
+                    }
+                }
+            });
+
+            // 監聽 Modal 內的欄位是否合理：供應選項
+            $(".supply_option").on("change", function () {
+                if ($(".supply_option:checked").val() != undefined) {
+                    $("#supply_group").addClass("is-valid").removeClass("is-invalid");
+                }
+                //radio 不可能再被一般操作取消，不做 invalid 處理
+            });
+
+            // 監聽刪除按鈕
+            $("#productList").on("click", ".delete_btn", function () {
+                // console.log($(this).data("pid"));
+                Swal.fire({
+                    title: "確認刪除？",
+                    showDenyButton: true,
+                    confirmButtonText: "確認",
+                    denyButtonText: "取消"
+                }).then((result) => {
+                    if (result.isDenied) { return; }
+
+                    // 沒有取消，傳遞至後端 API 進行刪除
+                    let deletePid = $(this).data("pid");
+                    axios.delete(`http://localhost:3000/product/${deletePid}`)
+                        .then(function (response) {
+                            // console.log(response);
+                            if (response.status == 200) {
+                                // 無腦更新，回到第一頁
+                                // location.reload();
+
+                                // 不重新取得後端資料，使用 filter() 過濾的功能，篩選出沒有被刪除的資料，再重新 render table
+                                pageState.productList = pageState.productList.filter(function (item) {
+                                    return item.pid != deletePid;
+                                })
+
+                                // 重新產生表格內的編號
+                                pageState.productList.forEach(function (item, index) {
+                                    item.id = index + 1;
+                                });
+
+                                // 重新計算總頁數
+                                pageState.pageAmount = Math.ceil(pageState.productList.length / pageState.pageSize);
+
+                                // 重新渲染表格內容
+                                renderMainPage();
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                });
+            });
         });
     </script>
 </body>
+
 </html>
