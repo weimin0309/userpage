@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Txt2Img Prompt 輕量管理工具 v8</title>
-    
+    <title>Txt2Img Prompt 輕量管理工具 v9.2</title>
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vue 3 CDN -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- SortableJS 拖曳核心與 Vue3 專用包 -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuedraggable@4.1.0/dist/vuedraggable.umd.min.js"></script>
+    <!-- 🟢 引入 Marked CDN 用於渲染 Markdown 筆記 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen">
 
     <div id="app" class="container mx-auto p-6 max-w-6xl" v-cloak>
         <header class="mb-6 flex justify-between items-center border-b pb-4">
-            <h1 class="text-2xl font-bold text-indigo-600">📝 Txt2Img Prompt 積木組合器 (智能括號解析版)</h1>
+            <h1 class="text-2xl font-bold text-indigo-600">📝 Txt2Img Prompt 積木組合器 v9</h1>
             <div class="flex gap-2">
                 <button @click="exportData" class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">匯出 JSON</button>
                 <button @click="triggerImport" class="px-3 py-1.5 bg-gray-600 text-white rounded text-sm hover:bg-gray-700">匯入 JSON</button>
@@ -26,60 +31,95 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div class="bg-white p-4 rounded-lg shadow">
-                <h2 class="text-lg font-semibold mb-3 flex justify-between items-center">
-                    <span>主模板列表 <span class="text-xs text-gray-400 font-normal">(可上下拖曳排序)</span></span>
-                    <button @click="openAddModal" class="text-xs bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-600">+ 新增模板</button>
-                </h2>
-                
-                <div class="mb-4 space-y-2">
-                    <input type="text" v-model="searchQuery" placeholder="搜尋模板名稱或內容..." class="w-full px-3 py-1.5 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                    <div class="flex flex-wrap gap-1">
-                        <span @click="toggleTagFilter('')" :class="['text-xs px-2 py-1 rounded cursor-pointer border', !selectedTagFilter ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">全部</span>
-                        <span v-for="tag in allTags" :key="tag" @click="toggleTagFilter(tag)" :class="['text-xs px-2 py-1 rounded cursor-pointer border', selectedTagFilter === tag ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">
-                            #{{ tag }}
-                        </span>
+            <!-- 左欄：模板管理與搜尋 ＆ 🟢 隨手筆記本 -->
+            <div class="space-y-6">
+                <!-- 模板管理 -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-3 flex justify-between items-center">
+                        <span>主模板列表 <span class="text-xs text-gray-400 font-normal">(可拖曳)</span></span>
+                        <button @click="openAddModal" class="text-xs bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-600">+ 新增模板</button>
+                    </h2>
+                    
+                    <div class="mb-4 space-y-2">
+                        <input type="text" v-model="searchQuery" placeholder="搜尋模板名稱或內容..." class="w-full px-3 py-1.5 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <div class="flex flex-wrap gap-1">
+                            <span @click="toggleTagFilter('')" :class="['text-xs px-2 py-1 rounded cursor-pointer border', !selectedTagFilter ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">全部</span>
+                            <span v-for="tag in allTags" :key="tag" @click="toggleTagFilter(tag)" :class="['text-xs px-2 py-1 rounded cursor-pointer border', selectedTagFilter === tag ? 'bg-indigo-100 text-indigo-700 border-indigo-300' : 'bg-gray-100 text-gray-600 border-gray-200']">
+                                #{{ tag }}
+                            </span>
+                        </div>
                     </div>
+
+                    <draggable 
+                        v-model="filteredTemplates" 
+                        item-key="id"
+                        handle=".drag-tpl-handle"
+                        class="space-y-2 max-h-[350px] overflow-y-auto pr-1"
+                        :disabled="searchQuery !== '' || selectedTagFilter !== ''"
+                    >
+                        <template #item="{ element: tpl }">
+                            <div @click="selectTemplate(tpl)"
+                                 :class="['p-3 border rounded-lg cursor-pointer transition-all relative group/tpl shadow-sm', currentTemplate?.id === tpl.id ? 'border-indigo-500 bg-indigo-50/40 shadow-md' : 'border-gray-200 hover:bg-gray-50']">
+                                
+                                <div class="drag-tpl-handle absolute left-1 top-1/2 -translate-y-1/2 opacity-0 group-hover/tpl:opacity-40 hover:!opacity-100 cursor-grab px-1 text-gray-500 font-bold text-xs">⋮⋮</div>
+                                
+                                <div class="flex justify-between items-start pl-3">
+                                    <h3 class="font-medium text-sm text-gray-900">{{ tpl.name }}</h3>
+                                    <div class="flex gap-2" @click.stop>
+                                        <button @click="openEditModal(tpl)" class="text-xs text-indigo-500 hover:text-indigo-700">⚙️ 編輯</button>
+                                        <button @click="deleteTemplate(tpl.id)" class="text-xs text-red-400 hover:text-red-600">🗑️ 刪除</button>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 truncate mt-1 pl-3">{{ tpl.base_prompt }}</p>
+                            </div>
+                        </template>
+                    </draggable>
                 </div>
 
-                <draggable 
-                    v-model="db.templates" 
-                    item-key="id"
-                    handle=".drag-tpl-handle"
-                    class="space-y-2 max-h-[550px] overflow-y-auto pr-1"
-                    :disabled="searchQuery !== '' || selectedTagFilter !== ''"
-                >
-                    <template #item="{ element: tpl }">
-                        <div v-if="isTemplateMatched(tpl)"
-                             @click="selectTemplate(tpl)"
-                             :class="['p-3 border rounded-lg cursor-pointer transition-all relative group/tpl shadow-sm', currentTemplate?.id === tpl.id ? 'border-indigo-500 bg-indigo-50/40 shadow-md' : 'border-gray-200 hover:bg-gray-50']">
-                            
-                            <div class="drag-tpl-handle absolute left-1 top-1/2 -translate-y-1/2 opacity-0 group-hover/tpl:opacity-40 hover:!opacity-100 cursor-grab px-1 text-gray-500 font-bold text-xs">⋮⋮</div>
-                            
-                            <div class="flex justify-between items-start pl-3">
-                                <h3 class="font-medium text-sm text-gray-900">{{ tpl.name }}</h3>
-                                <div class="flex gap-2" @click.stop>
-                                    <button @click="openEditModal(tpl)" class="text-xs text-indigo-500 hover:text-indigo-700">⚙️ 編輯</button>
-                                    <button @click="deleteTemplate(tpl.id)" class="text-xs text-red-400 hover:text-red-600">🗑️ 刪除</button>
-                                </div>
+                <!-- 🟢 功能 2：隨手筆記本區塊 -->
+                <div class="bg-white p-4 rounded-lg shadow flex flex-col">
+                    <h2 class="text-lg font-semibold mb-3 flex justify-between items-center border-b pb-2">
+                        <span>隨手筆記本 <span class="text-xs text-gray-400 font-normal">(支援 Markdown)</span></span>
+                        <button @click="openNoteModal('add')" class="text-xs bg-emerald-600 text-white px-2 py-1 rounded hover:bg-emerald-700">+ 新增筆記</button>
+                    </h2>
+                    
+                    <div class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                        <div v-for="note in db.notes" :key="note.id" 
+                             @click="viewNote(note)"
+                             class="p-2.5 border border-gray-200 rounded-lg hover:bg-slate-50 cursor-pointer flex justify-between items-center transition-colors group/note shadow-sm">
+                            <div class="truncate pr-2">
+                                <div class="text-sm font-medium text-gray-800 truncate">{{ note.title }}</div>
+                                <div class="text-[11px] text-gray-400 mt-0.5 truncate">{{ note.content }}</div>
                             </div>
-                            <p class="text-xs text-gray-500 truncate mt-1 pl-3">{{ tpl.base_prompt }}</p>
-                            <div class="flex flex-wrap gap-1 mt-2 pl-3">
-                                <span v-for="t in tpl.tags" :key="t" class="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">#{{ t }}</span>
+                            <div class="flex gap-2 opacity-0 group-hover/note:opacity-100 transition-opacity" @click.stop>
+                                <button @click="openNoteModal('edit', note)" class="text-xs text-indigo-500 hover:text-indigo-700">⚙️</button>
+                                <button @click="deleteNote(note.id)" class="text-xs text-red-400 hover:text-red-600">🗑️</button>
                             </div>
                         </div>
-                    </template>
-                </draggable>
+                        <div v-if="!db.notes || db.notes.length === 0" class="text-center py-6 text-xs text-gray-400">
+                            目前沒有筆記，來記點 SEED 或靈感吧！
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-white p-4 rounded-lg shadow md:col-span-2 flex flex-col justify-between min-h-[500px]">
+            <!-- 中、右欄：工作面板 -->
+            <div class="bg-white p-4 rounded-lg shadow md:col-span-2 flex flex-col justify-between min-h-[600px]">
                 <div>
                     <div class="flex justify-between items-center border-b pb-2 mb-4">
-                        <h2 class="text-lg font-semibold">工作面板 <span v-if="currentTemplate" class="text-xs text-gray-400 font-normal">(支援括號包覆，群組提示詞可任意拖曳、跨區置換)</span></h2>
-                        <button v-if="currentTemplate" @click="addNewGroup" class="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">+ 新增可選元素群組</button>
+                        <h2 class="text-lg font-semibold">工作面板</h2>
+                        <div class="flex gap-2">
+                            <!-- 🟢 功能 1.2 & 1.3：一鍵全部展開/折疊 -->
+                            <template v-if="currentTemplate">
+                                <button @click="setAllCollapse(false)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded border">👐 全部展開</button>
+                                <button @click="setAllCollapse(true)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1 rounded border">📁 全部折疊</button>
+                                <button @click="addNewGroup" class="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">+ 新增可選元素群組</button>
+                            </template>
+                        </div>
                     </div>
                     
                     <div v-if="currentTemplate">
+                        <!-- 當前模板基礎資料 -->
                         <div class="p-3 bg-gray-50 rounded-lg flex justify-between items-start mb-4">
                             <div class="space-y-1 flex-1">
                                 <div class="text-xs text-indigo-600 font-bold uppercase tracking-wider">目前選擇模板</div>
@@ -89,21 +129,30 @@
                             <button @click="openEditModal(currentTemplate)" class="text-xs bg-white border px-2 py-1 rounded shadow-sm text-indigo-600 hover:bg-gray-50 ml-2">⚙️ 編輯模板</button>
                         </div>
 
+                        <!-- 群組順序拖曳區 -->
                         <draggable 
                             v-model="currentTemplateGroupsOrdered" 
                             item-key="id"
                             handle=".drag-group-handle"
-                            class="space-y-4"
+                            class="space-y-3"
                         >
                             <template #item="{ element: group }">
                                 <div class="border rounded-lg p-3 bg-white shadow-sm relative group/panel pl-7 border-l-4 border-l-slate-300 hover:border-l-indigo-400 transition-colors">
                                     
                                     <div class="drag-group-handle absolute left-1.5 top-3.5 opacity-30 group-hover/panel:opacity-100 cursor-grab px-1 text-gray-400 text-sm font-bold">⋮⋮</div>
                                     
-                                    <div class="flex justify-between items-center mb-2 h-6">
+                                    <!-- 群組標題區 -->
+                                    <div class="flex justify-between items-center h-6" :class="{'mb-2': !groupCollapsedState[group.id]}">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-xs font-bold text-gray-700">【{{ group.group_name }}】</span>
-                                            <button v-if="group.items.length > 0" 
+                                            <!-- 🟢 功能 1.4：折疊切換按鈕 -->
+                                            <button @click="toggleGroupCollapse(group.id)" class="text-xs text-gray-500 hover:text-gray-700 font-mono w-4">
+                                                {{ groupCollapsedState[group.id] ? '▶' : '▼' }}
+                                            </button>
+                                            <span class="text-sm font-bold text-gray-700 cursor-pointer" @click="toggleGroupCollapse(group.id)">【{{ group.group_name }}】</span>
+                                            <span v-if="groupCollapsedState[group.id]" class="text-xs text-gray-400 font-normal">({{ group.items.length }} 個元素已隱藏)</span>
+
+                                            <!-- 只有在展開狀態才需要顯示全選按鈕 -->
+                                            <button v-if="group.items.length > 0 && !groupCollapsedState[group.id]" 
                                                     @click="toggleGroupSelection(group)" 
                                                     :class="['text-[10px] px-1.5 py-0.5 rounded border font-medium transition-colors', isGroupAllSelected(group) ? 'bg-indigo-50 border-indigo-300 text-indigo-600 hover:bg-indigo-100' : 'bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100']">
                                                 {{ isGroupAllSelected(group) ? '☑️ 取消全選' : '⬜ 整組全選' }}
@@ -115,25 +164,31 @@
                                         </div>
                                     </div>
 
-                                    <draggable 
-                                        v-model="group.items" 
-                                        group="elements"
-                                        item-key="toString"
-                                        class="flex flex-wrap gap-2 items-center mb-3 p-2 bg-gray-50/50 rounded-lg min-h-[46px] border border-dashed border-gray-100 group-hover/panel:border-gray-200 transition-colors"
-                                    >
-                                        <template #item="{ element: item }">
-                                            <div class="inline-flex items-center text-sm bg-white border shadow-sm rounded px-2.5 py-1 cursor-move hover:border-indigo-400 transition-colors select-none">
-                                                <input type="checkbox" :value="item" v-model="selectedElements" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-2 cursor-pointer">
-                                                <span class="mr-1.5 text-gray-800 font-medium">{{ item }}</span>
-                                                <span @click.stop="removeItemFromGroup(group.id, item)" class="text-gray-300 hover:text-red-500 font-bold cursor-pointer text-xs transition-colors">×</span>
-                                            </div>
-                                        </template>
-                                    </draggable>
+                                    <!-- 可被折疊的內容本體區塊 -->
+                                    <div v-show="!groupCollapsedState[group.id]">
+                                        <!-- 提示詞單兵拖曳區 -->
+                                        <draggable 
+                                            v-model="group.items" 
+                                            group="elements"
+                                            item-key="toString"
+                                            class="flex flex-wrap gap-2 items-center mb-3 p-2 bg-gray-50/50 rounded-lg min-h-[46px] border border-dashed border-gray-100 group-hover/panel:border-gray-200 transition-colors"
+                                        >
+                                            <template #item="{ element: item }">
+                                                <div class="inline-flex items-center text-sm bg-white border shadow-sm rounded px-2.5 py-1 cursor-move hover:border-indigo-400 transition-colors select-none">
+                                                    <input type="checkbox" :value="item" v-model="selectedElements" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-2 cursor-pointer">
+                                                    <span class="mr-1.5 text-gray-800 font-medium">{{ item }}</span>
+                                                    <span @click.stop="removeItemFromGroup(group.id, item)" class="text-gray-300 hover:text-red-500 font-bold cursor-pointer text-xs transition-colors">×</span>
+                                                </div>
+                                            </template>
+                                        </draggable>
 
-                                    <div class="flex gap-2">
-                                        <input type="text" v-model="groupInputs[group.id]" @keyup.enter="addItemToGroup(group.id)" placeholder="輸入新元素（多個用逗號隔開，支援括號封裝），按 Enter 加入..." class="w-full px-2.5 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                        <button @click="addItemToGroup(group.id)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded border">加入</button>
+                                        <!-- 在群組內追加新元素 -->
+                                        <div class="flex gap-2">
+                                            <input type="text" v-model="groupInputs[group.id]" @keyup.enter="addItemToGroup(group.id)" placeholder="輸入新元素（多個用逗號隔開，支援括號封裝），按 Enter 加入..." class="w-full px-2.5 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                            <button @click="addItemToGroup(group.id)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded border">加入</button>
+                                        </div>
                                     </div>
+
                                 </div>
                             </template>
                         </draggable>
@@ -147,6 +202,7 @@
                     </div>
                 </div>
 
+                <!-- 下方：最終 Prompt 輸出區 -->
                 <div class="mt-6 border-t pt-4">
                     <div class="text-sm font-semibold text-gray-700 mb-2">最終組合結果 (即時生成)：</div>
                     <div class="flex gap-2">
@@ -159,6 +215,7 @@
             </div>
         </div>
 
+        <!-- 彈窗A：新增/編輯模板 兩用視窗 -->
         <div v-if="isModalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <div class="bg-white rounded-lg max-w-lg w-full p-5 shadow-xl space-y-4">
                 <h3 class="text-lg font-semibold text-gray-900 border-b pb-2">
@@ -184,8 +241,49 @@
                 </div>
             </div>
         </div>
+
+        <!-- 🟢 彈窗B：新增/編輯筆記 兩用視窗 -->
+        <div v-if="isNoteModalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-lg max-w-xl w-full p-5 shadow-xl space-y-4">
+                <h3 class="text-lg font-semibold text-gray-900 border-b pb-2">
+                    {{ noteModalMode === 'add' ? '新增備忘筆記' : '編輯備忘筆記' }}
+                </h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">筆記標題 *</label>
+                        <input type="text" v-model="modalNote.title" placeholder="備忘標題..." class="w-full px-3 py-1.5 border text-sm rounded">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">內容 (支援完整 Markdown 語法) *</label>
+                        <textarea v-model="modalNote.content" placeholder="可以利用 markdown 語法 # 標題、- 條列、**粗體**，或是 ``` 程式碼區塊來記錄參數..." class="w-full px-3 py-1.5 border text-sm rounded h-48 font-mono"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 border-t pt-3">
+                    <button @click="isNoteModalOpen = false" class="px-3 py-1.5 border text-sm rounded text-gray-600 hover:bg-gray-50">取消</button>
+                    <button @click="saveNote" class="px-4 py-1.5 bg-emerald-600 text-white text-sm rounded hover:bg-emerald-700">儲存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🟢 彈窗C：前景展示渲染後的 Markdown 筆記視窗 -->
+        <div v-if="isViewNoteOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" @click.self="isViewNoteOpen = false">
+            <div class="bg-white rounded-lg max-w-2xl w-full p-6 shadow-xl flex flex-col max-h-[85vh]">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2"><span>📋 {{ activeNote?.title }}</span></h3>
+                    <button @click="isViewNoteOpen = false" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+                </div>
+                
+                <!-- 渲染輸出區，灌入 markdown 樣式 -->
+                <div class="overflow-y-auto flex-1 json-md-preview text-sm text-gray-700 leading-relaxed pr-2" v-html="renderedNoteContent"></div>
+                <div class="flex justify-end border-t pt-4 mt-4 gap-2">
+                    <button @click="openNoteModal('edit', activeNote); isViewNoteOpen = false" class="px-3 py-1.5 bg-slate-100 border text-slate-700 text-xs rounded hover:bg-slate-200">去編輯此筆記</button>
+                    <button @click="isViewNoteOpen = false" class="px-4 py-1.5 bg-gray-800 text-white text-xs rounded hover:bg-gray-900">關閉</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- 應用程式邏輯 -->
     <script>
         const { createApp, ref, computed, onMounted, watch } = Vue;
 
@@ -201,42 +299,56 @@
                         "g_default_2": { id: "g_default_2", template_id: "tpl_001", group_name: "女僕裝風格", items: ["英式女僕裝", "法式女僕裝", "大正女僕裝"], order: 1 }
                     },
                     templates: [
-                        {
-                            id: "tpl_001",
-                            name: "日式插畫女僕",
-                            base_prompt: "日式插畫風格, 女僕, 三人",
-                            tags: ["女僕", "插畫"]
-                        }
+                        { id: "tpl_001", name: "日式插畫女僕", base_prompt: "日式插畫風格, 女僕, 三人", tags: ["女僕"] }
+                    ],
+                    // 🟢 功能 2：初始化內建預設筆記範例
+                    notes: [
+                        { id: "n_default_1", title: "💡 常用優質動漫 SEED 備忘", content: "### 靜態美圖專用\n- **SEED**: `410928374`\n- **混雜強度**: 0.75\n- **備註**: 適合渲染複雜細節背景。\n\n### 動作追焦嘗試\n- **SEED**: `88201948`\n- 搭配 `motion blur` 效果特好。" }
                     ]
                 };
 
                 const db = ref(defaultDb);
                 const currentTemplate = ref(null);
                 const selectedElements = ref([]);
-                
                 const groupInputs = ref({});
                 const searchQuery = ref('');
                 const selectedTagFilter = ref('');
                 
-                // 彈窗控制升級：單一彈窗處理 Add / Edit
+                // 🟢 功能 1：群組摺疊狀態管理字典 { groupId: true/false }
+                const groupCollapsedState = ref({});
+
+                // 彈窗與筆記狀態
                 const isModalOpen = ref(false);
                 const modalMode = ref('add'); // 'add' 或 'edit'
                 const editingTplId = ref(null); // 紀錄目前正在編輯哪一個 ID
                 const modalTpl = ref({ name: '', base_prompt: '', tagsInput: '' });
+
+                // 🟢 功能 2：筆記相關變數
+                const isNoteModalOpen = ref(false);
+                const noteModalMode = ref('add');
+                const editingNoteId = ref(null);
+                const modalNote = ref({ title: '', content: '' });
+                const isViewNoteOpen = ref(false);
+                const activeNote = ref(null);
 
                 const copyStatus = ref('一鍵複製');
                 const fileInput = ref(null);
 
                 // 同步至 LocalStorage
                 onMounted(() => {
-                    const localData = localStorage.getItem('txt2img_prompt_db_v8');
+                    const localData = localStorage.getItem('txt2img_prompt_db_v9');
                     if (localData) {
-                        try { db.value = JSON.parse(localData); } catch(e) { console.error(e); }
+                        try { 
+                            const parsed = JSON.parse(localData);
+                            // 確保筆記欄位存在
+                            if(!parsed.notes) parsed.notes = [];
+                            db.value = parsed; 
+                        } catch(e) { console.error(e); }
                     }
                 });
 
                 watch(db, (newVal) => {
-                    localStorage.setItem('txt2img_prompt_db_v8', JSON.stringify(newVal));
+                    localStorage.setItem('txt2img_prompt_db_v9', JSON.stringify(newVal));
                 }, { deep: true });
 
                 // 計算所有標籤
@@ -248,6 +360,24 @@
 
                 // 搜尋篩選模板
                 // 核心排序更新：讓外層群組能透過拖曳重新動態調整 JSON 物件的順序
+                // ✅ 修正點 1：將篩選邏輯獨立為 computed，使 draggable 渲染與拖曳行為更安全穩定
+                const filteredTemplates = computed({
+                    get() {
+                        return db.value.templates.filter(tpl => {
+                            const matchQuery = tpl.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+                                               tpl.base_prompt.toLowerCase().includes(searchQuery.value.toLowerCase());
+                            const matchTag = selectedTagFilter.value ? tpl.tags.includes(selectedTagFilter.value) : true;
+                            return matchQuery && matchTag;
+                        });
+                    },
+                    set(newTemplates) {
+                        // 僅在無篩選狀態下，拖曳排序才回寫至全域 db
+                        if (searchQuery.value === '' && selectedTagFilter.value === '') {
+                            db.value.templates = newTemplates;
+                        }
+                    }
+                });
+
                 const currentTemplateGroupsOrdered = computed({
                     get() {
                         if (!currentTemplate.value) return [];
@@ -265,15 +395,12 @@
                     }
                 });
 
-                // 「即時動態獲取」當前模板所擁有的元素群組
-                const isTemplateMatched = (tpl) => {
-                    const matchQuery = tpl.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-                                       tpl.base_prompt.toLowerCase().includes(searchQuery.value.toLowerCase());
-                    const matchTag = selectedTagFilter.value ? tpl.tags.includes(selectedTagFilter.value) : true;
-                    return matchQuery && matchTag;
-                };
+                // 🟢 功能 2.3：使用 Marked 將 Markdown 轉化成安全 HTML 字串
+                const renderedNoteContent = computed(() => {
+                    if (!activeNote.value || !activeNote.value.content) return '';
+                    return marked.parse(activeNote.value.content);
+                });
 
-                // 組合輸出 Prompt
                 const combinedPrompt = computed(() => {
                     if (!currentTemplate.value) return '';
                     let prompt = currentTemplate.value.base_prompt;
@@ -288,11 +415,30 @@
                     return prompt;
                 });
 
+                // 🟢 功能 1.1：進入模板時，預設折疊全部群組
                 const selectTemplate = (tpl) => {
                     currentTemplate.value = tpl;
                     selectedElements.value = []; // 清空前一次的勾選
                     // 初始化動態輸入框
                     groupInputs.value = {};
+                    
+                    // 將該模板下的所有群組預設填入折疊狀態 (true)
+                    const groups = Object.values(db.value.elements).filter(g => g.template_id === tpl.id);
+                    groups.forEach(g => {
+                        groupCollapsedState.value[g.id] = true;
+                    });
+                };
+
+                // 🟢 功能 1.4：單一變更折疊/展開狀態
+                const toggleGroupCollapse = (groupId) => {
+                    groupCollapsedState.value[groupId] = !groupCollapsedState.value[groupId];
+                };
+
+                // 🟢 功能 1.2 & 1.3：一鍵全部展開或折疊
+                const setAllCollapse = (collapseState) => {
+                    currentTemplateGroupsOrdered.value.forEach(g => {
+                        groupCollapsedState.value[g.id] = collapseState;
+                    });
                 };
 
                 const toggleTagFilter = (tag) => { selectedTagFilter.value = tag; };
@@ -312,7 +458,7 @@
 
                 // 【動態功能】為目前模板新增一個元素群組
                 const addNewGroup = () => {
-                    const groupName = prompt("請輸入新元素群組的名稱（例如：天氣、光影、相機視角）：");
+                    const groupName = prompt("請輸入新元素群組的名稱：");
                     if (!groupName || !groupName.trim()) return;
 
                     const maxOrder = currentTemplateGroupsOrdered.value.length;
@@ -324,6 +470,8 @@
                         items: [],
                         order: maxOrder
                     };
+                    // 新增的預設展開方便直接編輯
+                    groupCollapsedState.value[gId] = false;
                 };
 
                 // 【優化】顯性修改群組名稱按鈕
@@ -341,6 +489,7 @@
                         const itemsToRemove = db.value.elements[groupId].items;
                         selectedElements.value = selectedElements.value.filter(e => !itemsToRemove.includes(e));
                         delete db.value.elements[groupId];
+                        delete groupCollapsedState.value[groupId];
                     }
                 };
 
@@ -454,34 +603,56 @@
 
                 // 儲存（新增與編輯共用此邏輯）
                 const saveTemplate = () => {
-                    if (!modalTpl.value.name || !modalTpl.value.base_prompt) {
-                        alert("請填寫模板名稱與基礎提示詞！");
-                        return;
-                    }
-
-                    const tags = modalTpl.value.tagsInput 
-                        ? modalTpl.value.tagsInput.replace(/,/g, ' ').split(' ').map(t => t.trim()).filter(Boolean)
-                        : [];
-
+                    if (!modalTpl.value.name || !modalTpl.value.base_prompt) return alert("請填寫必填欄位！");
+                    const tags = modalTpl.value.tagsInput ? modalTpl.value.tagsInput.replace(/,/g, ' ').split(' ').map(t => t.trim()).filter(Boolean) : [];
                     if (modalMode.value === 'add') {
-                        // 新增邏輯
-                        db.value.templates.push({
-                            id: "tpl_" + Date.now(),
-                            name: modalTpl.value.name,
-                            base_prompt: modalTpl.value.base_prompt,
-                            tags: tags
-                        });
-                    } else if (modalMode.value === 'edit') {
-                        // 編輯邏輯：找到對應的舊模板並用新值覆蓋
+                        db.value.templates.push({ id: "tpl_" + Date.now(), name: modalTpl.value.name, base_prompt: modalTpl.value.base_prompt, tags: tags });
+                    } else {
                         const targetTpl = db.value.templates.find(t => t.id === editingTplId.value);
-                        if (targetTpl) {
-                            targetTpl.name = modalTpl.value.name;
-                            targetTpl.base_prompt = modalTpl.value.base_prompt;
-                            targetTpl.tags = tags;
+                        if (targetTpl) { Object.assign(targetTpl, { name: modalTpl.value.name, base_prompt: modalTpl.value.base_prompt, tags: tags }); }
+                    }
+                    closeModal();
+                };
+
+                // 🟢 功能 2.2：管理筆記彈窗與資料增刪改查
+                const openNoteModal = (mode, note = null) => {
+                    noteModalMode.value = mode;
+                    if (mode === 'add') {
+                        modalNote.value = { title: '', content: '' };
+                    } else if (mode === 'edit' && note) {
+                        editingNoteId.value = note.id;
+                        modalNote.value = { title: note.title, content: note.content };
+                    }
+                    isNoteModalOpen.value = true;
+                };
+
+                const saveNote = () => {
+                    if (!modalNote.value.title || !modalNote.value.content) return alert("請填寫標題和內容！");
+                    if (noteModalMode.value === 'add') {
+                        db.value.notes.push({
+                            id: "n_" + Date.now(),
+                            title: modalNote.value.title,
+                            content: modalNote.value.content
+                        });
+                    } else {
+                        const target = db.value.notes.find(n => n.id === editingNoteId.value);
+                        if (target) {
+                            target.title = modalNote.value.title;
+                            target.content = modalNote.value.content;
                         }
                     }
+                    isNoteModalOpen.value = false;
+                };
 
-                    closeModal();
+                const deleteNote = (noteId) => {
+                    if (confirm("確定要刪除這條筆記嗎？")) {
+                        db.value.notes = db.value.notes.filter(n => n.id !== noteId);
+                    }
+                };
+
+                const viewNote = (note) => {
+                    activeNote.value = note;
+                    isViewNoteOpen.value = true;
                 };
 
                 // JSON 匯入匯出
@@ -494,13 +665,14 @@
 
                     const exportPayload = {
                         templates: db.value.templates,
-                        elements: sortedElements
+                        elements: sortedElements,
+                        notes: db.value.notes
                     };
 
                     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
                     const downloadAnchor = document.createElement('a');
                     downloadAnchor.setAttribute("href", dataStr);
-                    downloadAnchor.setAttribute("download", `prompt_manager_v8_${new Date().toISOString().slice(0,10)}.json`);
+                    downloadAnchor.setAttribute("download", `prompt_manager_v9_${new Date().toISOString().slice(0,10)}.json`);
                     document.body.appendChild(downloadAnchor);
                     downloadAnchor.click();
                     downloadAnchor.remove();
@@ -515,6 +687,7 @@
                         try {
                             const importedJson = JSON.parse(e.target.result);
                             if (importedJson.templates && importedJson.elements) {
+                                if(!importedJson.notes) importedJson.notes = [];
                                 db.value = importedJson;
                                 currentTemplate.value = null;
                                 alert("匯入成功！");
@@ -526,14 +699,16 @@
 
                 return {
                     db, currentTemplate, selectedElements, groupInputs, searchQuery, selectedTagFilter, allTags, currentTemplateGroupsOrdered, combinedPrompt, isModalOpen, modalMode, modalTpl, copyStatus, fileInput,
+                    groupCollapsedState, toggleGroupCollapse, setAllCollapse,
+                    isNoteModalOpen, noteModalMode, modalNote, isViewNoteOpen, activeNote, renderedNoteContent, openNoteModal, saveNote, deleteNote, viewNote,
                     selectTemplate, toggleTagFilter, deleteTemplate, copyToClipboard, openAddModal, openEditModal, closeModal, saveTemplate, exportData, triggerImport, importData,
-                    addNewGroup, renameGroup, deleteGroup, addItemToGroup, removeItemFromGroup,
-                    isGroupAllSelected, toggleGroupSelection, isTemplateMatched
+                    addNewGroup, renameGroup, deleteGroup, addItemToGroup, removeItemFromGroup, isGroupAllSelected, toggleGroupSelection, filteredTemplates
                 };
             }
         }).mount('#app');
     </script>
 
+    <!-- 🟢 筆記本的 Markdown 排版樣式微調 -->
     <style>
         [v-cloak] { display: none; }
         /* 拖曳時產生的半透明陰影樣式 */
@@ -542,6 +717,17 @@
             background: #e0e7ff !important;
             border: 2px dashed #6366f1 !important;
         }
+        /* Markdown 內容預覽樣式 */
+        .json-md-preview h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #1e293b; }
+        .json-md-preview h2 { font-size: 1.25rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; color: #334155; }
+        .json-md-preview h3 { font-size: 1.1rem; font-weight: 600; margin-top: 0.75rem; margin-bottom: 0.25rem; color: #475569; }
+        .json-md-preview ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        .json-md-preview ol { list-style-type: decimal; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+        .json-md-preview p { margin-bottom: 0.5rem; }
+        .json-md-preview code { background-color: #f1f5f9; padding: 0.125rem 0.25rem; border-radius: 0.25rem; font-family: monospace; color: #db2777; font-size: 0.85em; }
+        .json-md-preview pre { background-color: #0f172a; color: #38bdf8; padding: 0.75rem; border-radius: 0.5rem; font-family: monospace; margin: 0.5rem 0; overflow-x: auto; }
+        .json-md-preview pre code { background: none; color: inherit; padding: 0; font-size: 0.9em; }
+        .json-md-preview strong { font-weight: 700; color: #0f172a; }
     </style>
 </body>
 </html>
