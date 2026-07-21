@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人首頁</title>
+    <title>個人首頁 // 潛意識臨界點</title>
     <link rel="stylesheet" href="css/20260602_profile.css">
     <link rel="stylesheet" href="css/all.min.css">
     <style>
+        /* ==========================================================================
+           原版基礎核心樣式保持不變
+           ========================================================================== */
         body {
             background-color: var(--color-bg);
             color: var(--color-text);
+            transition: background-color 0.8s ease, color 0.8s ease;
         }
 
         /* s01: 自我介紹 */
@@ -23,6 +27,7 @@
             justify-content: center;
             overflow: hidden;
             padding: 80px 10%;
+            transition: background-color 0.8s ease;
         }
 
         /* 裝飾性漸層光暈 */
@@ -135,7 +140,7 @@
             border: 1px solid var(--color-border);
             color: var(--color-text-secondary);
             background-color: var(--color-surface);
-            transition: all 0.2s ease;
+            transition: all 0.2s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .s01-skill-tag:hover {
@@ -182,6 +187,7 @@
             border-left: 3px solid var(--color-primary);
             padding-left: 16px;
             margin: 0;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         /* 工作經歷卡片 */
@@ -208,7 +214,7 @@
             border: 1px solid var(--color-border);
             border-radius: var(--radius-md);
             padding: 14px 18px;
-            transition: all 0.25s ease;
+            transition: all 0.25s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .s01-exp-item:hover {
@@ -254,54 +260,41 @@
             animation: s01-scroll-bounce 2s ease-in-out infinite;
         }
 
-        .s01-scroll-hint i {
-            font-size: 16px;
-        }
+        .s01-scroll-hint i { font-size: 16px; }
 
         @keyframes s01-scroll-bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50%       { transform: translateX(-50%) translateY(6px); }
         }
 
-        /* ===== 照片橫向捲動列 ===== */
+        /* 照片橫向捲動列 */
         .s01-photos {
-            /* 讓容器不超出右欄寬度 */
             overflow-x: auto;
             overflow-y: hidden;
-            /* 隱藏捲軸，但保留可捲動能力 */
-            scrollbar-width: none;        /* Firefox */
-            -ms-overflow-style: none;     /* IE/Edge */
-            /* 保持單列排列 */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             gap: 10px;
-            /* 觸控順滑捲動 */
             -webkit-overflow-scrolling: touch;
             scroll-snap-type: x mandatory;
-            /* 左右 padding 讓邊緣照片有呼吸感 */
             padding: 4px 2px 8px;
-            /* 讓容器能延伸到邊緣 */
             margin: 0 -2px;
         }
 
-        /* 隱藏 WebKit 捲軸 */
-        .s01-photos::-webkit-scrollbar {
-            display: none;
-        }
+        .s01-photos::-webkit-scrollbar { display: none; }
 
         .s01-photos img {
-            /* 固定寬高，不壓縮 */
             flex: 0 0 auto;
             width: 160px;
             height: 110px;
             object-fit: cover;
             border-radius: var(--radius-sm);
             border: 1px solid var(--color-border);
-            transition: filter 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            transition: filter 0.3s ease, border-color 0.3s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
             filter: brightness(0.82) saturate(0.85);
             cursor: pointer;
-            /* 每張對齊捲動停靠點 */
             scroll-snap-align: start;
         }
 
@@ -311,7 +304,6 @@
             transform: scale(1.05);
         }
 
-        /* 滑動提示標籤（桌機可見，手機也保留） */
         .s01-photos-hint {
             font-size: 11px;
             font-family: var(--font-mono);
@@ -323,155 +315,15 @@
             opacity: 0.7;
         }
 
-        .s01-photos-hint i {
-            font-size: 12px;
-        }
-
-        /* ===== Lightbox ===== */
-        .lightbox-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0, 0, 0, 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            cursor: zoom-out;
-            /* hidden by default */
-            pointer-events: none;
-            transition: background 0.35s ease;
-        }
-
-        .lightbox-overlay.is-open {
-            background: rgba(0, 0, 0, 0.88);
-            pointer-events: all;
-        }
-
-        .lightbox-overlay img {
-            max-width: min(90vw, 960px);
-            max-height: 85vh;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            object-fit: contain;
-            transform: scale(0.75);
-            opacity: 0;
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        opacity  0.3s ease;
-        }
-
-        .lightbox-overlay.is-open img {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        /* 關閉按鈕 */
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 24px;
-            font-size: 28px;
-            color: var(--color-text-muted);
-            background: none;
-            border: none;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s ease, transform 0.2s ease;
-            opacity: 0;
-            transition: opacity 0.3s ease 0.1s, color 0.2s ease, transform 0.2s ease;
-        }
-
-        .lightbox-overlay.is-open .lightbox-close {
-            opacity: 1;
-        }
-
-        .lightbox-close:hover {
-            color: var(--color-text);
-            transform: scale(1.15);
-        }
-
-        /* ===== RWD：手機版 (≤ 768px) ===== */
-        @media (max-width: 768px) {
-
-            /* s01 改為單欄垂直 */
-            .s01 {
-                padding: 100px 6% 80px;
-                align-items: flex-start;
-            }
-
-            .s01-inner {
-                flex-direction: column;
-                align-items: center;
-                gap: 36px;
-                text-align: center;
-            }
-
-            /* 縮小頭像 */
-            .s01-avatar-wrap {
-                width: 180px;
-                height: 180px;
-            }
-
-            /* 標題字縮小 */
-            .s01-text-col h1 {
-                font-size: clamp(28px, 7vw, 36px);
-            }
-
-            .s01-subtitle {
-                font-size: 15px;
-            }
-
-            /* 引言靠左對齊 */
-            .s01-quote {
-                text-align: left;
-            }
-
-            /* 經歷 hover 效果在手機取消位移（避免橫向溢出）*/
-            .s01-exp-item:hover {
-                transform: none;
-            }
-
-            /* s02 s03 padding 縮小 */
-            .s02, .s03 {
-                padding: 60px 6%;
-            }
-
-            .s02 h2, .s03 h2 {
-                font-size: 28px;
-            }
-
-            /* 滾動提示在手機版隱藏（底部空間小）*/
-            .s01-scroll-hint {
-                display: none;
-            }
-        }
-
-        /* 超小螢幕 (≤ 480px) */
-        @media (max-width: 480px) {
-            .s01 {
-                padding: 90px 5% 70px;
-            }
-
-            .s01-avatar-wrap {
-                width: 150px;
-                height: 150px;
-            }
-
-            .s01-exp-period {
-                font-size: 11px;
-            }
-        }
-
         /* s02: 作品集 */
         .s02 {
             padding: 80px 10%;
             background-color: var(--color-bg-secondary);
             text-align: center;
+            transition: background-color 0.8s ease;
         }
 
-        .s02 h2 {
-            font-size: 36px;
-        }
+        .s02 h2 { font-size: 36px; transition: color 0.8s ease; }
 
         .portfolio-grid {
             max-width: var(--max-width);
@@ -490,7 +342,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .s02 .card:hover {
@@ -499,40 +351,12 @@
             box-shadow: var(--shadow-md);
         }
 
-        .s02 .card h3 {
-            margin-top: 0;
-            margin-bottom: 12px;
-            color: var(--color-text);
-            font-size: 20px;
-        }
-
-        .s02 .card p {
-            line-height: 1.6;
-            color: var(--color-text-secondary);
-            font-size: 14px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .s02 .card .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .s02 .card .link-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .s02 .card .link-item span {
-            font-size: 13px;
-            color: var(--color-text-muted);
-        }
-
+        .s02 .card h3 { margin-top: 0; margin-bottom: 12px; color: var(--color-text); font-size: 20px; }
+        .s02 .card p { line-height: 1.6; color: var(--color-text-secondary); font-size: 14px; margin-top: 0; margin-bottom: 20px; flex-grow: 1; }
+        .s02 .card .links-container { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+        .s02 .card .link-item { display: flex; flex-direction: column; gap: 4px; }
+        .s02 .card .link-item span { font-size: 13px; color: var(--color-text-muted); }
+        
         .s02 .card a {
             background-color: var(--color-secondary);
             color: var(--color-text);
@@ -558,13 +382,10 @@
             padding: 80px 10%;
             background-color: var(--color-bg);
             text-align: center;
+            transition: background-color 0.8s ease;
         }
 
-        .s03 h2 {
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: var(--color-text);
-        }
+        .s03 h2 { font-size: 36px; margin-bottom: 40px; color: var(--color-text); }
 
         .practice-list {
             max-width: var(--max-width);
@@ -584,7 +405,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .practice-item:hover {
@@ -593,83 +414,161 @@
             box-shadow: var(--shadow-md);
         }
 
-        .practice-item h4 {
-            margin: 0 0 8px 0;
-            color: var(--color-secondary);
-            font-size: 18px;
+        .practice-item h4 { margin: 0 0 8px 0; color: var(--color-secondary); font-size: 18px; }
+        .practice-item p { margin: 0 0 16px 0; color: var(--color-text-secondary); font-size: 14px; line-height: 1.5; flex-grow: 1; }
+        .practice-item .file-name { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); border-top: 1px solid var(--color-border); padding-top: 8px; margin-top: auto; }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            cursor: zoom-out;
+            pointer-events: none;
+            transition: background 0.35s ease;
         }
 
-        .practice-item p {
-            margin: 0 0 16px 0;
-            color: var(--color-text-secondary);
-            font-size: 14px;
-            line-height: 1.5;
-            flex-grow: 1;
+        .lightbox-overlay.is-open { background: rgba(0, 0, 0, 0.88); pointer-events: all; }
+        .lightbox-overlay img { max-width: min(90vw, 960px); max-height: 85vh; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); object-fit: contain; transform: scale(0.75); opacity: 0; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+        .lightbox-overlay.is-open img { transform: scale(1); opacity: 1; }
+        .lightbox-close { position: absolute; top: 20px; right: 24px; font-size: 28px; color: var(--color-text-muted); background: none; border: none; cursor: pointer; opacity: 0; transition: opacity 0.3s ease 0.1s, color 0.2s ease, transform 0.2s ease; }
+        .lightbox-overlay.is-open .lightbox-close { opacity: 1; }
+
+        /* ==========================================================================
+           ⚡️ 意識流潛意識深淵：觸發時專用樣式層 ⚡️
+           ========================================================================== */
+        
+        /* 映像管掃描線（平時隱藏） */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        .practice-item .file-name {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--color-text-muted);
-            border-top: 1px solid var(--color-border);
-            padding-top: 8px;
-            margin-top: auto;
+        /* 神經突觸背景 Canvas（平時隱藏） */
+        #thoughtCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* 當進入混亂暴走狀態 (glitch-active) 時的變革 */
+        body.glitch-active {
+            background-color: #020205 !important;
+            overflow-x: hidden;
+        }
+
+        body.glitch-active .s01, 
+        body.glitch-active .s02, 
+        body.glitch-active .s03 {
+            background-color: rgba(3, 3, 8, 0.6) !important;
+            border-color: rgba(255,255,255,0.02) !important;
+        }
+
+        body.glitch-active .glitch-overlay { opacity: 1; }
+        body.glitch-active #thoughtCanvas { opacity: 0.85; }
+
+        /* 暴走狀態下的核心漂流元素：加入強烈色彩衝突與混合模式 */
+        body.glitch-active .glitch-target {
+            position: relative; /* 保持流體 transform 相對原位計算 */
+            z-index: 5;
+            mix-blend-mode: difference !important;
+            will-change: transform;
+            /* 漂流期間關閉過渡動畫，確保 JS 即時運算流暢 */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0s !important;
+        }
+
+        /* 霓虹撕裂感的陰影微調 */
+        body.glitch-active .card, 
+        body.glitch-active .practice-item, 
+        body.glitch-active .s01-exp-item {
+            background-color: rgba(6, 6, 15, 0.9) !important;
+            border-color: rgba(0, 240, 255, 0.2) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+        }
+
+        /* 手機 RWD 取消位移 */
+        @media (max-width: 768px) {
+            .s01 { padding: 100px 6% 80px; align-items: flex-start; }
+            .s01-inner { flex-direction: column; align-items: center; gap: 36px; text-align: center; }
+            .s01-avatar-wrap { width: 180px; height: 180px; }
+            .s01-text-col h1 { font-size: clamp(28px, 7vw, 36px); }
+            .s01-subtitle { font-size: 15px; }
+            .s01-quote { text-align: left; }
+            .s01-exp-item:hover { transform: none; }
+            .s02, .s03 { padding: 60px 6%; }
+            .s02 h2, .s03 h2 { font-size: 28px; }
+            .s01-scroll-hint { display: none; }
         }
     </style>
 </head>
 
 <body>
+    <div class="glitch-overlay"></div>
+
+    <canvas id="thoughtCanvas"></canvas>
+
     <section class="s01">
         <div class="s01-inner">
-            <!-- 左欄：頭像 -->
             <div class="s01-avatar-col">
                 <div class="s01-avatar-wrap">
                     <div class="s01-avatar-ring"></div>
                     <div class="s01-avatar-bg"></div>
-        <div class="userImg"></div>
+                    <div class="userImg"></div>
                 </div>
                 <div class="s01-skills">
-                    <span class="s01-skill-tag">C/C++</span>
-                    <span class="s01-skill-tag">Python</span>
-                    <span class="s01-skill-tag">Qt6</span>
-                    <span class="s01-skill-tag">Algorithm</span>
-                    <span class="s01-skill-tag">ML</span>
+                    <span class="s01-skill-tag glitch-target">C/C++</span>
+                    <span class="s01-skill-tag glitch-target">Python</span>
+                    <span class="s01-skill-tag glitch-target">Qt6</span>
+                    <span class="s01-skill-tag glitch-target">Algorithm</span>
+                    <span class="s01-skill-tag glitch-target">ML</span>
                 </div>
             </div>
 
-            <!-- 右欄：文字 -->
             <div class="s01-text-col">
                 <div>
                     <h1>42號混凝土<br><span class="s01-title-accent">Software Engineer</span></h1>
                     <p class="s01-subtitle">興趣：吃飯睡覺打東東 · C/C++ / Python / Qt6</p>
                 </div>
 
-                <blockquote class="s01-quote">
+                <blockquote class="s01-quote glitch-target">
                     不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。<br>
                     <span style="font-size:13px;">—— Rick Astley</span>
                 </blockquote>
 
                 <div class="s01-experience">
                     <div class="s01-exp-label">工作經歷</div>
-                    <div class="s01-exp-item">
+                    <div class="s01-exp-item glitch-target">
                         <span class="s01-exp-period">2016–2024</span>
-                        <p class="s01-exp-detail">（生產管理）先進規劃排程系統 · C++(98)</p>
+                        <p class="s01-exp-detail">（生產管理）先進排程規劃 · C++(98)</p>
                     </div>
-                    <div class="s01-exp-item">
+                    <div class="s01-exp-item glitch-target">
                         <span class="s01-exp-period">2024–2025</span>
                         <p class="s01-exp-detail">清算系統 · C、Pro*C</p>
                     </div>
-                    <div class="s01-exp-item">
+                    <div class="s01-exp-item glitch-target">
                         <span class="s01-exp-period">2025–2026</span>
                         <p class="s01-exp-detail">遊戲式軍事模擬引擎 · C++、Qt6</p>
                     </div>
                 </div>
 
                 <div class="s01-photos" id="photoStrip">
-                    <img src="images/asurada_GSX_01.jpg" alt="asurada 01" onclick="openLightbox(this)">
-                    <img src="images/asurada_GSX_02.jpg" alt="asurada 02" onclick="openLightbox(this)">
-                    <img src="images/asurada_GSX_03.jpg" alt="asurada 03" onclick="openLightbox(this)">
-                    <!-- 新增照片：複製上一行並換 src 即可，版型不會跑掉 -->
+                    <img src="images/asurada_GSX_01.jpg" alt="asurada 01" class="glitch-target" onclick="openLightbox(this)">
+                    <img src="images/asurada_GSX_02.jpg" alt="asurada 02" class="glitch-target" onclick="openLightbox(this)">
+                    <img src="images/asurada_GSX_03.jpg" alt="asurada 03" class="glitch-target" onclick="openLightbox(this)">
                 </div>
                 <div class="s01-photos-hint">
                     <i class="fas fa-arrows-left-right"></i>
@@ -678,24 +577,16 @@
             </div>
         </div>
 
-        <!-- 滾動提示 -->
         <div class="s01-scroll-hint">
             <i class="fas fa-chevron-down"></i>
             <span>Scroll</span>
         </div>
     </section>
 
-    <!-- Lightbox Overlay -->
-    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
-        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();" aria-label="關閉">&#x2715;</button>
-        <img id="lightboxImg" src="" alt="放大檢視">
-    </div>
-
     <section class="s02">
-        <h2>課程實作</h2>
+        <h2>我ㄉ作品</h2>
         <div class="portfolio-grid">
-            <!-- 作品01 -->
-            <div class="card">
+            <div class="card glitch-target">
                 <h3>切版練習</h3>
                 <p>使用 HTML、CSS 練習切版（版面控制）。</p>
                 <div class="links-container">
@@ -710,8 +601,7 @@
                 </div>
             </div>
 
-            <!-- 作品02 -->
-            <div class="card">
+            <div class="card glitch-target">
                 <h3>Bootstrap 基礎練習</h3>
                 <p>初試 Bootstrap 框架，練習網格系統與常用元件排版。</p>
                 <div class="links-container">
@@ -719,8 +609,7 @@
                 </div>
             </div>
 
-            <!-- 作品03 -->
-            <div class="card">
+            <div class="card glitch-target">
                 <h3>地方美食</h3>
                 <p>彙整在地特色農村美食小吃，運用網頁進行清單展示。</p>
                 <div class="links-container">
@@ -728,8 +617,7 @@
                 </div>
             </div>
 
-            <!-- 作品04 -->
-            <div class="card">
+            <div class="card glitch-target">
                 <h3>切版綜合練習 (二)</h3>
                 <p>綜合運用多種 CSS 排版技巧，進行精細的網頁切版練習。</p>
                 <div class="links-container">
@@ -737,8 +625,7 @@
                 </div>
             </div>
 
-            <!-- 作品05 -->
-            <div class="card">
+            <div class="card glitch-target">
                 <h3>歷史時間軸</h3>
                 <p>以時間軸形式呈現歷史事件發展的排版練習。</p>
                 <div class="links-container">
@@ -753,8 +640,15 @@
                 </div>
             </div>
 
-            <!-- 作品06 -->
-            <div class="card">
+            <div class="card glitch-target">
+                <h3>CSS 樣式與配色手冊</h3>
+                <p>（此為 Gemini 產生的 vibe coding 實作，非本人製作）展示 CSS 設計規範與配色系統對照。</p>
+                <div class="links-container">
+                    <a href="style_guide_showcase.html" target="_blank">查看作品</a>
+                </div>
+            </div>
+
+            <div class="card glitch-target">
                 <h3>產品建檔表單 (JS 驗證)</h3>
                 <p>實作產品建檔表單與即時 JavaScript 驗證，套用 Uber Eats 質感的極簡美化風格。</p>
                 <div class="links-container">
@@ -764,100 +658,59 @@
         </div>
     </section>
 
-    <section class="s02" style="background-color: var(--color-bg); border-top: 1px solid var(--color-border);">
-        <h2>其他作品</h2>
-        <div class="portfolio-grid">
-            <!-- 其他作品01 -->
-            <div class="card">
-                <h3>CSS 樣式與配色手冊</h3>
-                <p>（此為 Gemini 產生的 vibe coding 實作，非本人製作）展示 CSS 設計規範與配色系統對照。</p>
-                <div class="links-container">
-                    <a href="style_guide_showcase.html" target="_blank">查看作品</a>
-                </div>
-            </div>
-
-            <!-- 其他作品02 -->
-            <div class="card">
-                <h3>賽博龐克風格首頁</h3>
-                <p>帶有強烈賽博龐克視覺特質與動態效果的個人首頁實驗性版本。</p>
-                <div class="links-container">
-                    <a href="gemini-code-1782953246256_賽博龐克風格.html" target="_blank">查看作品</a>
-                </div>
-            </div>
-
-            <!-- 其他作品03 -->
-            <div class="card">
-                <h3>個人首頁 // 潛意識臨界點 (混合版)</h3>
-                <p>結合多種視覺風格與互動設計的個人首頁混合實驗版本。</p>
-                <div class="links-container">
-                    <a href="gemini-code-1783037159451_混合版.html" target="_blank">查看作品</a>
-                </div>
-            </div>
-
-            <!-- 其他作品04 -->
-            <div class="card">
-                <h3>Txt2Img Prompt 輕量管理工具</h3>
-                <p>用於管理與生成 AI 繪圖 (Text-to-Image) 提示詞的輕量化網頁工具。</p>
-                <div class="links-container">
-                    <a href="gemini-code-txt2img_prompt_manager.html" target="_blank">查看作品</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="s03">
         <h2>基礎練習與掌握元素</h2>
         <div class="practice-list">
-            <a href="20260605_ch3_4.html" target="_blank" class="practice-item">
+            <a href="20260605_ch3_4.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>Chapter 3 & 4 基礎練習</h4>
                     <p>練習 CSS 字型大小、文字排版與基礎樣式屬性設定。</p>
                 </div>
                 <div class="file-name">20260605_ch3_4.html</div>
             </a>
-            <a href="20260605_ch5.html" target="_blank" class="practice-item">
+            <a href="20260605_ch5.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>Chapter 5 基礎練習</h4>
                     <p>學習並實作 HTML 表格與表單控制項之排版與設計。</p>
                 </div>
                 <div class="file-name">20260605_ch5.html</div>
             </a>
-            <a href="20260605_ch5_ChatGPT.html" target="_blank" class="practice-item">
+            <a href="20260605_ch5_ChatGPT.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>飲料 ERP 商品管理</h4>
                     <p>結合 Chapter 5 概念與 AI 協同設計的飲品後台管理介面。</p>
                 </div>
                 <div class="file-name">20260605_ch5_ChatGPT.html</div>
             </a>
-            <a href="20260609_Hotel_List.html" target="_blank" class="practice-item">
+            <a href="20260609_Hotel_List.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>旅館列表展示</h4>
                     <p>使用 CSS 排版呈現多欄位的旅館搜尋結果與列表清單。</p>
                 </div>
                 <div class="file-name">20260609_Hotel_List.html</div>
             </a>
-            <a href="20260616_ch6.html" target="_blank" class="practice-item">
+            <a href="20260616_ch6.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>Chapter 6 Bootstrap 欄與列</h4>
                     <p>熟悉 Bootstrap 的 Grid System，練習多響應式欄位切版。</p>
                 </div>
                 <div class="file-name">20260616_ch6.html</div>
             </a>
-            <a href="20260616_ch6_practice.html" target="_blank" class="practice-item">
+            <a href="20260616_ch6_practice.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>Chapter 6 切版練習題</h4>
                     <p>運用 Bootstrap 的格線系統，進行多種常見網頁版塊切版。</p>
                 </div>
                 <div class="file-name">20260616_ch6_practice.html</div>
             </a>
-            <a href="20260618_roller.html" target="_blank" class="practice-item">
+            <a href="20260618_roller.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>切版練習 - Roller</h4>
                     <p>針對 Roller 主題的網頁版塊與滑動特效切版練習。</p>
                 </div>
                 <div class="file-name">20260618_roller.html</div>
             </a>
-            <a href="20260623_flex_practice.html" target="_blank" class="practice-item">
+            <a href="20260623_flex_practice.html" target="_blank" class="practice-item glitch-target">
                 <div>
                     <h4>Bootstrap Flex 彈性排版</h4>
                     <p>深入練習 Bootstrap 的 Flexbox 工具類別以靈活調配網頁版面。</p>
@@ -866,29 +719,186 @@
             </a>
         </div>
     </section>
+
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();" aria-label="關閉">&#x2715;</button>
+        <img id="lightboxImg" src="" alt="放大檢視">
+    </div>
+
+    <script>
+        // --- 1. 原版 Lightbox 邏輯保持原封不動 ---
+        const overlay  = document.getElementById('lightboxOverlay');
+        const lbImg    = document.getElementById('lightboxImg');
+
+        function openLightbox(imgEl) {
+            lbImg.src = imgEl.src;
+            lbImg.alt = imgEl.alt;
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => { lbImg.src = ''; }, 350);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // --- 2. 進階挑戰：隨機量子意識塌陷（10秒暴走機制） ---
+        let isGlitching = false;
+        let elementsData = [];
+        let animationFrameId = null;
+        const targets = document.querySelectorAll('.glitch-target');
+
+        // 核心計時器：每 6 秒隨機投擲一次骰子（有 30% 機率觸發意識流）
+        setInterval(() => {
+            if (!isGlitching && Math.random() < 0.3) {
+                startGlitchUniverse();
+            }
+        }, 6000);
+
+        function startGlitchUniverse() {
+            isGlitching = true;
+            document.body.classList.add('glitch-active');
+            elementsData = [];
+
+            // 即時計算每個元素相對其容器的原始邊界，接管座標
+            targets.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const parentSection = el.closest('section');
+                const parentRect = parentSection.getBoundingClientRect();
+
+                // 初始隨機分佈在 Section 的寬高空間中
+                const randomX = Math.random() * (parentRect.width - rect.width - 40) + 20 - el.offsetLeft;
+                const randomY = Math.random() * (parentRect.height - rect.height - 40) + 20 - el.offsetTop;
+                const speed = Math.random() * 0.7 + 0.3; // 獨立下沉流速
+                const rotate = (Math.random() - 0.5) * 14; // 隨機偏斜角度
+
+                elementsData.push({
+                    element: el,
+                    section: parentSection,
+                    x: randomX,
+                    y: randomY,
+                    speed: speed,
+                    rotate: rotate,
+                    width: rect.width,
+                    height: rect.height
+                });
+            });
+
+            // 啟動流體動力學
+            updateLiquidFlow();
+
+            // 精準 10 秒後歸還控制權，回歸理智
+            setTimeout(() => {
+                stopGlitchUniverse();
+            }, 10000);
+        }
+
+        function updateLiquidFlow() {
+            if (!isGlitching) return;
+
+            elementsData.forEach(item => {
+                const sectionH = item.section.offsetHeight;
+                const elAbsoluteTop = item.element.offsetTop + item.y;
+
+                // 緩慢向下流動
+                item.y += item.speed;
+
+                // 輪迴機制：如果該卡片掉出所屬 section 的底部邊界
+                if (elAbsoluteTop > sectionH) {
+                    // 從頂端重新流入
+                    item.y = -item.element.offsetTop - item.height;
+                    item.x = Math.random() * (item.section.offsetWidth - item.width - 40) + 20 - item.element.offsetLeft;
+                    item.speed = Math.random() * 0.7 + 0.3;
+                }
+
+                // 實施相對 Transform 座標修正
+                item.element.style.transform = `translate(${item.x}px, ${item.y}px) rotate(${item.rotate}deg)`;
+            });
+
+            animationFrameId = requestAnimationFrame(updateLiquidFlow);
+        }
+
+        function stopGlitchUniverse() {
+            isGlitching = false;
+            cancelAnimationFrame(animationFrameId);
+            document.body.classList.remove('glitch-active');
+
+            // 清空所有動態樣式，藉由原 CSS 的 transition 特性流暢「吸回」原位
+            targets.forEach(el => {
+                el.style.transform = '';
+            });
+        }
+
+        // --- 3. 意識流專用高密度 Canvas 突觸背景線條 ---
+        const canvas = document.getElementById('thoughtCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 60;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speedX = (Math.random() - 0.5) * 1.1;
+                this.speedY = (Math.random() - 0.5) * 1.1;
+                this.radius = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255,' : 'rgba(255, 0, 127,';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color + ' 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 只有在 glitch 啟動時才進行高成本渲染計算
+            if (isGlitching) {
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 160) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${0.2 * (1 - distance / 160)})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
 </body>
-
-<script>
-    const overlay  = document.getElementById('lightboxOverlay');
-    const lbImg    = document.getElementById('lightboxImg');
-
-    function openLightbox(imgEl) {
-        lbImg.src = imgEl.src;
-        lbImg.alt = imgEl.alt;
-        overlay.classList.add('is-open');
-        document.body.style.overflow = 'hidden'; /* 防止背景捲動 */
-    }
-
-    function closeLightbox() {
-        overlay.classList.remove('is-open');
-        document.body.style.overflow = '';
-        /* 等動畫結束後清空 src，避免閃爍 */
-        setTimeout(() => { lbImg.src = ''; }, 350);
-    }
-
-    /* ESC 鍵關閉 */
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-    });
-</script>
 </html>

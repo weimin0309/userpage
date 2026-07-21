@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42號混凝土 · 意識流宇宙</title>
+    <!-- 保留你原有的 FontAwesome 或其他外鏈 -->
+    <link rel="stylesheet" href="css/20260602_profile.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        :root {
+            --cosmic-bg: #0b0d19;
+            --text-glow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* 全域重設：打造無邊界的思考深空 */
+        body {
+            background-color: var(--cosmic-bg);
+            color: var(--color-text, #e2e8f0);
+            font-family: var(--font-mono, monospace), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, #111428 0%, #05060b 100%);
+        }
+
+        /* 意識流動的動態背景光暈 */
+        .thought-stream-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            mix-blend-mode: screen;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+
+        .nebula-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #3b82f6, transparent); }
+        .nebula-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #14b8a6, transparent); animation-delay: -5s; }
+        .nebula-3 { top: 40%; left: 60%; width: 35vw; height: 35vw; background: radial-gradient(circle, #a855f7, transparent); animation-delay: -10s; }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.15); }
+        }
+
+        /* 主容器：模糊邊界 */
+        .mind-container {
+            position: relative;
+            z-index: 1;
+            padding: 100px 5vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 核心自我囈語區 (原 s01) */
+        .ego-section {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 150px;
+        }
+
+        /* 自我名字：巨大而失焦、隨後聚焦 */
+        .ego-title {
+            font-size: clamp(40px, 7vw, 90px);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin: 0 0 20px 0;
+            color: #fff;
+            text-shadow: var(--text-glow);
+        }
+
+        .ego-subtitle {
+            font-size: clamp(16px, 2vw, 24px);
+            color: var(--color-primary, #3b82f6);
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        /* 技能碎屑：像小行星帶一樣散落 */
+        .skill-orbit {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 60px;
+            max-width: 600px;
+        }
+
+        .skill-fragment {
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            font-size: 13px;
+            color: #94a3b8;
+            transition: all 0.4s ease;
+            cursor: default;
+        }
+
+        .skill-fragment:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #fff;
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* 歌詞引言：半透明的低語 */
+        .whisper-quote {
+            max-width: 550px;
+            font-style: italic;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #64748b;
+            border-left: 2px solid #14b8a6;
+            padding-left: 20px;
+            margin: 40px 0;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .whisper-quote:hover { opacity: 1; }
+
+        /* 工作經歷：非線性的記憶堆疊 */
+        .memory-timeline {
+            margin-top: 60px;
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .memory-node {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        /* 隨機微調每條記憶的角度，製造打破常規的混亂美感 */
+        .memory-node:nth-child(1) { transform: rotate(-0.5deg); }
+        .memory-node:nth-child(2) { transform: rotate(1deg); transform-origin: left; }
+        .memory-node:nth-child(3) { transform: rotate(-0.8deg); }
+
+        .memory-node:hover {
+            transform: scale(1.02) rotate(0deg) translateX(5px);
+            border-color: #14b8a6;
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.1);
+        }
+
+        .memory-time {
+            font-size: 12px;
+            color: #14b8a6;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* 頭像與興趣照片：意識流的核心「意象群體」 */
+        /* 它們會交錯並隨機漂浮在畫面的右側/各處 */
+        .imagery-cloud {
+            position: absolute;
+            right: 0;
+            top: 10%;
+            width: 45%;
+            height: 80%;
+            pointer-events: none;
+        }
+
+        .floating-img {
+            pointer-events: auto;
+            position: absolute;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: grayscale(30%) brightness(0.8);
+            animation: float-soft 6s ease-in-out infinite alternate;
+        }
+
+        /* 讓不同照片有著不同的圖層、大小、位置與漂浮頻率 */
+        .img-user {
+            width: 200px; height: 200px; border-radius: 50%;
+            top: 10%; left: 20%; z-index: 4;
+            animation-duration: 5s;
+        }
+        .img-interest-1 {
+            width: 220px; height: 150px;
+            top: 40%; left: 5%; z-index: 2;
+            animation-duration: 7s; animation-delay: -2s;
+            transform: rotate(-5deg);
+        }
+        .img-interest-2 {
+            width: 180px; height: 240px;
+            top: 25%; right: 5%; z-index: 3;
+            animation-duration: 8s; animation-delay: -4s;
+            transform: rotate(4deg);
+        }
+        .img-interest-3 {
+            width: 240px; height: 160px;
+            bottom: 5%; left: 30%; z-index: 1;
+            animation-duration: 6s; animation-delay: -1s;
+            transform: rotate(3deg);
+        }
+
+        @keyframes float-soft {
+            0% { transform: translateY(0px) rotate(inherit); }
+            100% { transform: translateY(-15px) rotate(inherit); }
+        }
+
+        .floating-img:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10;
+            cursor: pointer;
+            border-color: #3b82f6;
+        }
+
+        /* 意識流作品集與練習列表：碎片化區塊 */
+        .fragment-section-title {
+            font-size: 28px;
+            letter-spacing: 0.2em;
+            color: #94a3b8;
+            margin-bottom: 50px;
+            text-align: left;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .mind-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 120px;
+        }
+
+        /* 碎片卡片（原作品卡片與練習項目） */
+        .thought-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s, border-color 0.4s, background 0.4s, box-shadow 0.4s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 隨機化初始外觀，打破整齊劃一的死板 */
+        .mind-grid .thought-card:nth-child(even) { transform: translateY(10px) rotate(0.5deg); }
+        .mind-grid .thought-card:nth-child(odd) { transform: translateY(-5px) rotate(-0.5deg); }
+
+        .thought-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.04);
+            transform: scale(1.03) translateY(-5px) rotate(0deg) !important;
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.1);
+        }
+
+        .thought-card h3, .thought-card h4 {
+            margin: 0 0 12px 0;
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .thought-card h4 { color: #14b8a6; font-size: 18px; }
+
+        .thought-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #94a3b8;
+            margin: 0 0 24px 0;
+            flex-grow: 1;
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stream-link {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .stream-link:hover {
+            background: #14b8a6;
+            box-shadow: 0 5px 15px rgba(20, 184, 166, 0.4);
+            border-color: transparent;
+        }
+        
+        .link-subtext {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .file-tag {
+            font-size: 11px;
+            color: #475569;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 12px;
+            margin-top: 15px;
+        }
+
+        /* 燈箱優化 */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(5, 6, 11, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            cursor: zoom-out;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-overlay.is-open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox-overlay img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 8px;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lightbox-overlay.is-open img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 32px;
+            color: #64748b;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 響應式優化：在小螢幕上收攏雲端意象 */
+        @media (max-width: 1024px) {
+            .imagery-cloud {
+                position: relative;
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                top: 0;
+                margin-top: 40px;
+                margin-bottom: 40px;
+            }
+            .floating-img {
+                position: static;
+                width: calc(50% - 10px);
+                height: 150px;
+                animation: none !important;
+                transform: none !important;
+            }
+            .img-user { border-radius: 12px; width: calc(50% - 10px); height: 150px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 意識流動的斑駁背景 -->
+    <div class="thought-stream-bg">
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="nebula nebula-3"></div>
+    </div>
+
+    <div class="mind-container">
+        
+        <!-- 核心結構區：自我與記憶 -->
+        <section class="ego-section">
+            <div style="max-width: 650px;">
+                <h1 class="ego-title">42號混凝土<br><span style="color: #3b82f6;">Software Engineer</span></h1>
+                <p class="ego-subtitle">興趣：吃飯睡覺打東東 · C/C++ / Python / Qt6</p>
+                
+                <!-- 技能碎片群 -->
+                <div class="skill-orbit">
+                    <span class="skill-fragment">C/C++</span>
+                    <span class="skill-fragment">Python</span>
+                    <span class="skill-fragment">Qt6</span>
+                    <span class="skill-fragment">Algorithm</span>
+                    <span class="skill-fragment">ML</span>
+                </div>
+
+                <!-- 隨機思緒低語 -->
+                <blockquote class="whisper-quote">
+                    不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。<br>
+                    <span style="font-size:12px; color: #475569;">—— Rick Astley</span>
+                </blockquote>
+
+                <!-- 記憶片段 (工作經歷) -->
+                <div class="memory-timeline">
+                    <div style="font-size:11px; color:#475569; letter-spacing: 2px;">MEMORIES / 經歷</div>
+                    
+                    <div class="memory-node">
+                        <span class="memory-time">2016–2024</span>
+                        <p style="margin:0; font-size:14px;"><strong style="color:#fff;">[公司名稱]</strong> · （生產管理）先進排程規劃 · C++(98)</p>
+                    </div>
+                    
+                    <div class="memory-node">
+                        <span class="memory-time">2024–2025</span>
+                        <p style="margin:0; font-size:14px;"><strong style="color:#fff;">[公司名稱]</strong> · 清算系統 · C、Pro*C</p>
+                    </div>
+                    
+                    <div class="memory-node">
+                        <span class="memory-time">2025–2026</span>
+                        <p style="margin:0; font-size:14px;"><strong style="color:#fff;">[公司名稱]</strong> · 遊戲式軍事模擬引擎 · C++、Qt6</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 意象雲：頭像與興趣照在這裡無規律交織（支持未來複製擴充） -->
+            <div class="imagery-cloud">
+                <!-- 頭像 -->
+                <img src="images/alex-knight-2EJCSULRwC8-unsplash.jpg" alt="User Avatar" class="floating-img img-user" onclick="openLightbox(this)">
+                <!-- 興趣照群 -->
+                <img src="images/asurada_GSX_01.jpg" alt="asurada 01" class="floating-img img-interest-1" onclick="openLightbox(this)">
+                <img src="images/asurada_GSX_02.jpg" alt="asurada 02" class="floating-img img-interest-2" onclick="openLightbox(this)">
+                <img src="images/asurada_GSX_03.jpg" alt="asurada 03" class="floating-img img-interest-3" onclick="openLightbox(this)">
+                <!-- 未來若有新照片，只需直接複製貼在下方，並在 CSS 隨意加上獨立的位置 class 即可 -->
+            </div>
+        </section>
+
+        <!-- 作品集區塊 -->
+        <div class="fragment-section-title">CREATIONS / 作品</div>
+        <section class="mind-grid">
+            
+            <div class="thought-card">
+                <div>
+                    <h3>切版練習</h3>
+                    <p>使用 HTML、CSS 練習切版（版面控制）。</p>
+                </div>
+                <div class="card-links">
+                    <div>
+                        <span class="link-subtext">原版：</span>
+                        <a href="20260527_practice.html" target="_blank" class="stream-link">查看作品</a>
+                    </div>
+                    <div>
+                        <span class="link-subtext">ChatGPT 修飾版：</span>
+                        <a href="20260528_practice.html" target="_blank" class="stream-link">查看作品</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>Bootstrap 基礎練習</h3>
+                    <p>初試 Bootstrap 框架，練習網格系統與常用元件排版。</p>
+                </div>
+                <div class="card-links">
+                    <a href="20260605_bootstrap_practice.html" target="_blank" class="stream-link">查看作品</a>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>地方美食</h3>
+                    <p>彙整在地特色農村美食小吃，運用網頁進行清單展示。</p>
+                </div>
+                <div class="card-links">
+                    <a href="20260609_Travel_Food.html" target="_blank" class="stream-link">查看作品</a>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>切版綜合練習 (二)</h3>
+                    <p>綜合運用多種 CSS 排版技巧，進行精細的網頁切版練習。</p>
+                </div>
+                <div class="card-links">
+                    <a href="20260618_practice_2.html" target="_blank" class="stream-link">查看作品</a>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>歷史時間軸</h3>
+                    <p>以時間軸形式呈現歷史事件發展的排版練習。</p>
+                </div>
+                <div class="card-links">
+                    <div>
+                        <span class="link-subtext">原版：</span>
+                        <a href="20260623_timeline.html" target="_blank" class="stream-link">查看作品</a>
+                    </div>
+                    <div>
+                        <span class="link-subtext">Gemini 調整版：</span>
+                        <a href="20260623_timeline_byAntigravity.html" target="_blank" class="stream-link">查看作品</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>CSS 樣式與配色手冊</h3>
+                    <p>展示 CSS 設計規範與配色系統對照。（AI 協同實作展示）</p>
+                </div>
+                <div class="card-links">
+                    <a href="style_guide_showcase.html" target="_blank" class="stream-link">查看作品</a>
+                </div>
+            </div>
+
+            <div class="thought-card">
+                <div>
+                    <h3>產品建檔表單 (JS 驗證)</h3>
+                    <p>實作產品建檔表單與即時 JavaScript 驗證，套用 Uber Eats 質感的極簡美化風格。</p>
+                </div>
+                <div class="card-links">
+                    <a href="20260625_ch11_form_JS.html" target="_blank" class="stream-link">查看作品</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 基礎練習區塊：將原本的 `<a>` 包裝成卡片直接放入網格中 -->
+        <div class="fragment-section-title">FRAGMENTS / 基礎掌握</div>
+        <section class="mind-grid">
+            
+            <a href="20260605_ch3_4.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>Chapter 3 & 4 基礎</h4>
+                    <p>練習 CSS 字型大小、文字排版與基礎樣式屬性設定。</p>
+                </div>
+                <div class="file-tag">20260605_ch3_4.html</div>
+            </a>
+
+            <a href="20260605_ch5.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>Chapter 5 基礎</h4>
+                    <p>學習並實作 HTML 表格與表單控制項之排版與設計。</p>
+                </div>
+                <div class="file-tag">20260605_ch5.html</div>
+            </a>
+
+            <a href="20260605_ch5_ChatGPT.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>飲料 ERP 商品管理</h4>
+                    <p>結合 Chapter 5 概念與 AI 協同設計的飲品後台管理介面。</p>
+                </div>
+                <div class="file-tag">20260605_ch5_ChatGPT.html</div>
+            </a>
+
+            <a href="20260609_Hotel_List.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>旅館列表展示</h4>
+                    <p>使用 CSS 排版呈現多欄位的旅館搜尋結果與列表清單。</p>
+                </div>
+                <div class="file-tag">20260609_Hotel_List.html</div>
+            </a>
+
+            <a href="20260616_ch6.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>Ch6 Bootstrap 欄與列</h4>
+                    <p>熟悉 Bootstrap 的 Grid System，練習多響應式欄位切版。</p>
+                </div>
+                <div class="file-tag">20260616_ch6.html</div>
+            </a>
+
+            <a href="20260616_ch6_practice.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>Ch6 切版練習題</h4>
+                    <p>運用 Bootstrap 的格線系統，進行多種常見網頁版塊切版。</p>
+                </div>
+                <div class="file-tag">20260616_ch6_practice.html</div>
+            </a>
+
+            <a href="20260618_roller.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>切版練習 - Roller</h4>
+                    <p>針對 Roller 主題的網頁版塊與滑動特效切版練習。</p>
+                </div>
+                <div class="file-tag">20260618_roller.html</div>
+            </a>
+
+            <a href="20260623_flex_practice.html" target="_blank" class="thought-card">
+                <div>
+                    <h4>Bootstrap Flex 彈性排版</h4>
+                    <p>深入練習 Bootstrap 的 Flexbox 工具類別以靈活調配網頁版面。</p>
+                </div>
+                <div class="file-tag">20260623_flex_practice.html</div>
+            </a>
+        </section>
+    </div>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();" aria-label="關閉">&#x2715;</button>
+        <img id="lightboxImg" src="" alt="放大檢視">
+    </div>
+
+    <script>
+        const overlay  = document.getElementById('lightboxOverlay');
+        const lbImg    = document.getElementById('lightboxImg');
+
+        function openLightbox(imgEl) {
+            lbImg.src = imgEl.src;
+            lbImg.alt = imgEl.alt;
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => { lbImg.src = ''; }, 400);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>

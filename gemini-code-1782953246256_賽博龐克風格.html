@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42號混凝土 // 意識流深淵 // 核心解構</title>
+    <link rel="stylesheet" href="css/20260602_profile.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #030307;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff007f;
+            --neon-green: #00ffaa;
+        }
+
+        /* 打造無重力、無邊界的潛意識空間 */
+        body {
+            background-color: var(--bg-deep);
+            color: #d1d5db;
+            font-family: 'Courier New', var(--font-mono, monospace), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 250vh;
+        }
+
+        /* Canvas 思緒流動渲染層 */
+        #thoughtCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* 全域衝突濾鏡 */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        /* 解構主義容器 */
+        .abyss-container {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding: 40px;
+        }
+
+        /* 意識流囈語：隨機漂流的大文字 */
+        .ambient-text {
+            position: absolute;
+            font-size: clamp(60px, 12vw, 160px);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.02);
+            text-transform: uppercase;
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: -0.05em;
+            z-index: 1;
+        }
+        .at-1 { top: 5%; left: -5%; transform: rotate(-5deg); }
+        .at-2 { top: 40%; right: -10%; transform: rotate(3deg); color: rgba(0, 240, 255, 0.015); }
+        .at-3 { bottom: 15%; left: 10%; transform: rotate(-2deg); }
+
+        /* 核心自我（名字與引言）- 破碎重疊 */
+        .ego-fragment-core {
+            position: relative;
+            margin-top: 10vh;
+            margin-bottom: 20vh;
+            z-index: 10;
+        }
+
+        .ego-title {
+            font-size: clamp(45px, 8vw, 110px);
+            font-weight: 900;
+            line-height: 0.85;
+            color: #fff;
+            letter-spacing: -0.06em;
+            margin: 0;
+            mix-blend-mode: difference;
+            text-shadow: 3px 3px 0 var(--neon-pink), -3px -3px 0 var(--neon-blue);
+            animation: text-vibrate 0.3s infinite alternate;
+        }
+
+        @keyframes text-vibrate {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(1px, -1px); }
+        }
+
+        .ego-subtitle {
+            font-size: 20px;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.6);
+            display: inline-block;
+            padding: 4px 12px;
+        }
+
+        /* 技能碎屑 - 散落各處 */
+        .skill-cluster {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 500px;
+        }
+
+        .skill-shrapnel {
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--neon-blue);
+            font-size: 12px;
+            transform: rotate(calc(var(--r, 0) * 1deg));
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .skill-shrapnel:hover {
+            background: var(--neon-pink);
+            color: #000;
+            transform: scale(1.2) rotate(0deg);
+            z-index: 100;
+        }
+
+        /* 低語引言 - 橫跨、撕裂畫面 */
+        .whisper-quote {
+            position: absolute;
+            right: 5%;
+            top: 15vh;
+            max-width: 400px;
+            font-style: italic;
+            font-size: 14px;
+            line-height: 2;
+            color: rgba(255,255,255,0.4);
+            border-right: 2px solid var(--neon-pink);
+            padding-right: 20px;
+            text-align: right;
+            mix-blend-mode: exclusion;
+        }
+
+        /* 記憶交疊區 (原工作經歷) */
+        .memory-strata {
+            position: relative;
+            margin-left: 5vw;
+            max-width: 550px;
+        }
+
+        .memory-slice {
+            background: rgba(5, 5, 10, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin-bottom: -30px; /* 強制重疊 */
+            backdrop-filter: blur(8px);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            mix-blend-mode: difference;
+        }
+
+        .memory-slice:nth-child(2) { transform: translateX(30px) rotate(1.5deg); border-color: var(--neon-blue); }
+        .memory-slice:nth-child(3) { transform: translateX(-15px) rotate(-1deg); border-color: var(--neon-pink); }
+        .memory-slice:nth-child(4) { transform: translateX(10px) rotate(0.5deg); }
+
+        .memory-slice:hover {
+            transform: translate(0, -10px) scale(1.05) rotate(0deg) !important;
+            z-index: 99 !important;
+            border-color: var(--neon-green);
+            background: rgba(10, 10, 20, 0.95);
+        }
+
+        .slice-time {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--neon-pink);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 意象群體：散落、巨大、遮擋文字的照片 */
+        .unbound-imagery img {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.2);
+            filter: saturate(0.5) contrast(1.2);
+            mix-blend-mode: luminosity;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            animation: slow-drift 12s ease-in-out infinite alternate;
+        }
+
+        .unbound-imagery img:hover {
+            filter: none;
+            mix-blend-mode: normal;
+            transform: scale(1.15) rotate(0deg) !important;
+            z-index: 200 !important;
+            box-shadow: 0 0 30px rgba(0,240,255,0.5);
+        }
+
+        /* 隨機安放照片，製造刻意的版面衝突 */
+        .img-user { width: 260px; height: 260px; top: 32vh; right: 8vw; z-index: 2; transform: rotate(-6deg); animation-delay: -2s; }
+        .img-int-1 { width: 300px; height: 180px; top: 68vh; left: 45vw; z-index: 8; transform: rotate(4deg); animation-delay: -4s; }
+        .img-int-2 { width: 220px; height: 300px; top: 110vh; right: 5vw; z-index: 1; transform: rotate(-3deg); animation-delay: -6s; }
+        .img-int-3 { width: 280px; height: 190px; top: 145vh; left: 8vw; z-index: 15; transform: rotate(7deg); }
+
+        @keyframes slow-drift {
+            0% { transform: translateY(0) rotate(inherit); }
+            100% { transform: translateY(-25px) rotate(inherit); }
+        }
+
+        /* 碎片化思緒卡片區（作品與練習完全融合，無規則散佈） */
+        .chaos-stream-title {
+            font-size: 24px;
+            letter-spacing: 8px;
+            color: rgba(255,255,255,0.3);
+            margin: 250px 0 60px 0;
+            border-left: 4px solid var(--neon-blue);
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+
+        .shattered-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 20px;
+        }
+
+        /* 卡片解構 */
+        .fragment-card {
+            background: rgba(6, 6, 12, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            padding: 25px;
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        /* 利用 nth-child 賦予每張卡片截然不同的偏斜度與視覺比重，達成衝突感 */
+        .shattered-grid .fragment-card:nth-child(3n) { transform: translateY(30px) rotate(1.5deg); border-top: 3px solid var(--neon-pink); }
+        .shattered-grid .fragment-card:nth-child(3n+1) { transform: translateY(-15px) rotate(-2deg); border-top: 3px solid var(--neon-blue); }
+        .shattered-grid .fragment-card:nth-child(3n+2) { transform: translateY(10px) rotate(0.8deg); border-top: 3px solid var(--neon-green); }
+
+        .fragment-card:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: #fff;
+            transform: scale(1.08) translateY(-10px) rotate(0deg) !important;
+            z-index: 50;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        .fragment-card h3, .fragment-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .fragment-card h4 { color: var(--neon-blue); font-size: 17px; }
+
+        .fragment-card p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #8892b0;
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+        }
+
+        /* 連結改造成純粹的線條感知 */
+        .action-gate {
+            display: block;
+            text-align: center;
+            padding: 8px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+        .action-gate:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .gate-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .tag-file {
+            font-family: monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.2);
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+
+        /* 終極極簡燈箱 */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(2, 2, 5, 0.97);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-overlay.is-open { opacity: 1; pointer-events: all; }
+        .lightbox-overlay img { max-width: 95vw; max-height: 90vh; object-fit: contain; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 35px; color: #fff; background: none; border: none; cursor: pointer; }
+
+        /* 手機降級處理，但依然保持混亂 */
+        @media (max-width: 992px) {
+            .unbound-imagery img { position: relative !important; width: 100% !important; height: 160px !important; top: 0 !important; left: 0 !important; right: 0 !important; margin: 15px 0; transform: none !important; animation: none !important; }
+            .whisper-quote { position: relative; top: 0; right: 0; text-align: left; border-right: none; border-left: 2px solid var(--neon-pink); padding-left: 20px; margin: 30px 0; }
+            .memory-slice { margin-bottom: 15px; transform: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glitch-overlay"></div>
+
+    <canvas id="thoughtCanvas"></canvas>
+
+    <div class="abyss-container">
+        
+        <div class="ambient-text at-1">C++98 // QT6 // ML</div>
+        <div class="ambient-text at-2">CONCRETE 42 // CONCRETE 42</div>
+        <div class="ambient-text at-3">NOTHING GONNA GIVE YOU UP</div>
+
+        <section class="ego-fragment-core">
+            <h1 class="ego-title">42號混凝土<br><span style="color: var(--neon-blue);">Software Engineer</span></h1>
+            <div class="ego-subtitle">興趣：吃飯睡覺打東東 · C/C++ / Python / Qt6</div>
+            
+            <div class="skill-cluster">
+                <span class="skill-shrapnel" style="--r: -4">C/C++</span>
+                <span class="skill-shrapnel" style="--r: 3">Python</span>
+                <span class="skill-shrapnel" style="--r: -2">Qt6</span>
+                <span class="skill-shrapnel" style="--r: 5">Algorithm</span>
+                <span class="skill-shrapnel" style="--r: -6">ML</span>
+            </div>
+
+            <div class="unbound-imagery">
+                <img src="images/alex-knight-2EJCSULRwC8-unsplash.jpg" alt="User Image" class="img-user" onclick="openLightbox(this)">
+                <img src="images/asurada_GSX_01.jpg" alt="asurada 01" class="img-int-1" onclick="openLightbox(this)">
+                <img src="images/asurada_GSX_02.jpg" alt="asurada 02" class="img-int-2" onclick="openLightbox(this)">
+                <img src="images/asurada_GSX_03.jpg" alt="asurada 03" class="img-int-3" onclick="openLightbox(this)">
+            </div>
+
+            <blockquote class="whisper-quote">
+                不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。<br>
+                <span style="font-size:11px; color: var(--neon-pink);">—— Rick Astley</span>
+            </blockquote>
+        </section>
+
+        <section class="memory-strata">
+            <div style="font-size:11px; color: var(--neon-green); letter-spacing: 4px; margin-bottom: 20px;">[ MEMORY STRATA // 經歷斷層 ]</div>
+            
+            <div class="memory-slice" style="z-index: 5;">
+                <span class="slice-time">2016–2024</span>
+                <p style="margin:0;"><strong style="color:#fff;">[公司名稱]</strong> · （生產管理）先進排程規劃 · C++(98)</p>
+            </div>
+            
+            <div class="memory-slice" style="z-index: 6;">
+                <span class="slice-time">2024–2025</span>
+                <p style="margin:0;"><strong style="color:#fff;">[公司名稱]</strong> · 清算系統 · C、Pro*C</p>
+            </div>
+            
+            <div class="memory-slice" style="z-index: 7;">
+                <span class="slice-time">2025–2026</span>
+                <p style="margin:0;"><strong style="color:#fff;">[公司名稱]</strong> · 遊戲式軍事模擬引擎 · C++、Qt6</p>
+            </div>
+        </section>
+
+        <div class="chaos-stream-title">Shattered Thoughts // 創作與衍生碎片</div>
+        
+        <section class="shattered-grid">
+            
+            <div class="fragment-card">
+                <div>
+                    <h3>切版練習</h3>
+                    <p>使用 HTML、CSS 練習切版（版面控制）。</p>
+                </div>
+                <div>
+                    <span class="gate-label">原版：</span>
+                    <a href="20260527_practice.html" target="_blank" class="action-gate">查看核心</a>
+                    <span class="gate-label" style="margin-top:8px;">修飾版：</span>
+                    <a href="20260528_practice.html" target="_blank" class="action-gate">查看修飾</a>
+                </div>
+            </div>
+
+            <a href="20260605_ch3_4.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>Chapter 3 & 4 基礎</h4>
+                    <p>練習 CSS 字型大小、文字排版與基礎樣式屬性設定。</p>
+                </div>
+                <div class="tag-file">20260605_ch3_4.html</div>
+            </a>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>Bootstrap 基礎練習</h3>
+                    <p>初試 Bootstrap 框架，練習網格系統與常用元件排版。</p>
+                </div>
+                <a href="20260605_bootstrap_practice.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <a href="20260605_ch5.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>Chapter 5 基礎</h4>
+                    <p>學習並實作 HTML 表格與表單控制項之排版與設計。</p>
+                </div>
+                <div class="tag-file">20260605_ch5.html</div>
+            </a>
+
+            <a href="20260605_ch5_ChatGPT.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>飲料 ERP 商品管理</h4>
+                    <p>結合 Chapter 5 概念與 AI 協同設計的飲品後台管理介面。</p>
+                </div>
+                <div class="tag-file">20260605_ch5_ChatGPT.html</div>
+            </a>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>地方美食</h3>
+                    <p>彙整在地特色農村美食小吃，運用網頁進行清單展示。</p>
+                </div>
+                <a href="20260609_Travel_Food.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <a href="20260609_Hotel_List.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>旅館列表展示</h4>
+                    <p>使用 CSS 排版呈現多欄位的旅館搜尋結果與列表清單。</p>
+                </div>
+                <div class="tag-file">20260609_Hotel_List.html</div>
+            </a>
+
+            <a href="20260616_ch6.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>Ch6 Bootstrap 欄與列</h4>
+                    <p>熟悉 Bootstrap 的 Grid System，練習多響應式欄位切版。</p>
+                </div>
+                <div class="tag-file">20260616_ch6.html</div>
+            </a>
+
+            <a href="20260616_ch6_practice.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>Ch6 切版練習題</h4>
+                    <p>運用 Bootstrap 的格線系統，進行多種常見網頁版塊切版。</p>
+                </div>
+                <div class="tag-file">20260616_ch6_practice.html</div>
+            </a>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>切版綜合練習 (二)</h3>
+                    <p>綜合運用多種 CSS 排版技巧，進行精細的網頁切版練習。</p>
+                </div>
+                <a href="20260618_practice_2.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <a href="20260618_roller.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>切版練習 - Roller</h4>
+                    <p>針對 Roller 主題的網頁版塊與滑動特效切版練習。</p>
+                </div>
+                <div class="tag-file">20260618_roller.html</div>
+            </a>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>歷史時間軸</h3>
+                    <p>以時間軸形式呈現歷史事件發展的排版練習。</p>
+                </div>
+                <div>
+                    <span class="gate-label">原版：</span>
+                    <a href="20260623_timeline.html" target="_blank" class="action-gate">查看核心</a>
+                    <span class="gate-label" style="margin-top:8px;">Gemini 版：</span>
+                    <a href="20260623_timeline_byAntigravity.html" target="_blank" class="action-gate">查看重組</a>
+                </div>
+            </div>
+
+            <a href="20260623_flex_practice.html" target="_blank" class="fragment-card">
+                <div>
+                    <h4>Bootstrap Flex 彈性排版</h4>
+                    <p>深入練習 Bootstrap 的 Flexbox 工具類別以靈活調配網頁版面。</p>
+                </div>
+                <div class="tag-file">20260623_flex_practice.html</div>
+            </a>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>CSS 樣式與配色手冊</h3>
+                    <p>展示 CSS 設計規範與配色系統對照。（Vibe Coding 殘留物）</p>
+                </div>
+                <a href="style_guide_showcase.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <div class="fragment-card">
+                <div>
+                    <h3>產品建檔表單 (JS 驗證)</h3>
+                    <p>實作產品建檔表單與即時 JavaScript 驗證，套用 Uber Eats 質感的極簡美化風格。</p>
+                </div>
+                <a href="20260625_ch11_form_JS.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+        </section>
+    </div>
+
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();" aria-label="關閉">&#x2715;</button>
+        <img id="lightboxImg" src="" alt="放大檢視">
+    </div>
+
+    <script>
+        // 1. Canvas 流體/神經元動態渲染
+        const canvas = document.getElementById('thoughtCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 42; // 呼應你的名字
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ThoughtParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.speedY = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new ThoughtParticle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製互相牽引的神經突觸線條
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 0, 127, ${0.15 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // 2. Lightbox 邏輯保持完整
+        const overlay  = document.getElementById('lightboxOverlay');
+        const lbImg    = document.getElementById('lightboxImg');
+
+        function openLightbox(imgEl) {
+            lbImg.src = imgEl.src;
+            lbImg.alt = imgEl.alt;
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => { lbImg.src = ''; }, 300);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42號混凝土 // 熵增意識流宇宙 // 輪迴驗證</title>
+    <link rel="stylesheet" href="css/20260602_profile.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #020204;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff007f;
+            --neon-green: #00ffaa;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: #d1d5db;
+            font-family: 'Courier New', var(--font-mono, monospace), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 300vh;
+        }
+
+        /* 映像管掃描線與雜訊 */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* 強化版 Canvas 背景 */
+        #thoughtCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.85; /* 讓粒子更明顯 */
+        }
+
+        /* 解構主義容器 */
+        .abyss-container {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            box-sizing: border-box;
+            padding: 40px;
+        }
+
+        /* 巨大漂浮背景字 */
+        .ambient-text {
+            position: absolute;
+            font-size: clamp(60px, 15vw, 200px);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.015);
+            text-transform: uppercase;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 1;
+        }
+        .at-1 { top: 10vh; left: -5vw; transform: rotate(-3deg); }
+        .at-2 { top: 110vh; right: -10vw; transform: rotate(5deg); }
+        .at-3 { top: 210vh; left: 5vw; transform: rotate(-1deg); }
+
+        /* 各意識斷層區塊 - 給予明確的高度範圍以利液態輪迴 */
+        .mind-section {
+            position: relative;
+            width: 100%;
+            min-height: 80vh;
+            margin-bottom: 15vh;
+            border: 1px dashed rgba(255,255,255,0.03);
+            box-sizing: border-box;
+        }
+
+        .section-tag {
+            font-size: 12px;
+            color: var(--neon-green);
+            letter-spacing: 6px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            display: inline-block;
+            border-bottom: 1px solid var(--neon-green);
+            z-index: 100;
+            position: relative;
+        }
+
+        /* 核心自我（名字） */
+        .ego-title-block {
+            padding: 40px;
+            mix-blend-mode: difference;
+            z-index: 10;
+            position: relative;
+        }
+
+        .ego-title {
+            font-size: clamp(40px, 8vw, 100px);
+            font-weight: 900;
+            line-height: 0.9;
+            color: #fff;
+            text-shadow: 3px 3px 0 var(--neon-pink), -3px -3px 0 var(--neon-blue);
+        }
+
+        /* 流體碎片基本類別：由 JS 接管控制位置 */
+        .liquid-fragment {
+            position: absolute;
+            will-change: transform;
+            mix-blend-mode: difference; /* 與其他元素交會時產生強烈色彩衝突 */
+        }
+
+        /* 技能碎屑 */
+        .skill-shrapnel {
+            padding: 6px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+            font-size: 12px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,240,255,0.2);
+        }
+        .skill-shrapnel:hover {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink);
+            z-index: 999 !important;
+        }
+
+        /* 工作經歷記憶片 */
+        .memory-slice {
+            background: rgba(5, 5, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            width: 320px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .memory-slice:hover {
+            border-color: var(--neon-green);
+            z-index: 999 !important;
+        }
+        .slice-time { font-size: 11px; color: var(--neon-pink); display: block; margin-bottom: 5px; }
+
+        /* 意象照片片 */
+        .unbound-img {
+            border: 1px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            filter: grayscale(40%) contrast(1.2);
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        .unbound-img:hover {
+            filter: none;
+            z-index: 999 !important;
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        /* 作品與練習碎片卡片 */
+        .thought-card {
+            background: rgba(3, 3, 6, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 22px;
+            width: 280px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+        }
+        .thought-card:hover {
+            border-color: #fff;
+            z-index: 999 !important;
+        }
+        .thought-card h3, .thought-card h4 { margin: 0 0 10px 0; font-size: 18px; color: #fff; }
+        .thought-card h4 { color: var(--neon-blue); }
+        .thought-card p { font-size: 12px; line-height: 1.5; color: #8892b0; margin: 0 0 15px 0; }
+
+        /* 門戶閘門（連結） */
+        .action-gate {
+            display: block;
+            text-align: center;
+            padding: 6px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .action-gate:hover { background: #fff; color: #000; }
+        .gate-label { font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 2px; display: block; }
+        .tag-file { font-size: 10px; color: rgba(255,255,255,0.2); border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; margin-top: 10px; }
+
+        /* 低語引言 */
+        .whisper-quote {
+            background: rgba(0,0,0,0.7);
+            border-left: 3px solid var(--neon-pink);
+            padding: 15px;
+            font-style: italic;
+            font-size: 13px;
+            line-height: 1.8;
+            width: 300px;
+        }
+
+        /* 燈箱 */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: rgba(2, 2, 5, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .lightbox-overlay.is-open { opacity: 1; pointer-events: all; }
+        .lightbox-overlay img { max-width: 95vw; max-height: 90vh; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 35px; color: #fff; background: none; border: none; cursor: pointer; }
+    </style>
+</head>
+
+<body>
+
+    <div class="glitch-overlay"></div>
+    <canvas id="thoughtCanvas"></canvas>
+
+    <div class="abyss-container">
+        <div class="ambient-text at-1">BRAIN DUMP // RUNTIME</div>
+        <div class="ambient-text at-2">LOOP ELEMENT // REBORN</div>
+        <div class="ambient-text at-3">CONCRETE 42 // QUANTUM</div>
+
+        <section class="mind-section" id="section-ego" style="min-height: 95vh;">
+            <div class="section-tag">[ CORE EGO // 核心自我與記憶 ]</div>
+            
+            <div class="ego-title-block">
+                <h1 class="ego-title">42號混凝土<br><span style="color: var(--neon-blue); font-size: 0.4em; letter-spacing:4px;">SOFTWARE ENGINEER</span></h1>
+                <div style="font-size:13px; color: var(--neon-green); margin-top:10px;">興趣：吃飯睡覺打東東</div>
+            </div>
+
+            <span class="liquid-fragment skill-shrapnel">C/C++</span>
+            <span class="liquid-fragment skill-shrapnel">Python</span>
+            <span class="liquid-fragment skill-shrapnel">Qt6</span>
+            <span class="liquid-fragment skill-shrapnel">Algorithm</span>
+            <span class="liquid-fragment skill-shrapnel">ML</span>
+
+            <div class="liquid-fragment memory-slice">
+                <span class="slice-time">2016–2024</span>
+                <p style="margin:0; font-size:13px;"><strong style="color:#fff;">[公司名稱]</strong><br>（生產管理）先進排程規劃 · C++(98)</p>
+            </div>
+            <div class="liquid-fragment memory-slice">
+                <span class="slice-time">2024–2025</span>
+                <p style="margin:0; font-size:13px;"><strong style="color:#fff;">[公司名稱]</strong><br>清算系統 · C、Pro*C</p>
+            </div>
+            <div class="liquid-fragment memory-slice">
+                <span class="slice-time">2025–2026</span>
+                <p style="margin:0; font-size:13px;"><strong style="color:#fff;">[公司名稱]</strong><br>遊戲式軍事模擬引擎 · C++、Qt6</p>
+            </div>
+
+            <blockquote class="liquid-fragment whisper-quote">
+                不會給你上，不會讓你下，不會跑來跑去然後放棄你。不會使你哭，不會說再會，不會說謊然後傷害你。<br>
+                <span style="font-size:11px; color: var(--neon-pink);">—— Rick Astley</span>
+            </blockquote>
+
+            <img src="images/alex-knight-2EJCSULRwC8-unsplash.jpg" alt="User" class="liquid-fragment unbound-img" style="width:180px; height:180px; border-radius:50%;" onclick="openLightbox(this)">
+            <img src="images/asurada_GSX_01.jpg" alt="asurada 01" class="liquid-fragment unbound-img" style="width:240px; height:150px;" onclick="openLightbox(this)">
+            <img src="images/asurada_GSX_02.jpg" alt="asurada 02" class="liquid-fragment unbound-img" style="width:160px; height:220px;" onclick="openLightbox(this)">
+            <img src="images/asurada_GSX_03.jpg" alt="asurada 03" class="liquid-fragment unbound-img" style="width:220px; height:140px;" onclick="openLightbox(this)">
+        </section>
+
+        <section class="mind-section" id="section-creations" style="min-height: 100vh;">
+            <div class="section-tag">[ CREATIONS // 衍生成果碎片 ]</div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>切版練習</h3>
+                    <p>使用 HTML、CSS 練習切版（版面控制）。</p>
+                </div>
+                <div>
+                    <span class="gate-label">原版 / 修飾：</span>
+                    <a href="20260527_practice.html" target="_blank" class="action-gate">核心</a>
+                    <a href="20260528_practice.html" target="_blank" class="action-gate" style="margin-top:2px;">修飾</a>
+                </div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>Bootstrap 基礎練習</h3>
+                    <p>初試 Bootstrap 框架，練習網格系統與常用元件排版。</p>
+                </div>
+                <a href="20260605_bootstrap_practice.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>地方美食</h3>
+                    <p>彙整在地特色農村美食小吃，運用網頁進行清單展示。</p>
+                </div>
+                <a href="20260609_Travel_Food.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>切版綜合練習 (二)</h3>
+                    <p>綜合運用多種 CSS 排版技巧，進行精細的網頁切版練習。</p>
+                </div>
+                <a href="20260618_practice_2.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>歷史時間軸</h3>
+                    <p>以時間軸形式呈現歷史事件發展的排版練習。</p>
+                </div>
+                <div>
+                    <a href="20260623_timeline.html" target="_blank" class="action-gate">原始斷層</a>
+                    <a href="20260623_timeline_byAntigravity.html" target="_blank" class="action-gate" style="margin-top:2px;">Gemini調整</a>
+                </div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>CSS 樣式手冊</h3>
+                    <p>展示 CSS 設計規範與配色系統對照。（AI 協同殘留物）</p>
+                </div>
+                <a href="style_guide_showcase.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h3>產品建檔 (JS驗證)</h3>
+                    <p>實作產品建檔表單與即時驗證，套用極簡美化風格。</p>
+                </div>
+                <a href="20260625_ch11_form_JS.html" target="_blank" class="action-gate">進入序列</a>
+            </div>
+        </section>
+
+        <section class="mind-section" id="section-fragments" style="min-height: 100vh;">
+            <div class="section-tag">[ FRAGMENTS // 基礎掌握與底層訊號 ]</div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>Chapter 3 & 4 基底</h4>
+                    <p>練習 CSS 字型大小、文字排版與基礎樣式屬性設定。</p>
+                </div>
+                <div class="tag-file">20260605_ch3_4.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>Chapter 5 實體</h4>
+                    <p>學習並實作 HTML 表格與表單控制項之排版與設計。</p>
+                </div>
+                <div class="tag-file">20260605_ch5.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>飲料 ERP 商品管理</h4>
+                    <p>結合 Chapter 5 概念與 AI 協同設計的飲品後台管理介面。</p>
+                </div>
+                <div class="tag-file">20260605_ch5_ChatGPT.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>旅館列表展示</h4>
+                    <p>使用 CSS 排版呈現多欄位的旅館搜尋結果與列表清單。</p>
+                </div>
+                <div class="tag-file">20260609_Hotel_List.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>Ch6 欄與列</h4>
+                    <p>熟悉 Bootstrap 的 Grid System，練習多響應式欄位切版。</p>
+                </div>
+                <div class="tag-file">20260616_ch6.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>Ch6 切版練習題</h4>
+                    <p>運用 Bootstrap 的格線系統，進行多種常見網頁版塊切版。</p>
+                </div>
+                <div class="tag-file">20260616_ch6_practice.html</div>
+            </div>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>切版練習 - Roller</h4>
+                    <p>針對 Roller 主題的網頁版塊與滑動特效切版練習。</p>
+                </div>
+                <div class="tag-file">20260618_roller.html</div>
+            </a>
+
+            <div class="liquid-fragment thought-card">
+                <div>
+                    <h4>Flex 彈性排版</h4>
+                    <p>深入練習 Bootstrap 的 Flexbox 工具類別以靈活調配網頁版面。</p>
+                </div>
+                <div class="tag-file">20260623_flex_practice.html</div>
+            </div>
+        </section>
+    </div>
+
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();">&#x2715;</button>
+        <img id="lightboxImg" src="" alt="Zoom">
+    </div>
+
+    <script>
+        // --- 1. 隨機初始位置與液態下沉輪迴演算法 ---
+        const sections = document.querySelectorAll('.mind-section');
+        let elementsData = [];
+
+        function initLiquidElements() {
+            elementsData = [];
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionW = rect.width;
+                const sectionH = rect.height;
+                const frags = section.querySelectorAll('.liquid-fragment');
+
+                frags.forEach((el, index) => {
+                    const elW = el.offsetWidth || 150;
+                    const elH = el.offsetHeight || 100;
+
+                    // 1. 每次載入完全隨機擺放 X, Y 座標
+                    const randomX = Math.random() * (sectionW - elW - 40) + 20;
+                    const randomY = Math.random() * (sectionH - elH - 40) + 20;
+                    
+                    // 2. 分配隨機下沉速度 (0.25 到 0.85 像素/幀) 營造時間流速錯落
+                    const speed = Math.random() * 0.6 + 0.25;
+                    // 3. 分配隨機偏斜角度
+                    const rotate = (Math.random() - 0.5) * 16; 
+
+                    el.style.left = `${randomX}px`;
+                    
+                    elementsData.push({
+                        element: el,
+                        parent: section,
+                        x: randomX,
+                        y: randomY,
+                        speed: speed,
+                        rotate: rotate,
+                        width: elW,
+                        height: elH
+                    });
+                });
+            });
+        }
+
+        function updateLiquidFlow() {
+            elementsData.forEach(item => {
+                const parentH = item.parent.offsetHeight;
+                
+                // 由上到下慢速漂流
+                item.y += item.speed;
+
+                // 輪迴機制：如果卡片頂端超出了區塊底端
+                if (item.y > parentH) {
+                    // 重新轉生到區塊最頂端
+                    item.y = -item.height;
+                    // 轉生時重新洗牌 X 座標與流速，創造不可預測性
+                    item.x = Math.random() * (item.parent.offsetWidth - item.width - 40) + 20;
+                    item.speed = Math.random() * 0.6 + 0.25;
+                    item.element.style.left = `${item.x}px`;
+                }
+
+                // 套用座標與旋轉角度
+                item.element.style.transform = `translateY(${item.y}px) rotate(${item.rotate}deg)`;
+            });
+            requestAnimationFrame(updateLiquidFlow);
+        }
+
+        // 當頁面資源載入完畢（確保 offsetWidth/Height 抓取正確）再啟動
+        window.addEventListener('load', () => {
+            initLiquidElements();
+            updateLiquidFlow();
+        });
+
+        // --- 2. 顯著的高密度 Canvas 神經元突觸系統 ---
+        const canvas = document.getElementById('thoughtCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 75; // 提高密度讓效果更明顯
+        let mouse = { x: null, y: null, radius: 180 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speedX = (Math.random() - 0.5) * 0.9;
+                this.speedY = (Math.random() - 0.5) * 0.9;
+                this.radius = Math.random() * 3 + 1;
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255,' : 'rgba(255, 0, 127,';
+            }
+            update() {
+                // 基礎移動
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                // 滑動滑鼠時的微弱排斥互動
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = this.x - mouse.x;
+                    let dy = this.y - mouse.y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < mouse.radius) {
+                        let force = (mouse.radius - dist) / mouse.radius;
+                        this.x += (dx / dist) * force * 4;
+                        this.y += (dy / dist) * force * 4;
+                    }
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color + ' 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 180) { // 加大連線距離
+                        ctx.beginPath();
+                        // 線條混色
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${0.25 * (1 - distance / 180)})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+
+        // --- 3. Lightbox 基礎邏輯 ---
+        const overlay  = document.getElementById('lightboxOverlay');
+        const lbImg    = document.getElementById('lightboxImg');
+
+        function openLightbox(imgEl) {
+            lbImg.src = imgEl.src;
+            overlay.classList.add('is-open');
+        }
+        function closeLightbox() {
+            overlay.classList.remove('is-open');
+        }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>
