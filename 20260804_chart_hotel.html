@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.JS 圖表練習 - 各縣市飯店分布統計</title>
+    <link rel="stylesheet" href="css/basic_template.css">
+    <link rel="stylesheet" href="css/rollers.css">
+
+    <!-- plug-ins -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- TODO:
+    1. 計算每個縣市的旅館數量: CityCountyData
+    2. X-axis: CityCountyData.json 取得縣市列表
+    3. Y-axis: 計算方式：依照 X-axis 建立陣列，迴圈統計旅館列表，存入陣列 -->
+    <div class="container" id="app">
+        <div class="display-5 fw-900 text-center text-bg-info rounded rounded-3 p-3 my-3">{{ title }}</div>
+        <div class="row"></div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12 mt-9">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- plug-ins -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="js/vue.global.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script> -->
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script> -->
+    <script src="js/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="js/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="js/sweetalert2.all.min.js"></script>
+
+    <script src="js/cleanText.js"></script>
+
+    <script>
+        const App = {
+            data() {
+                return {
+                    title: "各縣市飯店分布統計",
+                    regionTitle: [],    // 索引值為數字，可以宣告為陣列
+                    counter: {},        // 索引值為字串，需要宣告為物件
+                    regionData: [],     // 索引值為數字，可以宣告為陣列
+                    label_x: [],
+                    data_y: [],
+                };
+            },
+            methods: {
+                getHotelData() {
+                    const vm = this;
+                    axios.get('js/HotelList.json')
+                        .then(function (response) {
+                            console.log(response.data.Hotels);
+                            vm.countHotelNumber(response.data.Hotels);
+                        }).catch(function (error) {
+                            console.log(error);
+                        }).finally(function () {
+                            // doNothing();
+                        });
+                },
+                countHotelNumber(rawData) {
+                    const vm = this;
+                    rawData.forEach((item) => {
+                        const getRegion = item.PostalAddress.City;
+
+                        if (vm.counter[getRegion] == undefined) {
+                            vm.counter[getRegion] = vm.regionData.length;
+                            vm.regionData.push([]);
+                            vm.regionTitle[vm.counter[getRegion]] = getRegion
+                        }
+
+                        vm.regionData[vm.counter[getRegion]].push(item)
+                    });
+
+                    //chartjs X軸資料
+                    vm.label_x = vm.regionTitle;
+                    //chartjs Y軸資料
+                    vm.data_y = vm.regionData.map(function (item) {
+                        return item.length;
+                    });
+                },
+                createChart() {
+                    const ctx = document.getElementById('myChart');
+
+                    myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [...this.label_x],
+                            datasets: [{
+                                label: this.title,
+                                data: [...this.data_y],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                updateChart() {
+                    myChart.data.labels = [...this.label_x];
+                    myChart.data.datasets[0].data = [...this.data_y];
+                    myChart.update();
+                    console.log(myChart.data);
+                },
+            },
+            // computed: {},
+            watch: { // 監聽變數
+                labels_x: {     // 如果此變數有異動
+                    handler() { this.updateChart(); }, // handler 處理事件
+                    deep:true   // 深度監聽，true: 若是朝狀陣列，不論在哪個維度都會觸發
+                },
+                data_y: {
+                    handler() { this.updateChart(); },
+                    deep:true
+                }
+            },
+            mounted() {
+                this.getHotelData();
+                this.createChart();
+                // this.updateChart();
+            }
+        };
+
+        Vue.createApp(App).mount("#app");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueJs 基本語法</title>
+    <link rel="stylesheet" href="css/basic_template.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            transition: transform 2s;
+        }
+        .rotate45 {
+            transform: rotate(45deg);
+        }
+        .rotate60 {
+            transform: rotate(60deg);
+        }
+        .rotate80 {
+            transform: rotate(80deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="display-2 fw-bold">{{ title }}</div>
+        <br>
+        <p class="fs-5">{{ content }}</p>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">1. 綁定資料 v-model</div>
+                <input type="text" name="" id="" class="form-control form-control-lg" placeholder="輸入任意字串" v-model="text01">
+                <div class="fs-3">
+                    你輸入的字串為：<span class="text-info fw-bold">{{ text01 }}</span>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">2. 綁定資料 v-bind</div>
+                <img v-bind:src="imgsrc" v-bind:class="imgclassname" alt="">
+            </div>
+
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">3. 迴圈 v-for、判斷式 v-if</div>
+                <ul class="list-group">
+                    <template v-for="item in product">
+                        <!-- 因為（規定）for 和 if 不能放在同一個標籤內，所以要把 for 往上移一層放在 template -->
+                        <!-- 如果只是要做篩選，更推薦使用 computed 做預先篩選，效能更好 -->
+                        <li class="list-group-item" v-if="item.price > 200">
+                            {{ item.name }} 一{{ item.unit }} -- {{ item.price }} 元
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">4. v-on 監聽</div>
+                <div class="mb-3">
+                    <label class="form-label">輸入一段字串</label>
+                    <input type="text" class="form-control form-control-lg" v-model="reverseTexts">
+                </div>
+                <button class="btn btn-success" v-on:click="reverseText">反轉文字</button>
+                <div class="fs-3">反轉文字：<span class="text-info fs-2">{{ reversedTexts }}</span></div>
+            <hr>
+                <div class="display-6 my-3 fw-bold text-primary">v-on 練習</div>
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="fs-1 fw-900 text-center">珍珠奶茶</div>
+                        <div class="fs-4 fw-900 text-center">
+                            單價： <span class="text-danger fs-1">{{ drinkPrice }}</span> 元
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center mb-4">
+                            <div class="fs-4 fw-900 text-center">數量：</div>
+                            <button class="btn btn-danger btn-lg" v-on:click="reduceDrinkNumber">－</button>
+                            <div class="display-4 fw-900 mx-4">{{ drinkNumber }}</div>
+                            <button class="btn btn-success btn-lg" v-on:click="addDrinkNumber">＋</button>
+                        </div>
+                        <div class="fs-2">
+                            總金額：<span class="fs-2 text-primary fw-900">{{ billAmount }}</span>元
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">5. 動態綁定（常用在 class）</div>
+                <div class="m-5"><div class="box border border-success" v-bind:class="{ 'rotate45' : isRotate45, 'rotate60' : isRotate60, 'rotate80' : isRotate80 }"></div></div>
+                <div class="fs-5">順時針旋轉：</div>
+                <button class="btn-success mt-2" v-on:click="if ((isRotate && isRotate45) || !isRotate){isRotate45 = !isRotate45;isRotate = !isRotate;}">45 度</button>
+                <button class="btn-success mt-2" v-on:click="if ((isRotate && isRotate60) || !isRotate){isRotate60 = !isRotate60;isRotate = !isRotate;}">60 度</button>
+                <button class="btn-success mt-2" v-on:click="if ((isRotate && isRotate80) || !isRotate){isRotate80 = !isRotate80;isRotate = !isRotate;}">80 度</button>
+            </div>
+
+            <div class="col-12">
+                <div class="display-5 my-3 fw-bold text-primary">6. compute（即時運算）</div>
+                <input type="text" class="form-control form-control-lg" v-model="rText06">
+                <div class="fs-2">字串反轉：</div>
+                <span class="fw-900 text-secondary">{{ reverseTextV2 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    title: "Hello, World!",
+                    content: "天然是以世界整個部落格充分移動深入台北發現選單上帝，數字你們的服裝他也東方楠雅就好提升，蔬菜眼睛也就小七原則聯盟，上述記憶滿意感情總經理，告訴高考提示多個真是地球春天聽說網域名稱開了，普遍閲讀，套件清晰至於，有限責任失望格式教材而在沒有課程社區字元很多妹。",
+
+                    // section 1
+                    text01: "",
+
+                    // section 2
+                    imgsrc: "images/asurada_GSX_02.jpg",
+                    imgclassname: "img-fluid",
+
+                    // section 3
+                    product: [
+                        {name: "草莓", price: 500, unit: "公斤"},
+                        {name: "芒果", price: 300, unit: "公斤"},
+                        {name: "柳丁", price: 150, unit: "公斤"},
+                        {name: "香蕉", price: 120, unit: "公斤"},
+                        {name: "超浮誇炙燒爆鮭干貝海景霸王丼", price: 1600, unit: "碗"}
+                    ],
+
+                    // section 4
+                    reverseTexts: "請輸入一段字串", // 多一個 s，嘿嘿嘿
+                    reversedTexts: "", // 多一個 d 和 s，嘿嘿嘿
+                    // 嘿嘿嘿個屁，沒事不要這樣命名，被自己搞到，差點沒發現少寫一個 s = =
+
+                    // section 4 練習
+                    drinkPrice: 60,
+                    drinkNumber: 1,
+                    billAmount: 60,
+
+                    // section 5
+                    isRotate: false,
+                    isRotate45: false,
+                    isRotate60: false,
+                    isRotate80: false,
+
+                    // section 6
+                    rText06: "請輸入一段字串，將會即時反轉"
+                }
+            },
+            methods: {
+                reverseText() {
+                    // split: 將 reverseTexts 從字串拆成陣列
+                    // reverse: 將陣列的順序反轉
+                    // join: 將陣列合併成字串
+                    this.reversedTexts = this.reverseTexts.split('').reverse().join('');
+                },
+                reduceDrinkNumber() {
+                    this.drinkNumber--;
+
+                    if (this.drinkNumber < 0)
+                        this.drinkNumber = 0;
+
+                    this.billAmount = this.drinkNumber * this.drinkPrice;
+                },
+                addDrinkNumber() {
+                    this.drinkNumber++;
+                    this.billAmount = this.drinkNumber * this.drinkPrice;
+                },
+                checkout() {
+                    this.billAmount = this.drinkNumber * this.drinkPrice;
+                }
+            },
+            computed: {
+                reverseTextV2() {
+                    return this.rText06.split('').reverse().join('');
+                }
+            }
+        }
+        Vue.createApp(App).mount("#app")
+    </script>
+</body>
+
+</html>

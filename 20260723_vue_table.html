@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueJs 表單練習</title>
+    <link rel="stylesheet" href="css/basic_template.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <div class="display-2 fw-900 text-bg-primary my-5 text-center py-3 rounded rounded-3 shadow-lg">{{ title }}
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" v-model="check_food" id="startOrder">
+                    <label for="startOrder" class="form-check-label">開始點餐</label>
+                </div>
+            </div>
+
+            <div v-if="check_food">
+                <div class="mb-3 form-floating">
+                    <input type="text" placeholder="" class="form-control" name="" id="customer" v-model="customer_name"
+                    :class=" customer_name.length > 1 && customer_name.length < 6 ? 'is-valid' : 'is-invalid'">
+                    <label for="customer">訂購姓名（二到五個字）</label>
+                    <!-- <div class="valid-feedback"></div> -->
+                    <div class="invalid-feedback">名稱長度不符</div>
+                </div>
+                <!-- <div class="col-12">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" v-model="check_food_array" value="勁辣雞腿堡">
+                        <label for="" class="form-check-label">勁辣雞腿堡</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" v-model="check_food_array" value="超級大麥克">
+                        <label for="" class="form-check-label">超級大麥克</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" v-model="check_food_array" value="吉士牛肉堡">
+                        <label for="" class="form-check-label">吉士牛肉堡</label>
+                    </div>
+                </div> -->
+                <div class="form-check" v-for="item in food_array">
+                    <input type="checkbox" class="form-check-input" v-bind:id="item.name" v-bind:value="item" v-model="check_food_array">
+                    <label v-bind:for="item.name" class="form-check-label">
+                        {{ item.name }} - NT$ {{ item.price }}
+                    </label>
+                </div>
+            <hr>
+                <div class="col-6">
+                    <select name="sugar" id="" class="form-select form-select-lg mt-3" v-model="selectSugar">
+                        <option value="" disabled selected class="text-center fw-900">---請選擇飲料甜度---</option>
+                        <option value="全糖">全糖</option>
+                        <option value="半糖">半糖</option>
+                        <option value="微糖">微糖</option>
+                        <option value="無糖">無糖</option>
+                    </select>
+                </div>
+            <hr>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="" id="cash" v-model="radioPay" value="現金">
+                    <label for="cash" class="form-check-label">現金</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="" id="credit_card" v-model="radioPay" value="信用卡">
+                    <label for="credit_card" class="form-check-label">信用卡</label>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="" v-if="check_food">
+                <div class="display-4 text-bg-info p-3 rounded-1 text-center fw-bold">餐點確認</div>
+                <div class="alert alert-warning mt-3" v-if="check_food_array.length == 0">尚未選取餐點</div>
+                <div class="" v-else>
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item d-flex justify-content-between" v-for="(item, index) in check_food_array">
+                            <span>{{ index + 1 }} - {{ item.name }}</span>
+                            <span>NT$ {{ item.price }}</span>
+                        </li>
+                    </ul>
+                    <div class="">飲料甜度：{{ selectSugar }}</div>
+
+                    <hr>
+
+                    <!-- v-bind: 縮寫: -->
+                    <!-- v-on:   縮寫@ -->
+                    <!-- <div class="fs-6 fw-bold my-3">同意遵守服務使用條款</div> -->
+                    <div class="mb-3 form-check form-switch">
+                        <input type="checkbox" class="form-check-input" v-model="agreeRule" :class=" agreeRule ? 'is-valid' : 'is-invalid' ">
+                        <label for="">同意／不同意遵守服務使用條款</label>
+                        <div class="valid-feedback">已同意使用條款</div>
+                        <div class="invalid-feedback">訂購前請閱讀並同意使用條款</div>
+                    </div>
+                    <!-- <div class="fs-6 fw-bold my-3">是否加入會員</div> -->
+                    <div class="mb-3 form-check form-switch">
+                        <input type="checkbox" class="form-check-input" v-model="agreeJoin" :class=" agreeJoin ? 'is-valid' : 'is-invalid' ">
+                        <label for="">同意／不同意加入會員</label>
+                        <div class="valid-feedback">感謝您加入會員</div>
+                        <div class="invalid-feedback">加入會員可以累積點數兌換優惠券喔</div>
+                    </div>
+
+                    <hr>
+
+                    <div class="fs-3 text-end mt-3">總價:<span class="text-danger fw-bold"> NT$ {{ totalPrice }}</span></div>
+                    <div class="fs-4">付款方式：{{ radioPay }}</div>
+                    <div class="fs-4">服務條款：{{ agreeRule ? "已同意" : "尚未同意"}}</div>
+
+                    <button class="btn btn-primary w-100 my-3 btn-lg"
+                    :disabled="!agreeRule || check_food_array.length === 0 || radioPay === '' || selectSugar === '' || customer_name.length < 2 || customer_name.length > 5">送出訂單</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    title: "VueJs 表單練習",
+                    check_food: false,
+                    customer_name: '',
+                    // 餐點資料
+                    food_array: [
+                        { name: "勁辣雞腿堡", price: 99 },
+                        { name: "超級大麥克", price: 88 },
+                        { name: "吉士牛肉堡", price: 77 }
+                    ],
+                    // 訂單餐點
+                    check_food_array: [],
+                    radioPay: '',
+                    selectSugar: '',
+                    agreeRule: false,
+                    agreeJoin: false
+                }
+            },
+            computed: {
+                totalPrice() {
+                    let total = 0;
+                    this.check_food_array.forEach(item => {
+                        total = total + item.price;
+                    });
+
+                    return total;
+                }
+            }
+        };
+
+        Vue.createApp(App).mount("#app");
+    </script>
+</body>
+
+</html>

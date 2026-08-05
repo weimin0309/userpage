@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Practice</title>
+    <link rel="stylesheet" href="/css/basic_template.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <div class="display-4 fw-bold text-center my-4 text-bg-success py-3">{{ title }}</div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/vue.global.js"></script>
+    <script src="/js/cleanText.js"></script>
+    <script src="/js/chart.js"></script>
+    <script>
+        let myChart = null;
+
+        const App = {
+            data() {
+                return {
+                    title: "Vue.JS + Chart.JS 圖表練習",
+                    labels_x: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    data_y: [12, 19, 3, 5, 2, 3],
+                };
+            },
+            methods: {
+                createChart() {
+                    const ctx = document.getElementById('myChart');
+
+                    myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            // [...vm.labels_x]：額外複製一份 vm.labels_x，不會去異動原本 vm.labels_x 的內容
+                            labels: [...this.labels_x],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [...this.data_y],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                updateChart() {
+                    myChart.data.labels = [...this.labels_x];
+                    myChart.data.datasets[0].data = [...this.data_y];
+                    myChart.update();
+                }
+            },
+            mounted() {
+                this.createChart();
+            },
+            watch: { // 監聽變數
+                labels_x: {     // 如果此變數有異動
+                    handler() { this.updateChart(); }, // handler 處理事件
+                    deep:true   // 深度監聽，true: 若是朝狀陣列，不論在哪個維度都會觸發
+                },
+                data_y: {
+                    handler() { this.updateChart(); },
+                    deep:true
+                }
+            }
+        };
+
+        Vue.createApp(App).mount("#app");
+    </script>
+</body>
+
+</html>
